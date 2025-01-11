@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/11 15:37:37 by pboucher         ###   ########.fr       */
+/*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
+/*   Updated: 2025/01/11 15:23:07 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	main(int argc, char **argv, char **envp)
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <stdlib.h>
+
+typedef struct	s_data
 {
-	t_data data;
+	char	*line;
+	char	**envp;
+}	t_data;
 
-	(void) argc;
-	(void) argv;
-	data.envp = envp;
-	data.line = readline("minishell > ");
-	while (line)
-	{
-		free(line);
-		line = readline("minishell > ");
-		printf("Line you wrote: %s\n", line);
-		if (line[0] == '\0')
-		{
-			free(line);
-			line = NULL;
-		}
-	}
-	return (0);
-}
+#endif
