@@ -13,11 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "010_FT_PRINTF/ft_printf.h"
-# include <stdlib.h>
 # include <signal.h>
 
 typedef struct	s_data

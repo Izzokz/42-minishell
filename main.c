@@ -12,18 +12,14 @@
 
 #include "minishell.h"
 
-char	*ft_prompt(char *prompt)
-{
-	ft_printf("%s > ", prompt);
-	return (ft_input());	
-}
-
 void	handle_signal(int signal, siginfo_t *signals, void *context)
 {
-	(void)context;
-	(void)signals;
+	(void) context;
+	(void) signals;
 	if (signal == SIGINT)
-		ft_printf("test");
+	{
+		ft_printf("\ntest: reprompt");
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -32,20 +28,20 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
-	sigaction(SIGINT, &data.usr, NULL);
-	data.usr.sa_sigaction = handle_signal;
 	data.envp = ft_rlines_dup(envp);
-	data.line = readline("minishell");
-	while (data.line)
+	while (1)
 	{
-		free(data.line);
-		data.line = readline("minishell");
-		printf("Line you wrote: %s\n", data.line);
-		if (data.line[0] == '\0')
+		data.usr.sa_sigaction = handle_signal;
+		sigaction(SIGINT, &data.usr, NULL);
+		data.line = readline("• minishell } ");
+		if (!data.line || data.line[0] == '\0')
 		{
 			free(data.line);
 			data.line = NULL;
+			break ;
 		}
+		free(data.line);
+		data.line = NULL;
 	}
 	ft_free_rlines(&data.envp);
 	return (0);
