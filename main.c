@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/11 16:29:17 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/13 16:48:00 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	handle_signal(int signal, siginfo_t *signals, void *context)
 	{
 		ft_printf("\ntest: reprompt");
 	}
+	if (signal == SIGQUIT)
+		ft_printf("You don't have to do this...\n");
+	if (signal == VEOF)
+		exit(0);
 }
 
 int	main(int argc, char **argv, char **envp)
