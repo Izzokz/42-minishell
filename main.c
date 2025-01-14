@@ -14,16 +14,16 @@
 
 void	handle_signal(int signal, siginfo_t *signals, void *context)
 {
-	(void) context;
+	t_data	*data;
+
+	data = (t_data *)context;
 	(void) signals;
 	if (signal == SIGINT)
 	{
 		ft_printf("\ntest: reprompt");
 	}
 	if (signal == SIGQUIT)
-		ft_printf("You don't have to do this...\n");
-	if (signal == VEOF)
-		exit(0);
+		return ;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		data.usr.sa_sigaction = handle_signal;
 		sigaction(SIGINT, &data.usr, NULL);
+		sigaction(SIGQUIT, &data.usr, NULL);
 		data.line = readline("• minishell } ");
 		if (!data.line || data.line[0] == '\0')
 		{
