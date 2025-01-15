@@ -2,7 +2,7 @@ NAME = minishell
 
 LIB = 010_FT_PRINTF/libftprintf.a
 
-SRC = main.c
+SRC = main.c ft_pipe_split.c
 
 OBJDIR = 666_OBJ/
 OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
@@ -26,6 +26,7 @@ $(OBJDIR)%.o: %.c | $(OBJDIR)
 	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $<
 
 libs:
+	@rm -rf 010_FT_PRINTF/
 	@git clone https://github.com/Izzokz/42-ft_printf.git 010_FT_PRINTF/
 	@printf "\033[38m\033[1mMinishell: \033[1;37mft_printf Cloned !\033[0m\n"
 

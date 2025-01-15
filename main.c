@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	handle_signal(int signal, siginfo_t *signals, void *context)
+static void	handle_signal(int signal, siginfo_t *signals, void *context)
 {
 	t_data	*data;
 
@@ -39,12 +39,11 @@ int	main(int argc, char **argv, char **envp)
 		sigaction(SIGINT, &data.usr, NULL);
 		sigaction(SIGQUIT, &data.usr, NULL);
 		data.line = readline("• minishell } ");
-		if (!data.line || data.line[0] == '\0')
-		{
-			free(data.line);
-			data.line = NULL;
+		if (!data.line)
 			break ;
-		}
+		data.input = ft_pipe_split(data.line);
+		ft_printf("%*.2[\n]s\n", data.input);
+		ft_free_slines(&data.input);
 		free(data.line);
 		data.line = NULL;
 	}

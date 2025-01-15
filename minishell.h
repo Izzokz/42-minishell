@@ -20,9 +20,12 @@
 
 typedef struct	s_data
 {
-	char	*line;
-	char	**envp;
+	char		*line;
+	t_rlines	envp;
+	t_slines	input;
 	struct sigaction	usr;
 }	t_data;
+
+t_slines	ft_pipe_split(char *line);
 
 #endif
