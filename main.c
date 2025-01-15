@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/15 13:59:49 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/15 14:38:45 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 void handler(int n)
 {
 	// printf("\n%d\n", n);
-	if (n == 2)
+	if (n == SIGINT)
 		ft_printf("\n• minishell } ");
-	if (n == 3)
+	if (n == SIGQUIT)
 		return ;
 }
 
