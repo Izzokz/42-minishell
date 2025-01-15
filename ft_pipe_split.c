@@ -12,13 +12,6 @@
 
 #include "minishell.h"
 
-static void	ft_skip_char(char *part, int *i, char c)
-{
-	while (part[++(*i)] == c)
-		;
-	(*i)--;
-}
-
 static int	ft_edit_split(t_rlines *split, char *line_part, char c)
 {
 	t_ints	i;
@@ -33,7 +26,6 @@ static int	ft_edit_split(t_rlines *split, char *line_part, char c)
 	i.count1 = 0;
 	i.count2 = 0;
 	i.i = -1;
-	ft_skip_char((*split)[i.len], &i.i, c);
 	while ((*split)[i.len][++(i.i)])
 	{
 		if (!(i.count1 + i.count2) && (*split)[i.len][i.i] == c)
@@ -48,6 +40,12 @@ static int	ft_edit_split(t_rlines *split, char *line_part, char c)
 	return (0);
 }
 
+static void	*ft_calloc_err(void)
+{
+	ft_printf_err("Internal Error:ft_calloc()", 2);
+	return (NULL);
+}
+
 /*
 i.count1 determines if a single quote is opened
 i.count2 determines if a double quote is opened
@@ -60,19 +58,15 @@ static t_rlines	ft_mini_split(char *line, char c)
 	i.count1 = 0;
 	i.count2 = 0;
 	split = ft_calloc(1, sizeof(char *));
-	if (!split || ft_edit_split(&split, line, c) == -1)
-	{
-		ft_printf_err("Internal Error:ft_calloc()", 2);
-		return (NULL);
-	}
 	i.i = -1;
-	ft_skip_char(line, &i.i, c);
+	if (!split)
+		return (ft_calloc_err());
 	while (line[++(i.i)])
 	{
 		if ((!(i.count1 + i.count2) && line[i.i] != c
-			&& (i.i != 0 && line[i.i - 1] == c)
+			&& (i.i == 0 || line[i.i - 1] == c)
 			&& ft_edit_split(&split, line + i.i, c) == -1))
-			return (NULL);
+			return (ft_calloc_err());
 		else if (line[i.i] == '\'')
 			i.count1 = !i.count1;
 		else if (line[i.i] == '"')
@@ -100,10 +94,7 @@ t_slines	ft_pipe_split(char *line)
 		return (NULL);
 	split = ft_calloc(ft_rlines_len(pre_split) + 1, sizeof(t_rlines));
 	if (!split)
-	{
-		ft_printf_err("Internal Error:ft_calloc()", 2);
-		return (NULL);
-	}
+		return (ft_calloc_err());
 	i = -1;
 	while (pre_split[++i])
 	{
