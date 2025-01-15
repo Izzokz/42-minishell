@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/15 16:55:38 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/15 17:05:08 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,25 @@ void handler(int n)
 int ft_strcmp(char *s1, char *s2)
 {
 	int i;
+	int j;
 
 	i = 0;
-	while (s1[i] == s2[i])
+	while (s1[i])
+	{
+		j = 0;
+		if (s1[i] == s2[j])
+		{
+			while (s2[j] && s1[i] == s2[j])
+			{
+				j++;
+				i++;
+			}
+			if (!s2[j])
+				return (1);
+		}
 		i++;
-	return (i);
+	}
+	return (0);
 }
 
 int	main(int argc, char **argv, char **envp)
