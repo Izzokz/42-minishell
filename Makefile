@@ -2,7 +2,7 @@ NAME = minishell
 
 LIB = 010_FT_PRINTF/libftprintf.a
 
-SRC = main.c ft_pipe_split.c
+SRC = main.c ft_pipe_split.c ft_free_all.c
 
 OBJDIR = 666_OBJ/
 OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))

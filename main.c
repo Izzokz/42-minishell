@@ -11,13 +11,13 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
+/*
 void	ft_exit(t_rlines command)
 {
 	if (command[0] == "exit")
 		exit(0);
 }
-
+*/
 void handler(int n)
 {
 	// printf("\n%d\n", n);
@@ -42,13 +42,16 @@ int	main(int argc, char **argv, char **envp)
 		if (!data.line)
 			break ;
 		data.input = ft_pipe_split(data.line);
-		ft_printf("%*.2[\n]s\n", data.input);
-		ft_exit(data.input);
+		ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
+		//ft_exit(data.input);
+		//replace ft_exit() by the executor function.
+		if (!data.line) // if exit in the pipeline, frees input and returns instantly.
+			break ;
 		ft_free_slines(&data.input);
 		free(data.line);
 		data.line = NULL;
 	}
-	ft_free_rlines(&data.envp);
+	ft_free_all(&data);
 	ft_printf("exit\n");
 	return (0);
 }
