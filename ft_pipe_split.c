@@ -64,8 +64,8 @@ static t_rlines	ft_mini_split(char *line, char c)
 	while (line[++(i.i)])
 	{
 		if ((!(i.count1 + i.count2) && line[i.i] != c
-			&& (i.i == 0 || line[i.i - 1] == c)
-			&& ft_edit_split(&split, line + i.i, c) == -1))
+				&& (i.i == 0 || line[i.i - 1] == c)
+				&& ft_edit_split(&split, line + i.i, c) == -1))
 			return (ft_calloc_err());
 		else if (line[i.i] == '\'')
 			i.count1 = !i.count1;

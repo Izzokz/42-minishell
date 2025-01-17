@@ -18,11 +18,12 @@
 # include "010_FT_PRINTF/ft_printf.h"
 # include <signal.h>
 
-typedef struct	s_data
+typedef struct s_data
 {
-	char		*line;
-	t_rlines	envp;
-	t_slines	input;
+	char				*line;
+	t_rlines			envp;
+	t_slines			input;
+	t_slines			pipeline;
 	struct sigaction	usr;
 }	t_data;
 
