@@ -22,7 +22,13 @@ void handler(int n)
 {
 	// printf("\n%d\n", n);
 	if (n == SIGINT)
+	{
 		ft_printf("\n• minishell } ");
+		rl_on_new_line();
+//		rl_forced_update_display ();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 	if (n == SIGQUIT)
 		return ;
 }
