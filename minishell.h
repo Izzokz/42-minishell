@@ -28,6 +28,9 @@ typedef struct s_data
 }	t_data;
 
 t_slines	ft_pipe_split(char *line);
+void		ft_exit_id(t_data *data, int exit_id);
+void		ft_exit(t_data *data);
+int			ft_make_pipeline(t_data *data);
 void		ft_free_all(t_data *data);
 
 #endif

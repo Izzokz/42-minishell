@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	ft_set_operation(t_data *data, int part)
 {
@@ -24,9 +24,15 @@ static int	ft_set_operation(t_data *data, int part)
 			|| data->input[part][i.i][0] == '<')
 		{
 			ft_realloc_rlines(&(data->pipeline[part]), 1);
+			if (!data->pipeline)
+				return (ft_printf_err(
+					"Internal Error:ft_realloc_rlines(%*.)", 2));
 			data->pipeline[part][i.i] = ft_strdup(data->input[part][i.i]);
+			if (!(data->pipeline[part][i.i]))
+				return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));
 		}
 	}
+	return (0);
 }
 
 int	ft_make_pipeline(t_data *data)

@@ -10,17 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-/*
-void	ft_exit(t_rlines command)
+#include "../minishell.h"
+
+static void handler(int n)
 {
-	if (command[0] == "exit")
-		exit(0);
-}
-*/
-void handler(int n)
-{
-	// printf("\n%d\n", n);
 	if (n == SIGINT)
 	{
 		ft_printf("\n");
@@ -31,21 +24,22 @@ void handler(int n)
 	if (n == SIGQUIT)
 		return ;
 }
-
-int ft_strcmp(char *s1, char *s2)
+/*
+static int ft_strcmp(char *s1, char *s2)
 {
 	int	i;
-	
+
 	i = 0;
 	while (s1[i] && s2[i] && s1[i] == s2[i])
 		i++;
 	return (s2[i] - s1[i]);
 }
-
-void ft_loop(t_data *data)
+*/
+static void ft_loop(t_data *data)
 {
+	return ;
 	t_ints	i;
-	
+
 	i.i = -1;
 	while (data->pipeline[++(i.i)])
 	{
@@ -62,10 +56,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data data;
 
-	data.exit = 0;
 	(void) argc;
 	(void) argv;
 	data.envp = ft_rlines_dup(envp);
+	if (!data.envp)
+		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
 	while (1)
 	{
 		signal(SIGINT, handler);
@@ -74,10 +69,10 @@ int	main(int argc, char **argv, char **envp)
 		if (!data.line )
 			break ;
 		data.input = ft_pipe_split(data.line);
-		ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
-		//ft_exit(data.input);
-		ft_loop(&data);
-		if (!data.line || data.exit) // if exit in the pipeline, frees input and returns instantly.
+		//data.pipeline = ft_make_pipeline(&data);
+		//ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
+		ft_loop(&data); // does not work yet so there's a return in the first line of the funct
+		if (!data.line) // if exit in the pipeline, frees input and returns instantly.
 			break ;
 		ft_free_slines(&data.input);
 		free(data.line);

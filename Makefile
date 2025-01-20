@@ -2,11 +2,18 @@ NAME = minishell
 
 LIB = 010_FT_PRINTF/libftprintf.a
 
-SRC = main.c ft_pipe_split.c ft_free_all.c
+MAINDIR = 000_MAIN/
+UTILSDIR = 100_UTILS/
+BUILTINSDIR = 110_BUILTINS/
+MAINSRC = $(MAINDIR)main.c \
+	$(MAINDIR)ft_pipe_split.c \
+	$(MAINDIR)ft_make_pipeline.c
+UTILSSRC = $(UTILSDIR)ft_free_all.c
+BUILTINSSRC = $(BUILTINSDIR)ft_exit.c
 
 OBJDIR = 666_OBJ/
-OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
-DEP = $(addprefix $(OBJDIR), $(SRC:.c=.d))
+OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(UTILSSRC) $(BUILTINSSRC)))
+DEP = $(patsubst %.c,$(OBJDIR)%.d,$(notdir $(MAINSRC) $(UTILSSRC) $(BUILTINSSRC)))
 
 CCA = cc -Wall -Werror -Wextra -L/usr/local/lib -I/usr/local/include -lreadline -MP -MMD -g3
 
@@ -22,7 +29,13 @@ $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 	@printf "\033[38m\033[1mMinishell: \033[1;37m666_OBJ/ Generated !\033[0m\n"
 
-$(OBJDIR)%.o: %.c | $(OBJDIR)
+$(OBJDIR)%.o: $(MAINDIR)%.c | $(OBJDIR)
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $<
+
+$(OBJDIR)%.o: $(UTILSDIR)%.c | $(OBJDIR)
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $<
+
+$(OBJDIR)%.o: $(BUILTINSDIR)%.c | $(OBJDIR)
 	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $<
 
 libs:

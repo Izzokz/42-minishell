@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_all.c                                      :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/16 13:07:10 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/16 13:07:12 by kzhen-cl         ###   ########.fr       */
+/*   Created: 2025/01/20 14:50:34 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2025/01/20 14:50:35 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-void	ft_free_all(t_data *data)
+void	ft_exit(t_data *data)
 {
-	ft_free_rlines(&data->envp);
-	ft_free_slines(&data->input);
-	free(data->line);
+	ft_free_all(data);
+	exit(errno);
+}
+
+void	ft_exit_id(t_data *data, int exit_id)
+{
+	ft_free_all(data);
+	exit((char)exit_id);
 }
