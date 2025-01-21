@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/18 16:39:17 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/21 17:03:24 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,18 @@ static void handler(int n)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	if (n == SIGQUIT)
-		return ;
 }
-/*
-static int ft_strcmp(char *s1, char *s2)
-{
-	int	i;
 
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	return (s2[i] - s1[i]);
-}
-*/
+// static int ft_strcmp(char *s1, char *s2)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (s1[i] && s2[i] && s1[i] == s2[i])
+// 		i++;
+// 	return (s2[i] - s1[i]);
+// }
+
 static void ft_loop(t_data *data)
 {
 	return ;
@@ -64,8 +62,8 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		signal(SIGINT, handler);
-		signal(SIGQUIT, handler);
-		data.line = readline("\e[92m• minishell (} \e[97m");
+		signal(SIGQUIT, SIG_IGN);
+		data.line = readline("\e[33mMinishell ⮞⮞ \e[97m");
 		if (!data.line )
 			break ;
 		data.input = ft_pipe_split(data.line);
@@ -79,6 +77,7 @@ int	main(int argc, char **argv, char **envp)
 		data.line = NULL;
 	}
 	ft_free_all(&data);
+	// system("clear");
 	ft_printf("exit\n");
 	return (0);
 }
