@@ -43,6 +43,10 @@ libs:
 	@git clone https://github.com/Izzokz/42-ft_printf.git 010_FT_PRINTF/
 	@printf "\033[38m\033[1mMinishell: \033[1;37mft_printf Cloned !\033[0m\n"
 
+	@rm -rf 010_FT_PRINTF/
+	@git clone https://github.com/Izzokz/42-ft_printf.git 010_FT_PRINTF/
+	@printf "\033[38m\033[1mMinishell: \033[1;37mlibft Cloned !\033[0m\n"
+
 $(LIB):
 	@$(MAKE) -C 010_FT_PRINTF/
 

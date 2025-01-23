@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/22 15:03:01 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/23 14:34:06 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <readline/history.h>
 # include "010_FT_PRINTF/ft_printf.h"
 # include <signal.h>
+# include <sys/wait.h>
 
 typedef struct s_data
 {
 	char				*line;
 	char				**path;
-	int					id1;
-	int					id2;
+	int					pid;
 	t_rlines			envp;
 	t_slines			input;
 	t_slines			pipeline;
