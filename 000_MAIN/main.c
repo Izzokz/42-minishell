@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/21 17:03:24 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/22 16:11:42 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,22 @@ static void handler(int n)
 	}
 }
 
-// static int ft_strcmp(char *s1, char *s2)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (s1[i] && s2[i] && s1[i] == s2[i])
-// 		i++;
-// 	return (s2[i] - s1[i]);
-// }
-
 static void ft_loop(t_data *data)
 {
-	return ;
 	t_ints	i;
 
+	fork();
+	if (!(data->input))
+		return ;
 	i.i = -1;
-	while (data->pipeline[++(i.i)])
+	while (data->input[++(i.i)])
 	{
 		i.j = -1;
-		while (data->pipeline[i.i][++(i.j)])
+		while (data->input[i.i][++(i.j)])
 		{
-			if (data->pipeline[i.i][i.j][0] == 'e')
-				ft_printf("%s\n", data->pipeline[i.i][i.j]);
+			// ft_printf("%s", data->input[i.i][(i.j)]);
+			execve("/bin/ls", data->input[i.i], data->envp);
+			exit(data->id1);
 		}
 	}
 }
@@ -56,6 +49,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+	data.path = NULL;
 	data.envp = ft_rlines_dup(envp);
 	if (!data.envp)
 		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
@@ -64,6 +58,7 @@ int	main(int argc, char **argv, char **envp)
 		signal(SIGINT, handler);
 		signal(SIGQUIT, SIG_IGN);
 		data.line = readline("\e[33mMinishell ⮞⮞ \e[97m");
+		data.id1 = fork();
 		if (!data.line )
 			break ;
 		data.input = ft_pipe_split(data.line);
@@ -77,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 		data.line = NULL;
 	}
 	ft_free_all(&data);
-	// system("clear");
+	system("clear");
 	ft_printf("exit\n");
 	return (0);
 }

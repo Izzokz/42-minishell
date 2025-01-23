@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/11 16:22:42 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:03:01 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 typedef struct s_data
 {
 	char				*line;
+	char				**path;
+	int					id1;
+	int					id2;
 	t_rlines			envp;
 	t_slines			input;
 	t_slines			pipeline;
