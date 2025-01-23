@@ -16,5 +16,6 @@ void	ft_free_all(t_data *data)
 {
 	ft_free_rlines(&data->envp);
 	ft_free_slines(&data->input);
+	ft_free_rlines(&data->path);
 	free(data->line);
 }

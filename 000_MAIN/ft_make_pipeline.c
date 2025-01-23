@@ -18,18 +18,22 @@ static int	ft_set_operation(t_data *data, int part)
 
 	data->pipeline[part] = ft_calloc(2, sizeof(char *));
 	i.i = -1;
+	i.count = 0;
 	while (data->input[part][++(i.i)])
 	{
-		if (data->input[part][i.i][0] == '>'
-			|| data->input[part][i.i][0] == '<')
+		i.count++;
+//		if (data->input[part][i.i][0] == '<')
+//			ft_handle_input_redirection(data, part, &i);
+		if (data->input[part][i.i][0] == '>')
 		{
 			ft_realloc_rlines(&(data->pipeline[part]), 1);
 			if (!data->pipeline)
 				return (ft_printf_err(
-					"Internal Error:ft_realloc_rlines(%*.)", 2));
+						"Internal Error:ft_realloc_rlines(%*.)", 2));
 			data->pipeline[part][i.i] = ft_strdup(data->input[part][i.i]);
 			if (!(data->pipeline[part][i.i]))
 				return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));
+			i.count = 0;
 		}
 	}
 	return (0);

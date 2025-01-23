@@ -16,6 +16,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "010_FT_PRINTF/ft_printf.h"
+# include "020_LIBFT/libft.h"
 # include <signal.h>
 # include <sys/wait.h>
 
@@ -30,6 +31,8 @@ typedef struct s_data
 	struct sigaction	usr;
 }	t_data;
 
+void		ft_set_path(t_data *data);
+char		*ft_get_path(char *filename, char **all_path);
 t_slines	ft_pipe_split(char *line);
 void		ft_exit_id(t_data *data, int exit_id);
 void		ft_exit(t_data *data);

@@ -28,8 +28,6 @@ static void ft_loop(t_data *data)
 	t_ints	i;
 
 	i.i = -1;
-	if	(!data->input)
-		return ;
 	while (data->input[++(i.i)])
 	{
 		i.j = -1;
@@ -49,15 +47,18 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
-	data.path = ft_set_path(&data);
 	data.envp = ft_rlines_dup(envp);
 	if (!data.envp)
 		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
+	ft_set_path(&data);
+	if (!data.path)
+		return (ft_printf_err("Internal Error:ft_set_path(%*.)", 2));
 	while (1)
 	{
 		signal(SIGINT, handler);
 		signal(SIGQUIT, SIG_IGN);
 		data.line = readline("\e[1;33m]>Minishell » \e[0;97m");
+		ft_printf("\e[0m");
 		if (!data.line)
 			break ;
 		if (!!data.line[0])
@@ -78,7 +79,7 @@ int	main(int argc, char **argv, char **envp)
 		data.line = NULL;
 	}
 	ft_free_all(&data);
-	system("clear");
+	//system("clear");
 	ft_printf("exit\n");
 	return (0);
 }

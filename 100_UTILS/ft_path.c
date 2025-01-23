@@ -12,6 +12,37 @@
 
 #include "../minishell.h"
 
+static void	ft_realloc(char **buffer, unsigned int ext)
+{
+	char	*temp_buffer;
+
+	if (!ext || !(*buffer))
+		return ;
+	temp_buffer = ft_strdup(*buffer);
+	if (!temp_buffer)
+		return ;
+	free(*buffer);
+	*buffer = ft_calloc(ft_strlen(temp_buffer) + ext + 1, sizeof(char));
+	if (!(*buffer))
+	{
+		free(temp_buffer);
+		return ;
+	}
+	ft_strlcat(*buffer, temp_buffer, -1);
+	free(temp_buffer);
+}
+
+static char	*get_in_dir(char *filename)
+{
+	char	*path;
+
+	path = ft_calloc(1000, sizeof(char));
+	getcwd(path, 1000);
+	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup("/")});
+	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(filename)});
+	return (path);
+}
+
 void	ft_set_path(t_data *data)
 {
 	char	*path_line;
@@ -29,16 +60,16 @@ void	ft_set_path(t_data *data)
 			data->path = ft_split(path_line, ':');
 			free(path_line);
 			i = -1;
-			while (data->path[++i])
+			while (data->path && data->path[++i])
 			{
 				ft_realloc(&(data->path[i]), 1);
 				ft_strlcat(data->path[i], "/", -1);
 			}
-			ft_realloc(data->path, 1);
+			if (data->path)
+				ft_realloc(data->path, 1);
 			return ;
 		}
 	}
-	return ;
 }
 
 char	*ft_get_path(char *filename, char **all_path)
@@ -65,6 +96,6 @@ char	*ft_get_path(char *filename, char **all_path)
 	if (ft_strlen(filename) > 1 && filename[0] == '.' && filename[1] == '/'
 		&& access(filename, X_OK) != -1)
 		return (get_in_dir(filename));
-	ft_printf("Pipex:%s(access=%_1)\n", filename, 0);
+	ft_printf("Minishell:%s(access=%_1)\n", filename, 0);
 	return (NULL);
 }
