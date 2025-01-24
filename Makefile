@@ -7,7 +7,8 @@ UTILSDIR = 100_UTILS/
 BUILTINSDIR = 110_BUILTINS/
 MAINSRC = $(MAINDIR)main.c \
 	$(MAINDIR)ft_pipe_split.c \
-	$(MAINDIR)ft_make_pipeline.c
+	$(MAINDIR)ft_make_pipeline.c \
+	$(MAINDIR)ft_exec.c
 UTILSSRC = $(UTILSDIR)ft_free_all.c \
 	$(UTILSDIR)ft_path.c
 BUILTINSSRC = $(BUILTINSDIR)ft_exit.c

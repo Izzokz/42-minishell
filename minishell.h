@@ -25,6 +25,10 @@ typedef struct s_data
 	char				*line;
 	char				**path;
 	int					pid;
+	int					*pipe;
+	int					swap_pipe;
+	int					fd;
+	int					exe;
 	t_rlines			envp;
 	t_slines			input;
 	t_slines			pipeline;
@@ -34,8 +38,7 @@ typedef struct s_data
 void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);
 t_slines	ft_pipe_split(char *line);
-void		ft_exit_id(t_data *data, int exit_id);
-void		ft_exit(t_data *data);
+void		ft_exit(t_data *data, t_rlines cmd);
 int			ft_make_pipeline(t_data *data);
 void		ft_free_all(t_data *data);
 
