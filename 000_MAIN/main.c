@@ -23,24 +23,6 @@ static void handler(int n)
 	}
 }
 
-static void ft_loop(t_data *data)
-{
-	t_ints	i;
-
-	i.i = -1;
-	while (data->input[++(i.i)])
-	{
-		i.j = -1;
-		while (data->input[i.i][++(i.j)])
-		{
-			data->exe = 1;
-			ft_exec(data, *(data)->input);
-			// ft_free_all(data);
-			// exit(127);
-		}
-	}
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_data data;
@@ -66,11 +48,9 @@ int	main(int argc, char **argv, char **envp)
 			data.input = ft_pipe_split(data.line);
 			//data.pipeline = ft_make_pipeline(&data);
 			//ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
-			ft_loop(&data); // does not work yet so there's a return in the first line of the funct
-			while (wait(NULL) > 0)
-				;
 			if (!data.line) // if exit in the pipeline, frees input and returns instantly.
 				break ;
+			ft_loop(&data);
 			ft_free_slines(&data.input);
 		}
 		free(data.line);

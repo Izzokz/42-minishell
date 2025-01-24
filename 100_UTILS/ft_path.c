@@ -96,6 +96,7 @@ char	*ft_get_path(char *filename, char **all_path)
 	if (ft_strlen(filename) > 1 && filename[0] == '.' && filename[1] == '/'
 		&& access(filename, X_OK) != -1)
 		return (get_in_dir(filename));
-	ft_printf("\e[1;31m[Minishell] \e[0;97m%s: command not found\n", filename, 0);
+	ft_printf("\e[1;31m[Minishell] \e[0;97m%s: command not found\n",
+		filename, 0);
 	return (NULL);
 }
