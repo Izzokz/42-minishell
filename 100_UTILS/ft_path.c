@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:47 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/23 15:03:11 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:50:27 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,6 @@ char	*ft_get_path(char *filename, char **all_path)
 	if (ft_strlen(filename) > 1 && filename[0] == '.' && filename[1] == '/'
 		&& access(filename, X_OK) != -1)
 		return (get_in_dir(filename));
-	ft_printf("Minishell:%s(access=%_1)\n", filename, 0);
+	ft_printf("\e[1;31m[Minishell] \e[0;97m%s: command not found\n", filename, 0);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/23 15:03:20 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:51:51 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static void ft_loop(t_data *data)
 		i.j = -1;
 		while (data->input[i.i][++(i.j)])
 		{
-			// ft_printf("%s", data->input[i.i][(i.j)]);
-			//execve("/bin/ls", data->input[i.i], data->envp);
-			ft_free_all(data);
-			exit(127);
+			data->exe = 1;
+			ft_exec(data, *(data)->input);
+			// ft_free_all(data);
+			// exit(127);
 		}
 	}
 }
@@ -66,9 +66,7 @@ int	main(int argc, char **argv, char **envp)
 			data.input = ft_pipe_split(data.line);
 			//data.pipeline = ft_make_pipeline(&data);
 			//ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
-			data.pid = fork();
-			if (data.pid == 0)
-				ft_loop(&data); // does not work yet so there's a return in the first line of the funct
+			ft_loop(&data); // does not work yet so there's a return in the first line of the funct
 			while (wait(NULL) > 0)
 				;
 			if (!data.line) // if exit in the pipeline, frees input and returns instantly.

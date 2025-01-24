@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/23 14:34:06 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:35:24 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,25 @@ typedef struct s_data
 	struct sigaction	usr;
 }	t_data;
 
+//	000_MAIN
+/*	ft_exec.c */
+int			ft_exec(t_data *data, t_rlines cmd);
+/*	ft_make_pipeline.c */
+int			ft_make_pipeline(t_data *data);
+/*	ft_parsing.c */
+/*	ft_pipe_split.c */
+t_slines	ft_pipe_split(char *line);
+
+//	100_UTILS
+/*	ft_free_all.c */
+void		ft_free_all(t_data *data);
+/*	ft_path.c */
 void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);
-t_slines	ft_pipe_split(char *line);
+
+//	110_BUILTINS
+/*	ft_exit.c */
 void		ft_exit(t_data *data, t_rlines cmd);
-int			ft_make_pipeline(t_data *data);
-void		ft_free_all(t_data *data);
+
 
 #endif
