@@ -30,9 +30,9 @@ static int	ft_edit_split(t_rlines *split, char *line_part, char c)
 	{
 		if (!(i.count1 + i.count2) && (*split)[i.len][i.i] == c)
 			break ;
-		else if ((*split)[i.len][i.i] == '\'')
+		else if (!i.count2 && (*split)[i.len][i.i] == '\'')
 			i.count1 = !i.count1;
-		else if ((*split)[i.len][i.i] == '"')
+		else if (!i.count1 && (*split)[i.len][i.i] == '"')
 			i.count2 = !i.count2;
 	}
 	while ((*split)[i.len][i.i])
@@ -67,9 +67,9 @@ static t_rlines	ft_mini_split(char *line, char c)
 				&& (i.i == 0 || line[i.i - 1] == c)
 				&& ft_edit_split(&split, line + i.i, c) == -1))
 			return (ft_calloc_err());
-		else if (line[i.i] == '\'')
+		else if (!i.count2 && line[i.i] == '\'')
 			i.count1 = !i.count1;
-		else if (line[i.i] == '"')
+		else if (!i.count1 && line[i.i] == '"')
 			i.count2 = !i.count2;
 	}
 	return (split);
