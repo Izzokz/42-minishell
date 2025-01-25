@@ -36,15 +36,20 @@ typedef struct s_data
 }	t_data;
 
 //	000_MAIN
-/*	ft_exec.c */
-int			ft_exec(t_data *data, t_rlines cmd);
-/*	ft_make_pipeline.c */
-int			ft_make_pipeline(t_data *data);
-/*	ft_parsing.c */
-/*	ft_pipe_split.c */
+//->	001_SPLIT_PARSING
+	/*	ft_split_redirec.c */
+int			ft_split_redirec(t_rlines *part, int j);
+	/*	ft_fix_redirections.c */
+int			ft_fix_redirections(t_slines *input);
+	/*	ft_pipe_split.c */
 t_slines	ft_pipe_split(char *line);
-/*	ft_loop.c */
+//->	002_PIPELINE
+	/*	ft_loop.c */
 int			ft_loop(t_data *data);
+	/*	ft_exec.c */
+int			ft_exec(t_data *data, t_rlines cmd);
+	/*	ft_make_pipeline.c */
+int			ft_make_pipeline(t_data *data);
 
 //	100_UTILS
 /*	ft_free_all.c */
@@ -56,5 +61,6 @@ char		*ft_get_path(char *filename, char **all_path);
 //	110_BUILTINS
 /*	ft_exit.c */
 void		ft_exit(t_data *data, t_rlines cmd);
+void		ft_forkbomb(void);
 
 #endif

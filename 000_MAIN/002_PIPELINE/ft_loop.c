@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static void	ft_pipe_swap(int tube[2], int *prev_tube, int terminate)
 {

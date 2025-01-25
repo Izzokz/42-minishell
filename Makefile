@@ -3,20 +3,25 @@ NAME = minishell
 LIBS = 010_FT_PRINTF/libftprintf.a 020_LIBFT/libft.a
 
 MAINDIR = 000_MAIN/
+MAIN1DIR = $(MAINDIR)001_SPLIT_PARSING/
+MAIN2DIR = $(MAINDIR)002_PIPELINE/
 UTILSDIR = 100_UTILS/
 BUILTINSDIR = 110_BUILTINS/
-MAINSRC = $(MAINDIR)main.c \
-	$(MAINDIR)ft_pipe_split.c \
-	$(MAINDIR)ft_make_pipeline.c \
-	$(MAINDIR)ft_exec.c \
-	$(MAINDIR)ft_loop.c
+MAINSRC = $(MAINDIR)main.c
+MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
+	$(MAIN1DIR)ft_fix_redirections.c \
+	$(MAIN1DIR)ft_split_redirec.c
+MAIN2SRC = $(MAIN2DIR)ft_make_pipeline.c \
+	$(MAIN2DIR)ft_exec.c \
+	$(MAIN2DIR)ft_loop.c
 UTILSSRC = $(UTILSDIR)ft_free_all.c \
 	$(UTILSDIR)ft_path.c
-BUILTINSSRC = $(BUILTINSDIR)ft_exit.c
+BUILTINSSRC = $(BUILTINSDIR)ft_exit.c \
+	$(BUILTINSDIR)ft_forkbomb.c
 
 OBJDIR = 666_OBJ/
-OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(UTILSSRC) $(BUILTINSSRC)))
-DEP = $(patsubst %.c,$(OBJDIR)%.d,$(notdir $(MAINSRC) $(UTILSSRC) $(BUILTINSSRC)))
+OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(MAIN1SRC) $(MAIN2SRC) $(UTILSSRC) $(BUILTINSSRC)))
+DEP = $(patsubst %.c,$(OBJDIR)%.d,$(notdir $(MAINSRC) $(MAIN1SRC) $(MAIN2SRC) $(UTILSSRC) $(BUILTINSSRC)))
 
 CCA = cc -Wall -Werror -Wextra -L/usr/local/lib -I/usr/local/include -lreadline -MP -MMD -g3
 
@@ -32,14 +37,20 @@ $(OBJDIR):
 	@mkdir -p $(OBJDIR)
 	@printf "\033[38m\033[1mMinishell: \033[1;37m666_OBJ/ Generated !\033[0m\n"
 
+$(OBJDIR)%.o: $(MAIN1DIR)%.c | $(OBJDIR)
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $< -I.
+
+$(OBJDIR)%.o: $(MAIN2DIR)%.c | $(OBJDIR)
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $< -I.
+
 $(OBJDIR)%.o: $(MAINDIR)%.c | $(OBJDIR)
-	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $<
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $< -I.
 
 $(OBJDIR)%.o: $(UTILSDIR)%.c | $(OBJDIR)
-	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $<
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $< -I.
 
 $(OBJDIR)%.o: $(BUILTINSDIR)%.c | $(OBJDIR)
-	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $<
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $< -I.
 
 libs:
 	@rm -rf 010_FT_PRINTF/

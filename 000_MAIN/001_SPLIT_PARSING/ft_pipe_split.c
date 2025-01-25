@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static int	ft_edit_split(t_rlines *split, char *line_part, char c)
 {
@@ -103,5 +103,7 @@ t_slines	ft_pipe_split(char *line)
 			return (ft_free_input(&pre_split, &split));
 	}
 	ft_free_rlines(&pre_split);
+	if (ft_fix_redirections(&split) == -1)
+		return (ft_free_slines(&split));
 	return (split);
 }
