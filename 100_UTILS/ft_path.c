@@ -72,31 +72,31 @@ void	ft_set_path(t_data *data)
 	}
 }
 
-char	*ft_get_path(char *filename, char **all_path)
+char	*ft_get_path(char *file, char **all_path)
 {
 	int		i;
 	char	*path;
 
-	path = NULL;
-	i = -1;
+	if (!ft_strncmp(file, "exit", -1))
+		return (ft_strdup(file));
 	if (!all_path)
 		return (NULL);
-	if (filename[0] == '/')
-		if (access(filename, X_OK) != -1)
-			return (ft_strdup(filename));
+	if (file[0] == '/')
+		if (access(file, X_OK) != -1)
+			return (ft_strdup(file));
+	i = -1;
 	while (all_path[++i])
 	{
-		path = ft_strjoin(all_path[i], filename);
+		path = ft_strjoin(all_path[i], file);
 		if (!path)
 			return (NULL);
 		if (access(path, X_OK) != -1)
 			return (path);
 		free(path);
 	}
-	if (ft_strlen(filename) > 1 && filename[0] == '.' && filename[1] == '/'
-		&& access(filename, X_OK) != -1)
-		return (get_in_dir(filename));
-	ft_printf("\e[1;31m[Minishell] \e[0;97m%s: command not found\n",
-		filename, 0);
+	if (ft_strlen(file) > 1 && file[0] == '.' && file[1] == '/'
+		&& access(file, X_OK) != -1)
+		return (get_in_dir(file));
+	ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s: not found\e[0m\n", 2, file);
 	return (NULL);
 }

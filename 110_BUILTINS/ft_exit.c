@@ -11,29 +11,94 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <limits.h>
 
-static int	numerical(char *str)
+static void	did_overflow(long number, int *err)
 {
-	int	i;
+	static long	n;
+	static int	init = 0;
 
-	i = -1;
-	while (str[++i])
-		if (!ft_isdigit(str[i]))
-			return (0);
-	return (1);
+	if (!err)
+	{
+		init = 0;
+		return ;
+	}
+	if (!init)
+	{
+		n = number;
+		init = 1;
+	}
+	else
+	{
+		if (n > number)
+			*err = 1;
+		else
+			n = number;
+	}
+}
+
+static long	ft_atoll(const char *str, int *err)
+{
+	long	number;
+	int		index;
+	int		sign;
+
+	number = 0;
+	index = -1;
+	sign = 1;
+	if (str[0] == '-' || str[0] == '+')
+	{
+		index++;
+		if (str[0] == '-')
+			sign = -1;
+	}
+	while (str[++index] && !(*err))
+	{
+		if (ft_isdigit(str[index]))
+			number = number * 10 + str[index] - '0';
+		else
+			*err = 1;
+		did_overflow(number, err);
+	}
+	did_overflow(0, NULL);
+	if (!(*err) && index == 1 && (str[0] == '-' || str[0] == '+'))
+		*err = 1;
+	return (number * sign);
+}
+
+static int	numerical(char *str, long *i)
+{
+	int	err;
+
+	err = 0;
+	if (!ft_strncmp(str, "-9223372036854775808", -1))
+		*i = LONG_MIN;
+	else
+		*i = ft_atoll(str, &err);
+	return (!err);
 }
 
 void	ft_exit(t_data *data, t_rlines cmd)
 {
-	int	len;
+	int		len;
+	long	exit_id;
 
 	len = ft_rlines_len(cmd);
-	if (len > 1 && !numerical(cmd[1]))
+	if (len > 1 && !numerical(cmd[1], &exit_id))
+	{
+		ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s: not valid\e[0m\n",
+			2, cmd[1]);
 		errno = 2;
+	}
 	else if (len > 2)
+	{
+		ft_printf_fd("\e[1;31m[Minishell] \e[0;97mtoo many args\e[0m\n", 2);
 		errno = 1;
-	else if (len == 2 && numerical(cmd[1]))
-		errno = (char)ft_atoi(cmd[1]);
+		if (ft_slines_rlen(data->input) == 1)
+			return ;
+	}
+	else if (len == 2)
+		errno = (char)exit_id;
 	ft_free_all(data);
 	exit(errno);
 }

@@ -22,7 +22,7 @@ static void	handler(int n)
 		rl_redisplay();
 	}
 }
-
+/*
 static void	print_slines_test(t_slines slines)
 {
 	int	i;
@@ -36,7 +36,7 @@ static void	print_slines_test(t_slines slines)
 		ft_printf("\n");
 	}
 }
-
+*/
 static int	set_data(t_data *data, char **envp)
 {
 	data->input = NULL;
@@ -75,14 +75,14 @@ int	main(int argc, char **argv, char **envp)
 		if (data.line[0])
 		{
 			data.input = ft_pipe_split(data.line);
-			print_slines_test(data.input);
+			//print_slines_test(data.input);
 			free(data.line);
 			data.line = NULL;
 			//data.pipeline = ft_make_pipeline(&data);
 			//ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
 			if (!data.input) // if exit in the pipeline, frees input and returns instantly.
 				break ;
-			//ft_loop(&data);
+			ft_loop(&data);
 			ft_free_slines(&data.input);
 		}
 		free(data.line);
