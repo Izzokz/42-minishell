@@ -37,7 +37,7 @@ static void	did_overflow(long number, int *err)
 	}
 }
 
-static long	ft_atoll(const char *str, int *err)
+static long	ft_atol(const char *str, int *err)
 {
 	long	number;
 	int		index;
@@ -74,7 +74,7 @@ static int	numerical(char *str, long *i)
 	if (!ft_strncmp(str, "-9223372036854775808", -1))
 		*i = LONG_MIN;
 	else
-		*i = ft_atoll(str, &err);
+		*i = ft_atol(str, &err);
 	return (!err);
 }
 

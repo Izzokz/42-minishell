@@ -22,7 +22,7 @@ static void	handler(int n)
 		rl_redisplay();
 	}
 }
-/*
+
 static void	print_slines_test(t_slines slines)
 {
 	int	i;
@@ -36,7 +36,7 @@ static void	print_slines_test(t_slines slines)
 		ft_printf("\n");
 	}
 }
-*/
+
 static int	set_data(t_data *data, char **envp)
 {
 	data->input = NULL;
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data.line[0])
 		{
 			data.input = ft_pipe_split(data.line);
-			//print_slines_test(data.input);
+			print_slines_test(data.input);
 			free(data.line);
 			data.line = NULL;
 			//data.pipeline = ft_make_pipeline(&data);

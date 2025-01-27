@@ -10,7 +10,8 @@ BUILTINSDIR = 110_BUILTINS/
 MAINSRC = $(MAINDIR)main.c
 MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
 	$(MAIN1DIR)ft_fix_redirections.c \
-	$(MAIN1DIR)ft_split_redirec.c
+	$(MAIN1DIR)ft_split_redirec.c \
+	$(MAINDIR)ft_remove_quotes.c
 MAIN2SRC = $(MAIN2DIR)ft_make_pipeline.c \
 	$(MAIN2DIR)ft_exec.c \
 	$(MAIN2DIR)ft_loop.c

@@ -15,11 +15,11 @@
 static int	needs_fork(char *cmd, t_data *data)
 {
 	return ((ft_strncmp(cmd, "echo", -1)
-		&& ft_strncmp(cmd, "cd", -1)
-		&& ft_strncmp(cmd, "pwd", -1)
-		&& ft_strncmp(cmd, "export", -1)
-		&& ft_strncmp(cmd, "unset", -1)
-		&& ft_strncmp(cmd, "env", -1))
+			&& ft_strncmp(cmd, "cd", -1)
+			&& ft_strncmp(cmd, "pwd", -1)
+			&& ft_strncmp(cmd, "export", -1)
+			&& ft_strncmp(cmd, "unset", -1)
+			&& ft_strncmp(cmd, "env", -1))
 		&& (ft_strncmp(cmd, "exit", -1)
 			|| ft_slines_rlen(data->input) > 1));
 }

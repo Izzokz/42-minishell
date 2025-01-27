@@ -43,6 +43,8 @@ int			ft_split_redirec(t_rlines *part, int j);
 int			ft_fix_redirections(t_slines *input);
 	/*	ft_pipe_split.c */
 t_slines	ft_pipe_split(char *line);
+	/*	ft_remove_quotes.c */
+int			ft_remove_quotes(t_slines input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
 int			ft_loop(t_data *data);
