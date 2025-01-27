@@ -20,8 +20,8 @@ static int	needs_fork(char *cmd, t_data *data)
 		&& ft_strncmp(cmd, "export", -1)
 		&& ft_strncmp(cmd, "unset", -1)
 		&& ft_strncmp(cmd, "env", -1))
-		|| (!ft_strncmp(cmd, "exit", -1)
-			&& ft_slines_rlen(data->input) > 1));
+		&& (ft_strncmp(cmd, "exit", -1)
+			|| ft_slines_rlen(data->input) > 1));
 }
 
 static int	handle_builtins(t_data *data, t_rlines cmd)
@@ -39,7 +39,10 @@ static int	handle_builtins(t_data *data, t_rlines cmd)
 	if (!ft_strncmp(cmd[0], "env", -1))
 		return (ft_env(data, cmd));*/
 	if (!ft_strncmp(cmd[0], "exit", -1))
+	{
 		ft_exit(data, cmd);
+		return (0);
+	}
 	return (-1);
 }
 
