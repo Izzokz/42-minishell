@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/24 15:35:24 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:37:17 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,9 @@ char		*ft_get_path(char *filename, char **all_path);
 /*	ft_exit.c */
 void		ft_exit(t_data *data, t_rlines cmd);
 void		ft_forkbomb(void);
+/*	ft_cd.c */
+void		ft_cd(t_data *data, t_rlines cmd);
+/*	ft_pwd.c */
+void		ft_pwd(t_data *data, t_rlines cmd);
 
 #endif

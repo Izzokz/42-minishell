@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:55:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/24 15:35:10 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/28 16:47:24 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,22 @@ static int	handle_builtins(t_data *data, t_rlines cmd)
 {
 /*	if (!ft_strncmp(cmd[0], "echo", -1))
 		return (ft_echo(data, cmd));
-	if (!ft_strncmp(cmd[0], "cd", -1))
-		return (ft_cd(data, cmd));
-	if (!ft_strncmp(cmd[0], "pwd", -1))
-		return (ft_pwd(data, cmd));
 	if (!ft_strncmp(cmd[0], "export", -1))
 		return (ft_export(data, cmd));
 	if (!ft_strncmp(cmd[0], "unset", -1))
-		return (ft_unset(data, cmd));
+		return (ft_unset(data, cmd));*/
 	if (!ft_strncmp(cmd[0], "env", -1))
-		return (ft_env(data, cmd));*/
+		return (ft_printf("%*[\n]s\n", data->envp));
+	if (!ft_strncmp(cmd[0], "pwd", -1))
+	{
+		ft_pwd(data, cmd);
+		return (0);
+	}
+	if (!ft_strncmp(cmd[0], "cd", -1))
+	{
+		ft_cd(data, cmd);
+		return (0);
+	}
 	if (!ft_strncmp(cmd[0], "exit", -1))
 	{
 		ft_exit(data, cmd);
