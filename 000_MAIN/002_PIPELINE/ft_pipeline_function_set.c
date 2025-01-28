@@ -42,9 +42,13 @@ void	ft_destroy_pipeline(t_pipeline *start)
 	}
 }
 
-void	ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
+int	ft_add_pipeline(t_pipeline *start, int (*func)(t_data *, void *),
 	void *param, void (*free)())
 {
-	if (prev)
-		prev->next = ft_new_pipeline(func, param, free);
+	if (!start)
+		return (0);
+	while (start->next)
+		start = start->next;
+	start->next = ft_new_pipeline(func, param, free);
+	return (!!start->next);
 }

@@ -27,10 +27,8 @@ static int	ft_set_cmd(t_data *data, t_ints *i)
 	while (data->input[i->i][++len])
 		if (ft_rlines_add(&dup, ft_strdup(data->input[i->i][++len]), A_END) == -1)
 			return (-1);
-	if (!data->pipeline)
+	if (!ft_add_pipeline(data->pipeline, ft_exec, &dup, ft_free_tab))
 		data->pipeline = ft_new_pipeline(ft_exec, &dup, ft_free_tab);
-	else
-		ft_add_pipeline(data->pipeline, ft_exec, &dup, ft_free_tab);
 	return (0);
 }
 
@@ -41,20 +39,14 @@ static int	ft_set_redirec(t_data *data, char *filename,
 
 	dup = ft_strdup(filename);
 	if ((filename - 1)[0] == '<')
-	{
-		if (!data->pipeline)
+		if (!ft_add_pipeline(data->pipeline, func, dup, free))
 			data->pipeline = ft_new_pipeline(func, dup, free);
-		else
-			ft_add_pipeline(data->pipeline, func, dup, free);
-	}
 	else
 	{
 		if (i->count)
 			ft_set_cmd(data, i);
-		if (!data->pipeline)
+		if (!ft_add_pipeline(data->pipeline, func, dup, free))
 			data->pipeline = ft_new_pipeline(func, dup, free);
-		else
-			ft_add_pipeline(data->pipeline, func, dup, free);
 	}
 	return (0);
 }
