@@ -20,6 +20,8 @@
 # include <signal.h>
 # include <sys/wait.h>
 
+typedef void s_pipeline;
+
 typedef struct s_data
 {
 	char				*line;
@@ -31,9 +33,17 @@ typedef struct s_data
 	int					exe;
 	t_rlines			envp;
 	t_slines			input;
-	t_slines			pipeline;
+	struct s_pipeline		*pipeline;
 	struct sigaction	usr;
 }	t_data;
+
+typedef struct s_pipeline
+{
+	int		(*func)(t_data *, void *);
+	void	(*free)();
+	void	*param;
+	void	*next;
+}	t_pipeline;
 
 //	000_MAIN
 //->	001_SPLIT_PARSING
@@ -52,10 +62,18 @@ int			ft_loop(t_data *data);
 int			ft_exec(t_data *data, t_rlines cmd);
 	/*	ft_make_pipeline.c */
 int			ft_make_pipeline(t_data *data);
+	/*	ft_pipeline_function_set.c */
+t_pipeline	*ft_new_pipeline(int (*func)(t_data *, void *),
+				void *param, void (*free)());
+void		ft_destroy_pipeline(t_pipeline *start);
+void		ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
+				void *param, void (*free)());
 
 //	100_UTILS
 /*	ft_free_all.c */
 void		ft_free_all(t_data *data);
+/*	ft_free_tab.c */
+void		ft_free_tab(t_rlines *rlines);
 /*	ft_path.c */
 void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);

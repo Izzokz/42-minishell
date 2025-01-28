@@ -1,0 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipeline_function_set.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/28 13:31:54 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2025/01/28 13:31:56 by kzhen-cl         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+t_pipeline	*ft_new_pipeline(int (*func)(t_data *, void *), void *param,
+	void (*free)())
+{
+	t_pipeline	*pipeline;
+
+	if (!param || !func || !free)
+		return (NULL);
+	pipeline = malloc(sizeof(t_pipeline));
+	if (!pipeline)
+		return (NULL);
+	pipeline->func = func;
+	pipeline->free = free;
+	pipeline->param = param;
+	pipeline->next = NULL;
+	return (pipeline);
+}
+
+void	ft_destroy_pipeline(t_pipeline *start)
+{
+	t_pipeline	*tmp;
+
+	while (start)
+	{
+		tmp = start->next;
+		start->free(start->param);
+		free(start);
+		start = tmp;
+	}
+}
+
+void	ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
+	void *param, void (*free)())
+{
+	if (prev)
+		prev->next = ft_new_pipeline(func, param, free);
+}

@@ -14,9 +14,11 @@ MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
 	$(MAINDIR)ft_remove_quotes.c
 MAIN2SRC = $(MAIN2DIR)ft_make_pipeline.c \
 	$(MAIN2DIR)ft_exec.c \
-	$(MAIN2DIR)ft_loop.c
+	$(MAIN2DIR)ft_loop.c \
+	$(MAIN2DIR)ft_pipeline_function_set.c
 UTILSSRC = $(UTILSDIR)ft_free_all.c \
-	$(UTILSDIR)ft_path.c
+	$(UTILSDIR)ft_path.c \
+	$(UTILSDIR)ft_free_tab.c
 BUILTINSSRC = $(BUILTINSDIR)ft_exit.c \
 	$(BUILTINSDIR)ft_forkbomb.c
 
