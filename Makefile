@@ -18,7 +18,8 @@ MAIN2SRC = $(MAIN2DIR)ft_exec.c \
 	$(MAIN2DIR)ft_pipeline_function_set.c
 UTILSSRC = $(UTILSDIR)ft_free_all.c \
 	$(UTILSDIR)ft_path.c \
-	$(UTILSDIR)ft_free_tab.c
+	$(UTILSDIR)ft_free_tab.c \
+	$(UTILSDIR)ft_expand.c
 BUILTINSSRC = $(BUILTINSDIR)ft_exit.c \
 	$(BUILTINSDIR)ft_pwd.c \
 	$(BUILTINSDIR)ft_unset.c \

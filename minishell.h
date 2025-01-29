@@ -55,7 +55,7 @@ int			ft_split_redirec(t_rlines *part, int j);
 	/*	ft_fix_redirections.c */
 int			ft_fix_redirections(t_slines *input);
 	/*	ft_pipe_split.c */
-t_slines	ft_pipe_split(char *line);
+t_slines	ft_pipe_split(char *line, t_rlines envp);
 	/*	ft_remove_quotes.c */
 int			ft_remove_quotes(t_slines input);
 	/*	ft_fix_order.c */
@@ -82,6 +82,10 @@ void		ft_free_tab(t_rlines *rlines);
 /*	ft_path.c */
 void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);
+/*	ft_expand.c */
+int			ft_expand_line(char **input, t_rlines envp);
+int			ft_expand_rlines(t_rlines *rlines, t_rlines envp);
+int			ft_expand_slines(t_slines *slines, t_rlines envp);
 
 //	110_BUILTINS
 /*	ft_exit.c */

@@ -60,7 +60,7 @@ static char *ft_generate_path(void)
 {
     char    *path;
     int     i;
-    
+
     path = getcwd(NULL, 0);
     i = ft_strlen(path) - 1;
     while (path[i] != '/')
@@ -91,7 +91,7 @@ int    main(int argc, char **argv, char **envp)
             break ;
         if (data.line[0])
         {
-            data.input = ft_pipe_split(data.line);
+            data.input = ft_pipe_split(data.line, data.envp);
             print_slines_test(data.input);
             free(data.line);
             data.line = NULL;
