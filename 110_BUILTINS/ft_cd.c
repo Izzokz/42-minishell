@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:01:50 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/29 17:12:49 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/29 18:32:25 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_get_env(t_data *data, t_ints *num)
 	}
 }
 
-void	ft_cd(t_data *data, t_rlines cmd)
+int	ft_cd(t_data *data, t_rlines cmd)
 {
 	char		*path;
 	char		*temp;
@@ -54,4 +54,5 @@ void	ft_cd(t_data *data, t_rlines cmd)
 	data->envp[i.j] = ft_strjoin("PWD=", path);
 	chdir(path);
 	free(path);
+	return (0);
 }

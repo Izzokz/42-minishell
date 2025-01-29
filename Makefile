@@ -21,8 +21,9 @@ UTILSSRC = $(UTILSDIR)ft_free_all.c \
 	$(UTILSDIR)ft_free_tab.c
 BUILTINSSRC = $(BUILTINSDIR)ft_exit.c \
 	$(BUILTINSDIR)ft_pwd.c \
+	$(BUILTINSDIR)ft_unset.c \
+	$(BUILTINSDIR)ft_echo.c \
 	$(BUILTINSDIR)ft_cd.c \
-	$(BUILTINSDIR)ft_forkbomb.c
 
 OBJDIR = 666_OBJ/
 OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(MAIN1SRC) $(MAIN2SRC) $(UTILSSRC) $(BUILTINSSRC)))

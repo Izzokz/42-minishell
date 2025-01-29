@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/28 14:45:43 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:04:06 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,21 @@ static int	set_data(t_data *data, char **envp)
 	return (0);
 }
 
+static char *ft_generate_path(void)
+{
+    char    *path;
+    int     i;
+    
+    path = getcwd(NULL, 0);
+    i = ft_strlen(path) - 1;
+    while (path[i] != '/')
+        i--;
+    path = ft_substr(path, i + 1, -1);
+    path = gnlxio_ft_strjoinfree(&(char *){ft_strdup(PROMPT)}, &path);
+    path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(LOCAL)});
+    return (path);
+}
+
 int    main(int argc, char **argv, char **envp)
 {
     t_data data;
@@ -69,10 +84,7 @@ int    main(int argc, char **argv, char **envp)
     {
         signal(SIGINT, handler);
         signal(SIGQUIT, SIG_IGN);
-        path = gnlxio_ft_strjoinfree(&(char *){getcwd(NULL, 0)},
-                    &(char *){ft_strdup("\e[1;34m/Minishell » \e[0;97m")});
-        path = gnlxio_ft_strjoinfree(&(char *){ft_strdup("\e[1;33m")},
-                    &path);
+        path = ft_generate_path();
         data.line = readline(path);
         free(path);
         if (!data.line)

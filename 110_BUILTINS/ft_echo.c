@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 16:06:14 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/29 18:32:49 by pboucher         ###   ########.fr       */
+/*   Created: 2025/01/29 18:22:15 by pboucher          #+#    #+#             */
+/*   Updated: 2025/01/29 19:10:25 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_pwd(t_data *data, t_rlines cmd)
+int	ft_echo(t_rlines cmd)
 {
-	char	*path;
-	int		i;
+	t_ints ints;
 
-	(void) cmd;
-	i = 0;
-	while (data->envp[i])
+	ints.count = 0;
+	ints.len = ft_rlines_len(cmd);
+	if (ints.len == 1)
+		return (ft_printf("\n"));
+	ints.i = 1;
+	if (!ft_strncmp("-n", cmd[1], 2))
 	{
-		if (!ft_strncmp(data->envp[i], "PWD=", 4))
-			break ;
-		i++;
+		ints.count = 1;
+		ints.i++;
 	}
-	path = ft_substr(data->envp[i], 4, -1);
-	ft_printf("%s\n", path);
-	free(path);
+	ft_printf("%*[ ]s", cmd + ints.i);
+	if (ints.count == 0)
+		ft_printf("\n");
 	return (0);
 }

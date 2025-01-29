@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/28 16:37:17 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/29 20:13:47 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include "020_LIBFT/libft.h"
 # include <signal.h>
 # include <sys/wait.h>
+
+# define PROMPT "\e[1;34m[\e[1;31mm\e[1;32mi\e[1;33mn\e[1;34mi\e[1;31mP\e[1;35mK\e[1;34m]\e[1;33m@ \e[1;35m{\e[1;36m"
+# define LOCAL "\e[1;35m} \e[1;31m»\e[0;97m "
 
 struct	s_pipeline;
 
@@ -83,10 +86,13 @@ char		*ft_get_path(char *filename, char **all_path);
 //	110_BUILTINS
 /*	ft_exit.c */
 void		ft_exit(t_data *data, t_rlines cmd);
-void		ft_forkbomb(void);
 /*	ft_cd.c */
-void		ft_cd(t_data *data, t_rlines cmd);
+int			ft_cd(t_data *data, t_rlines cmd);
 /*	ft_pwd.c */
-void		ft_pwd(t_data *data, t_rlines cmd);
+int			ft_pwd(t_data *data, t_rlines cmd);
+/*	ft_unset.c */
+int			ft_unset(t_data *data, t_rlines cmd);
+/*	ft_echo.c */
+int			ft_echo(t_rlines cmd);
 
 #endif
