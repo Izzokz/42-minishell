@@ -21,7 +21,7 @@ static int	add_to_tmp(t_rlines *tmp, char *part)
 	if (!dup)
 		return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));
 	if (ft_rlines_add(tmp, dup, A_END) == -1)
-		return (!(((void *[2]){(free(dup), NULL), (void *)42}[1])) - 1);
+		return (!!(((void *[2]){(free(dup), NULL), (void *)42}[1])) - 2);
 	return (0);
 }
 
