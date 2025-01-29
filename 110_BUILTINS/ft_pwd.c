@@ -17,12 +17,12 @@ void	ft_pwd(t_data *data, t_rlines cmd)
 	char	*path;
 	int		i;
 
-	(void)cmd;
+	(void) cmd;
 	i = 0;
 	while (data->envp[i])
 	{
 		if (!ft_strncmp(data->envp[i], "PWD=", 4))
-			break;
+			break ;
 		i++;
 	}
 	path = ft_substr(data->envp[i], 4, -1);

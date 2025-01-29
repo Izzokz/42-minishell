@@ -32,7 +32,7 @@ static void	print_slines_test(t_slines slines)
 	i = -1;
 	while (slines[++i])
 	{
-		ft_printf("%*[:]s", slines[i]);
+		ft_printf("%*[ ]s", slines[i]);
 		ft_printf("\n");
 	}
 }

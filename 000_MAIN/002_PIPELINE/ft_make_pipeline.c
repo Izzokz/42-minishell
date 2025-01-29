@@ -25,7 +25,8 @@ static int	ft_set_cmd(t_data *data, t_ints *i)
 		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
 	len = i->j - len - 1;
 	while (data->input[i->i][++len])
-		if (ft_rlines_add(&dup, ft_strdup(data->input[i->i][++len]), A_END) == -1)
+		if (ft_rlines_add(&dup, ft_strdup(data->input[i->i][++len]),
+			A_END) == -1)
 			return (-1);
 	if (!ft_add_pipeline(data->pipeline, ft_exec, &dup, ft_free_tab))
 		data->pipeline = ft_new_pipeline(ft_exec, &dup, ft_free_tab);
@@ -38,29 +39,28 @@ static int	ft_set_redirec(t_data *data, char *filename,
 	char	*dup;
 
 	dup = ft_strdup(filename);
-	if ((filename - 1)[0] == '<')
-		if (!ft_add_pipeline(data->pipeline, func, dup, free))
-			data->pipeline = ft_new_pipeline(func, dup, free);
-	else
-	{
-		if (i->count)
-			ft_set_cmd(data, i);
-		if (!ft_add_pipeline(data->pipeline, func, dup, free))
-			data->pipeline = ft_new_pipeline(func, dup, free);
-	}
+	if (i->count)
+		ft_set_cmd(data, i);
+	if (!ft_add_pipeline(data->pipeline, func, dup, free))
+		data->pipeline = ft_new_pipeline(func, dup, free);
 	return (0);
 }
 
 static int	ft_set_operation(t_data *data, t_ints *i)
 {
 	if (data->input[i->i][i->j][0] == '<' && data->input[i->i][i->j][1] == '<')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 2, ft_here_doc, i));
+		return (ft_set_redirec(data, data->input[i->i][i->j] + 2,
+			ft_here_doc, i));
 	else if (data->input[i->i][i->j][0] == '<')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 1, ft_open_read, i));
-	else if (data->input[i->i][i->j][0] == '>' && data->input[i->i][i->j][1] == '>')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 2, ft_open_append, i));
+		return (ft_set_redirec(data, data->input[i->i][i->j] + 1,
+			ft_open_read, i));
+	else if (data->input[i->i][i->j][0] == '>'
+		&& data->input[i->i][i->j][1] == '>')
+		return (ft_set_redirec(data, data->input[i->i][i->j] + 2,
+			ft_open_append, i));
 	else if (data->input[i->i][i->j][0] == '>')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 1, ft_open_trunc, i));
+		return (ft_set_redirec(data, data->input[i->i][i->j] + 1,
+			ft_open_trunc, i));
 	else
 		i->count++;
 	if (!data->input[i->i][i->j + 1])

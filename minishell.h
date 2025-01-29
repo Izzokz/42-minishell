@@ -20,7 +20,7 @@
 # include <signal.h>
 # include <sys/wait.h>
 
-typedef void s_pipeline;
+struct	s_pipeline;
 
 typedef struct s_data
 {
@@ -33,7 +33,7 @@ typedef struct s_data
 	int					exe;
 	t_rlines			envp;
 	t_slines			input;
-	struct s_pipeline		*pipeline;
+	struct s_pipeline	*pipeline;
 	struct sigaction	usr;
 }	t_data;
 
@@ -55,6 +55,8 @@ int			ft_fix_redirections(t_slines *input);
 t_slines	ft_pipe_split(char *line);
 	/*	ft_remove_quotes.c */
 int			ft_remove_quotes(t_slines input);
+	/*	ft_fix_order.c */
+int			ft_fix_order(t_slines *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
 int			ft_loop(t_data *data);
@@ -66,7 +68,7 @@ int			ft_make_pipeline(t_data *data);
 t_pipeline	*ft_new_pipeline(int (*func)(t_data *, void *),
 				void *param, void (*free)());
 void		ft_destroy_pipeline(t_pipeline *start);
-void		ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
+int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 				void *param, void (*free)());
 
 //	100_UTILS

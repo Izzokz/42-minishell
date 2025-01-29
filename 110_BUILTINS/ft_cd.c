@@ -22,7 +22,7 @@ void	ft_cd(t_data *data, t_rlines cmd)
 	while (data->envp[i])
 	{
 		if (!ft_strncmp(data->envp[i], "HOME=", 5))
-			break;
+			break ;
 		i++;
 	}
 	path = ft_substr(data->envp[i], 5, -1);

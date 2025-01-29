@@ -104,7 +104,7 @@ t_slines	ft_pipe_split(char *line)
 	}
 	ft_free_rlines(&pre_split);
 	if (ft_fix_redirections(&split) == -1
-		|| ft_remove_quotes(split) == -1)
+		|| ft_remove_quotes(split) == -1 || ft_fix_order(&split) == -1)
 		return (ft_free_slines(&split));
 	return (split);
 }
