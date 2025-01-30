@@ -15,7 +15,7 @@
 int	ft_chr(char *cmd)
 {
 	t_ints i;
-	
+
 	i.i = -1;
 	while (cmd[++i.i])
 		if (cmd[i.i] == '=')
@@ -33,11 +33,10 @@ int	ft_export(t_data *data, t_rlines cmd)
 	ints.i = 0;
 	while (cmd[++ints.i])
 	{
-		if (!ft_strncmp(cmd[ints.i], "=", 1))
-			ft_printf_fd("\e[1;31m[Minishell] \e[0;97mnot a valid identifier\e[0m\n", 2);
+		if (!ft_chr(cmd[ints.i]))
+			ft_rlines_add(&data->envp, cmd[ints.i], A_END);
 		else
-			if (!ft_chr(cmd[ints.i]))
-				ft_rlines_add(&data->envp, cmd[ints.i], 5);
+			ft_printf_fd("\e[1;31m[Minishell] \e[0;97mnot a valid identifier\e[0m\n", 2);
 	}
 	return (0);
 }
