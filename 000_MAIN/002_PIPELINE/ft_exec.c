@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:55:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/29 18:51:56 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/30 05:05:03 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static int	needs_fork(char *cmd, t_data *data)
 
 static int	handle_builtins(t_data *data, t_rlines cmd)
 {
-/*	if (!ft_strncmp(cmd[0], "export", -1))
-		return (ft_export(data, cmd));*/
+	if (!ft_strncmp(cmd[0], "export", -1))
+		return (ft_export(data, cmd));
 	if (!ft_strncmp(cmd[0], "echo", -1))
 		return (ft_echo(cmd));
 	if (!ft_strncmp(cmd[0], "unset", -1))

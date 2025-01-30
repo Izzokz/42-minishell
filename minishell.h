@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/29 20:13:47 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/01/30 05:00:56 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ int			ft_pwd(t_data *data, t_rlines cmd);
 int			ft_unset(t_data *data, t_rlines cmd);
 /*	ft_echo.c */
 int			ft_echo(t_rlines cmd);
+/*	ft_export.c */
+int			ft_export(t_data *data, t_rlines cmd);
 
 #endif
