@@ -69,6 +69,9 @@ libs:
 	@git clone https://github.com/PGBmax/Libft.git 020_LIBFT/
 	@printf "\033[38m\033[1mMinishell: \033[1;37mlibft Cloned !\033[0m\n"
 
+dep:
+	@sudo apt install libreadline-dev
+
 $(LIBS):
 	@$(MAKE) -C 010_FT_PRINTF/
 	@$(MAKE) -C 020_LIBFT/
