@@ -72,7 +72,7 @@ int	ft_fix_order(t_slines *input)
 		if (reorder(&((*input)[i]), &tmp, 4) == -1)
 			return (-1);
 		ft_free_rlines(&((*input)[i]));
-			(*input)[i] = tmp;
+		(*input)[i] = tmp;
 	}
 	return (0);
 }

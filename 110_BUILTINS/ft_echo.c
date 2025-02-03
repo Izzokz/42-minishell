@@ -14,7 +14,7 @@
 
 int	ft_echo(t_rlines cmd)
 {
-	t_ints ints;
+	t_ints	ints;
 
 	ints.count = 0;
 	ints.len = ft_rlines_len(cmd);

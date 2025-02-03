@@ -56,56 +56,63 @@ static int	set_data(t_data *data, char **envp)
 	return (0);
 }
 
-static char *ft_generate_path(void)
+static char	*ft_generate_path(void)
 {
-    char    *path;
-    int     i;
+	char	*path;
+	char	*tmp;
+	int		i;
 
-    path = getcwd(NULL, 0);
-    i = ft_strlen(path) - 1;
-    while (path[i] != '/')
-        i--;
-    path = ft_substr(path, i + 1, -1);
-    path = gnlxio_ft_strjoinfree(&(char *){ft_strdup(PROMPT)}, &path);
-    path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(LOCAL)});
-    return (path);
+	tmp = getcwd(NULL, 0);
+	if (!tmp)
+	{
+		ft_printf_err("Internal Error:getcwd(%*.)", 2);
+		return (NULL);
+	}
+	i = ft_strlen(tmp) - 1;
+	while (tmp[i] != '/')
+		i--;
+	path = ft_substr(tmp, i + 1, -1);
+	free(tmp);
+	path = gnlxio_ft_strjoinfree(&(char *){ft_strdup(PROMPT)}, &path);
+	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(LOCAL)});
+	return (path);
 }
 
-int    main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-    t_data data;
-    char    *path;
+	t_data	data;
+	char	*path;
 
-    (void) argc;
-    (void) argv;
-    if (set_data(&data, envp) == -1)
-        return (-1);
-    while (1)
-    {
-        signal(SIGINT, handler);
-        signal(SIGQUIT, SIG_IGN);
-        path = ft_generate_path();
-        data.line = readline(path);
-        free(path);
-        if (!data.line)
-            break ;
-        if (data.line[0])
-        {
-            data.input = ft_pipe_split(data.line, data.envp);
-            print_slines_test(data.input);
-            free(data.line);
-            data.line = NULL;
-            //data.pipeline = ft_make_pipeline(&data);
-            //ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
-            if (!data.input) // if exit in the pipeline, frees input and returns instantly.
-                break ;
-            ft_loop(&data);
-            ft_free_slines(&data.input);
-        }
-        free(data.line);
-        data.line = NULL;
-    }
-    ft_free_all(&data);
-    ft_printf("exit\n");
-    return (0);
+	(void) argc;
+	(void) argv;
+	if (set_data(&data, envp) == -1)
+		return (-1);
+	while (1)
+	{
+		signal(SIGINT, handler);
+		signal(SIGQUIT, SIG_IGN);
+		path = ft_generate_path();
+		data.line = readline(path);
+		free(path);
+		if (!data.line)
+			break ;
+		if (data.line[0])
+		{
+			data.input = ft_pipe_split(data.line, data.envp);
+			print_slines_test(data.input);
+			free(data.line);
+			data.line = NULL;
+			//data.pipeline = ft_make_pipeline(&data);
+			//ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
+			if (!data.input) // if exit in the pipeline, frees input and returns instantly.
+				break ;
+			ft_loop(&data);
+			ft_free_slines(&data.input);
+		}
+		free(data.line);
+		data.line = NULL;
+	}
+	ft_free_all(&data);
+	ft_printf("exit\n");
+	return (0);
 }

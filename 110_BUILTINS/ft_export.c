@@ -12,12 +12,12 @@
 
 #include "../minishell.h"
 
-int	ft_chr(char *cmd)
+static int	ft_chr(char *cmd)
 {
-	t_ints i;
+	t_ints	i;
 
 	i.i = -1;
-	while (cmd[++i.i])
+	while (cmd[++(i.i)])
 		if (cmd[i.i] == '=')
 			return (1);
 	return (0);
@@ -25,18 +25,26 @@ int	ft_chr(char *cmd)
 
 int	ft_export(t_data *data, t_rlines cmd)
 {
-	t_ints ints;
+	t_ints	ints;
+	char	*dup;
 
 	ints.len = ft_rlines_len(cmd);
 	if (ints.len == 1)
-		return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97mnot enough arguments\e[0m\n", 2));
+		return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s\e[0m\n", 2,
+				"not enough arguments"));
 	ints.i = 0;
-	while (cmd[++ints.i])
+	while (cmd[++(ints.i)])
 	{
-		if (!ft_chr(cmd[ints.i]))
-			ft_rlines_add(&data->envp, cmd[ints.i], A_END);
+		if (ft_chr(cmd[ints.i]))
+		{
+			dup = ft_strdup(cmd[ints.i]);
+			if (!dup)
+				return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));
+			ft_rlines_add(&(data->envp), dup, A_END);
+		}
 		else
-			ft_printf_fd("\e[1;31m[Minishell] \e[0;97mnot a valid identifier\e[0m\n", 2);
+			ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s\e[0m\n", 2,
+				"not a valid identifier");
 	}
 	return (0);
 }
