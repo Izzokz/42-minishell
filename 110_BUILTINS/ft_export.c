@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/04 15:18:47 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:24:15 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int	ft_export(t_data *data, t_rlines cmd)
 		ints.j = ft_chr(cmd[ints.i]);
 		if (ints.j)
 		{
-			if ()
-			dup = ft_strdup(cmd[ints.i]);
+			if (ints.j)
+				dup = ft_strdup(cmd[ints.i]);
 			if (!dup)
 				return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));
 			ft_rlines_add(&(data->envp), dup, A_END);
