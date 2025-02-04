@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/04 15:04:24 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:31:10 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	up_shlvl(t_data *data)
 	if (num.j >= 1000)
 		num.j = 0;
 	free(data->envp[num.i]);
+	free(temp);
 	data->envp[num.i] = gnlxio_ft_strjoinfree(&str, &(char *){ft_itoa(num.j)});
 }
 
