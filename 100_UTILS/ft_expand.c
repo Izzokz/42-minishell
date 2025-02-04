@@ -41,7 +41,7 @@ static void	replace_spaces(char **var)
 	*var = tmp;
 }
 
-static char	*ft_env_var(char *var, t_rlines envp)
+static char	*ft_env_var(char *var, t_rlines envp, int quoted)
 {
 	char	*output;
 	char	*temp;
@@ -64,7 +64,8 @@ static char	*ft_env_var(char *var, t_rlines envp)
 	free(temp);
 	if (!envp[i])
 		return (ft_strdup(""));
-	replace_spaces(&output);
+	if (!quoted)
+		replace_spaces(&output);
 	return (output);
 }
 
@@ -91,38 +92,53 @@ static int	remap2(char **line, char **tmp, char **var, t_ints *i)
 	return (0);
 }
 
-static int	remap(char **line, int i, t_rlines envp)
+static int	remap(char **line, int *i, t_rlines envp, int quoted)
 {
 	t_ints	j;
 	char	*tmp;
 	char	*var;
 
-	if ((*line)[i] != '$')
+	if ((*line)[*i] != '$')
 		return (0);
-	j.i = i;
-	j.tmp = i;
+	j.i = *i;
+	j.tmp = *i;
 	while ((*line)[++(j.i)] && !ft_strchr(" \t\n\v\f\r", (*line)[j.i])
-		&& (*line)[j.i] != '"' && (*line)[j.i] != '\'')
+		&& (*line)[j.i] != '"' && (*line)[j.i] != '\'' && (*line)[j.i] != '$')
 		;
-	tmp = ft_substr((*line), i + 1, j.i - i);
+	tmp = ft_substr((*line), *i + 1, j.i - *i - 1);
 	if (!tmp)
 		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
-	var = ft_env_var(tmp, envp);
+	var = ft_env_var(tmp, envp, quoted);
 	free(tmp);
 	tmp = NULL;
 	if (!var)
 		return (-1);
-	tmp = ft_calloc((ft_strlen(*line) - (j.i - i)) + ft_strlen(var) + 1, 1);
+	*i = *i + ft_strlen(var) - 1;
+	tmp = ft_calloc((ft_strlen(*line) - (j.i - *i)) + ft_strlen(var) + 1, 1);
 	return (remap2(line, &tmp, &var, &j));
 }
 
+/*
+i.count1 determines if a single quote is opened
+i.count2 determines if a double quote is opened
+*/
 int	ft_expand_line(char **input, t_rlines envp)
 {
-	int	i;
+	t_ints	i;
 
-	i = -1;
-	while ((*input)[++i])
-		if (remap(input, i, envp) == -1)
+	i.i = -1;
+	i.count1 = 0;
+	i.count2 = 0;
+	while ((*input)[++(i.i)])
+	{
+		if (!i.count2 && (*input)[i.i] == '\'')
+			i.count1 = !i.count1;
+		else if (!i.count1 && (*input)[i.i] == '"')
+			i.count2 = !i.count2;
+		if (!i.count1 && remap(input, &i.i, envp, i.count2) == -1)
 			return (-1);
+		if (ft_strlen(*input) <= (size_t)i.i)
+			break ;
+	}
 	return (0);
 }
