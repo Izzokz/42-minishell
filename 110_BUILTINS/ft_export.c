@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/30 05:08:14 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:18:47 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_chr(char *cmd)
 	i.i = -1;
 	while (cmd[++(i.i)])
 		if (cmd[i.i] == '=')
-			return (1);
+			return (i.i);
 	return (0);
 }
 
@@ -35,8 +35,10 @@ int	ft_export(t_data *data, t_rlines cmd)
 	ints.i = 0;
 	while (cmd[++(ints.i)])
 	{
-		if (ft_chr(cmd[ints.i]))
+		ints.j = ft_chr(cmd[ints.i]);
+		if (ints.j)
 		{
+			if ()
 			dup = ft_strdup(cmd[ints.i]);
 			if (!dup)
 				return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));

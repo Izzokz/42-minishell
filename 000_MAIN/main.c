@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/29 20:04:06 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/04 15:04:24 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,30 @@ static char	*ft_generate_path(void)
 	return (path);
 }
 
+void	up_shlvl(t_data *data)
+{
+	t_ints	num;
+	char	*temp;
+	char	*str;
+	
+	num.i = 0;
+	num.j = 0;
+	while (data->envp[num.i])
+	{
+		if (!ft_strncmp(data->envp[num.i], "SHLVL=", 6))
+			break;
+		num.i++;
+	}
+	temp = ft_substr(data->envp[num.i], 6, -1);
+	str = ft_substr(data->envp[num.i], 0, 6);
+	num.j = ft_atoi(temp);
+	num.j++;
+	if (num.j >= 1000)
+		num.j = 0;
+	free(data->envp[num.i]);
+	data->envp[num.i] = gnlxio_ft_strjoinfree(&str, &(char *){ft_itoa(num.j)});
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -87,6 +111,7 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	if (set_data(&data, envp) == -1)
 		return (-1);
+	up_shlvl(&data);
 	while (1)
 	{
 		signal(SIGINT, handler);
