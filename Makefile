@@ -19,7 +19,8 @@ MAIN2SRC = $(MAIN2DIR)ft_exec.c \
 UTILSSRC = $(UTILSDIR)ft_free_all.c \
 	$(UTILSDIR)ft_path.c \
 	$(UTILSDIR)ft_free_tab.c \
-	$(UTILSDIR)ft_expand.c
+	$(UTILSDIR)ft_expand.c \
+	$(UTILSDIR)ft_expand_rlines.c
 BUILTINSSRC = $(BUILTINSDIR)ft_exit.c \
 	$(BUILTINSDIR)ft_pwd.c \
 	$(BUILTINSDIR)ft_export.c \
