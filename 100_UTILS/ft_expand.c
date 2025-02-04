@@ -12,9 +12,38 @@
 
 #include "minishell.h"
 
+static void	replace_spaces(char **var)
+{
+	char	*tmp;
+	t_ints	i;
+
+	tmp = ft_calloc(ft_strlen(*var) + 1, sizeof(char));
+	if (!tmp)
+		return ;
+	i.count = 1;
+	i.i = -1;
+	i.x = -1;
+	while ((*var)[++(i.i)])
+	{
+		if (ft_strchr(" \t\n\v\f\r", (*var)[i.i]) && !i.count)
+		{
+			tmp[++(i.x)] = ' ';
+			i.count = 1;
+		}
+		else if (!ft_strchr(" \t\n\v\f\r", (*var)[i.i]))
+		{
+			tmp[++(i.x)] = (*var)[i.i];
+			i.count = 0;
+		}
+	}
+	tmp[i.x] -= tmp[i.x] * (tmp[i.x] == ' ');
+	free(*var);
+	*var = tmp;
+}
+
 static char	*ft_env_var(char *var, t_rlines envp)
 {
-	char	*path_line;
+	char	*output;
 	char	*temp;
 	int		len;
 	int		i;
@@ -26,19 +55,17 @@ static char	*ft_env_var(char *var, t_rlines envp)
 		ft_printf_err("Internal Error:ft_realloc(%*.)", 2);
 		return (NULL);
 	}
-	path_line = NULL;
+	output = NULL;
 	len = ft_strlen(temp);
 	i = -1;
-	while (envp[++i])
-	{
+	while (!output && envp[++i])
 		if (ft_strnstr(envp[i], temp, len))
-		{
-			path_line = ft_substr(envp[i], len, -1);
-			break ;
-		}
-	}
+			output = ft_substr(envp[i], len, -1);
 	free(temp);
-	return (path_line);
+	if (!envp[i])
+		return (ft_strdup(""));
+	replace_spaces(&output);
+	return (output);
 }
 
 static int	remap2(char **line, char **tmp, char **var, t_ints *i)
@@ -74,8 +101,8 @@ static int	remap(char **line, int i, t_rlines envp)
 		return (0);
 	j.i = i;
 	j.tmp = i;
-	while ((*line)[++(j.i)] && (*line)[j.i] != ' ' && (*line)[j.i] != '"'
-		&& (*line)[j.i] != '\"' && (*line)[j.i] != '\t')
+	while ((*line)[++(j.i)] && !ft_strchr(" \t\n\v\f\r", (*line)[j.i])
+		&& (*line)[j.i] != '"' && (*line)[j.i] != '\'')
 		;
 	tmp = ft_substr((*line), i + 1, j.i - i);
 	if (!tmp)
@@ -96,28 +123,6 @@ int	ft_expand_line(char **input, t_rlines envp)
 	i = -1;
 	while ((*input)[++i])
 		if (remap(input, i, envp) == -1)
-			return (-1);
-	return (0);
-}
-
-int	ft_expand_rlines(t_rlines *input, t_rlines envp)
-{
-	int	i;
-
-	i = -1;
-	while ((*input)[++i])
-		if (ft_expand_line(&((*input)[i]), envp) == -1)
-			return (-1);
-	return (0);
-}
-
-int	ft_expand_slines(t_slines *input, t_rlines envp)
-{
-	int	i;
-
-	i = -1;
-	while ((*input)[++i])
-		if (ft_expand_rlines(&((*input)[i]), envp) == -1)
 			return (-1);
 	return (0);
 }

@@ -84,6 +84,7 @@ void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);
 /*	ft_expand.c */
 int			ft_expand_line(char **input, t_rlines envp);
+/*	ft_expand_rlines.c */
 int			ft_expand_rlines(t_rlines *rlines, t_rlines envp);
 int			ft_expand_slines(t_slines *slines, t_rlines envp);
 
