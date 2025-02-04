@@ -36,7 +36,8 @@ static void	replace_spaces(char **var)
 			i.count = 0;
 		}
 	}
-	tmp[i.x] -= tmp[i.x] * (tmp[i.x] == ' ');
+	if (i.x >= 0)
+		tmp[i.x] -= tmp[i.x] * (tmp[i.x] == ' ');
 	free(*var);
 	*var = tmp;
 }
@@ -105,6 +106,8 @@ static int	remap(char **line, int *i, t_rlines envp, int quoted)
 	while ((*line)[++(j.i)] && !ft_strchr(" \t\n\v\f\r", (*line)[j.i])
 		&& (*line)[j.i] != '"' && (*line)[j.i] != '\'' && (*line)[j.i] != '$')
 		;
+	if (j.i - *i - 1 <= 0)
+		return (0);
 	tmp = ft_substr((*line), *i + 1, j.i - *i - 1);
 	if (!tmp)
 		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
@@ -113,9 +116,29 @@ static int	remap(char **line, int *i, t_rlines envp, int quoted)
 	tmp = NULL;
 	if (!var)
 		return (-1);
-	*i = *i + ft_strlen(var) - 1;
 	tmp = ft_calloc((ft_strlen(*line) - (j.i - *i)) + ft_strlen(var) + 1, 1);
+	*i += ft_strlen(var) - 1;
 	return (remap2(line, &tmp, &var, &j));
+}
+
+static int	del_index(char **part, int *i)
+{
+	t_ints	j;
+	char	*tmp;
+
+	tmp = ft_calloc(ft_strlen(*part), sizeof(char));
+	if (!tmp)
+		return (-1);
+	j.i = -1;
+	j.j = -1;
+	while ((*part)[++(j.i)])
+		if (j.i != *i)
+			tmp[++(j.j)] = (*part)[j.i];
+	if ((*part)[*i] != '\\')
+		(*i)--;
+	free(*part);
+	*part = tmp;
+	return (0);
 }
 
 /*
@@ -135,10 +158,17 @@ int	ft_expand_line(char **input, t_rlines envp)
 			i.count1 = !i.count1;
 		else if (!i.count1 && (*input)[i.i] == '"')
 			i.count2 = !i.count2;
+		if ((!i.count1 && (((*input)[i.i] == '\\'
+					&& (*input)[i.i + 1] == '"')
+			|| (*input)[i.i] == '"'))
+			|| (!i.count2 && (*input)[i.i] == '\''))
+		{
+			if (del_index(input, &i.i) == -1)
+				return (-1);
+			continue ;
+		}
 		if (!i.count1 && remap(input, &i.i, envp, i.count2) == -1)
 			return (-1);
-		if (ft_strlen(*input) <= (size_t)i.i)
-			break ;
 	}
 	return (0);
 }
