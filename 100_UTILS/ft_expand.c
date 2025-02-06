@@ -103,8 +103,7 @@ static int	remap(char **line, int *i, t_rlines envp, int quoted)
 		return (0);
 	j.i = *i;
 	j.tmp = *i;
-	while ((*line)[++(j.i)] && !ft_strchr(" \t\n\v\f\r", (*line)[j.i])
-		&& (*line)[j.i] != '"' && (*line)[j.i] != '\'' && (*line)[j.i] != '$')
+	while ((*line)[++(j.i)] && ft_isalnum((*line)[j.i]))
 		;
 	if (j.i - *i - 1 <= 0)
 		return (0);

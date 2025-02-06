@@ -59,12 +59,22 @@ static int	is_valid_symbol(char *str, int x)
 
 int	ft_split_redirec(t_rlines *part, int j)
 {
-	int	x;
+	t_ints	i;
 
-	x = -1;
-	while ((*part)[j][++x])
-		if (is_valid_symbol((*part)[j], x)
-			&& !finish_symbols((*part)[j] + x))
-			return (rewrite(part, j, x));
+	i.x = -1;
+	i.count1 = 0;
+	i.count2 = 0;
+	while ((*part)[j][++(i.x)])
+	{
+		if (!i.count2 && (*part)[j][i.x] == '\'')
+			i.count1 = !i.count1;
+		else if (!i.count1 && (*part)[j][i.x] == '"')
+			i.count2 = !i.count2;
+		if (i.count1 + i.count2)
+			continue ;
+		if (is_valid_symbol((*part)[j], i.x)
+			&& !finish_symbols((*part)[j] + i.x))
+			return (rewrite(part, j, i.x));
+	}
 	return (0);
 }
