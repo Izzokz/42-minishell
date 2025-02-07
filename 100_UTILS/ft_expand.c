@@ -12,6 +12,23 @@
 
 #include "minishell.h"
 
+static void	replace_loop(char **var, char **tmp, t_ints *i)
+{
+	while ((*var)[++(i->i)])
+	{
+		if (ft_strchr(" \t\n\v\f\r", (*var)[i->i]) && !i->count)
+		{
+			(*tmp)[++(i->x)] = ' ';
+			i->count = 1;
+		}
+		else if (!ft_strchr(" \t\n\v\f\r", (*var)[i->i]))
+		{
+			(*tmp)[++(i->x)] = (*var)[i->i];
+			i->count = 0;
+		}
+	}
+}
+
 static void	replace_spaces(char **var)
 {
 	char	*tmp;
@@ -23,19 +40,7 @@ static void	replace_spaces(char **var)
 	i.count = 1;
 	i.i = -1;
 	i.x = -1;
-	while ((*var)[++(i.i)])
-	{
-		if (ft_strchr(" \t\n\v\f\r", (*var)[i.i]) && !i.count)
-		{
-			tmp[++(i.x)] = ' ';
-			i.count = 1;
-		}
-		else if (!ft_strchr(" \t\n\v\f\r", (*var)[i.i]))
-		{
-			tmp[++(i.x)] = (*var)[i.i];
-			i.count = 0;
-		}
-	}
+	replace_loop(var, &tmp, &i);
 	if (i.x >= 0)
 		tmp[i.x] -= tmp[i.x] * (tmp[i.x] == ' ');
 	free(*var);

@@ -20,9 +20,10 @@
 # include <signal.h>
 # include <sys/wait.h>
 
-# define PROMPT1 "\e[1;34m[\e[1;31mm\e[1;32mi\e[1;33mn\e[1;34mi\e[1;31mP\e[1;35mK\e[1;34m]\e[1;33m@"
-# define PROMPT2 " \e[1;35m{\e[1;36m"
-# define LOCAL "\e[1;35m} \e[1;31m»\e[0;97m "
+# define MINI "\e[1;34m[\e[1;31mm\e[1;32mi\e[1;33mn\e[1;34mi\e[1;35mPK\e[1;34m]"
+# define USER "\e[1;33m@"
+# define PBEG " \e[1;35m{"
+# define PEND "} \e[1;31m»\e[0;97m "
 
 struct	s_pipeline;
 
