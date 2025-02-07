@@ -79,13 +79,11 @@ char	*ft_get_path(char *file, char **all_path)
 
 	if (!ft_strncmp(file, "exit", -1))
 		return (ft_strdup(file));
-	if (!all_path)
-		return (NULL);
 	if (file[0] == '/')
 		if (access(file, X_OK) != -1)
 			return (ft_strdup(file));
 	i = -1;
-	while (all_path[++i])
+	while (all_path && all_path[++i])
 	{
 		path = ft_strjoin(all_path[i], file);
 		if (!path)
