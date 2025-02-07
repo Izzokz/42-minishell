@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/06 17:54:30 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/07 14:30:41 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define USER "\e[1;33m@"
 # define PBEG " \e[1;35m{"
 # define PEND "} \e[1;31m»\e[0;97m "
+
+# define ERRORCD "\e[1;31m[Minishell] \e[0;97mNo such file or directory\e[0m\n"
 
 struct	s_pipeline;
 
