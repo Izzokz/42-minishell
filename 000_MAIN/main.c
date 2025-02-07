@@ -37,6 +37,41 @@ static void	print_slines_test(t_slines slines)
 	}
 }
 
+static void	ft_get_user(t_data *data)
+{
+	t_ints	num;
+
+	num.i = -1;
+	while (data->envp && data->envp[++(num.i)])
+		if (!ft_strncmp(data->envp[num.i], "USER=", 5))
+			break ;
+	if (!data->envp || !data->envp[num.i])
+		data->user = ft_strdup("user");
+	else
+		data->user = ft_substr(data->envp[num.i], 5, -1);
+}
+
+static int	is_env_var(char *var, char **envp)
+{
+	char	*lim;
+	int		i;
+
+	lim = ft_strjoin(var, "=");
+	if (!lim)
+		return (ft_printf_err("Internal Error:ft_strjoin(%*.)", 2) + 1);
+	i = -1;
+	while (envp[++i])
+	{
+		if (ft_strnstr(envp[i], lim, 5))
+		{
+			free(lim);
+			return (1);
+		}
+	}
+	free(lim);
+	return (0);
+}
+
 static int	set_data(t_data *data, char **envp)
 {
 	data->input = NULL;
@@ -45,35 +80,24 @@ static int	set_data(t_data *data, char **envp)
 	data->envp = NULL;
 	data->path = NULL;
 	data->envp = ft_rlines_dup(envp);
-	if (!data->envp)
+	if (!invalid_rlines(envp) && invalid_rlines(data->envp))
 		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
+	ft_get_user(data);
+	if (!data->user)
+		ft_printf_err("Internal Error:ft_get_user()", 2);
 	ft_set_path(data);
-	if (!data->path)
+	if (is_env_var("PATH", data->envp) && invalid_rlines(data->path))
 	{
 		ft_free_all(data);
 		return (ft_printf_err("Internal Error:ft_set_path(%*.)", 2));
-		exit (0);
 	}
 	return (0);
-}
-
-static void	ft_get_user(t_data *data)
-{
-	t_ints num;
-
-	num.i = -1;
-	while (data->envp && data->envp[++(num.i)])
-		if (!ft_strncmp(data->envp[num.i], "USER=", 5))
-			break;
-	if (!data->envp || !data->envp[num.i])
-		data->user = ft_strdup("user");
-	else
-		data->user = ft_substr(data->envp[num.i], 5, -1);
 }
 
 static char	*ft_generate_path(t_data *data)
 {
 	char	*path;
+	char	*prompt;
 	char	*tmp;
 	int		i;
 
@@ -88,12 +112,13 @@ static char	*ft_generate_path(t_data *data)
 		i--;
 	path = ft_substr(tmp, i + 1, -1);
 	free(tmp);
-	ft_get_user(data);
-	data->user = gnlxio_ft_strjoinfree(&(char *){ft_strdup(PROMPT1)}, &data->user);
-	data->user = gnlxio_ft_strjoinfree(&data->user, &(char *){ft_strdup(PROMPT2)});
-	path = gnlxio_ft_strjoinfree(&data->user, &path);
-	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(LOCAL)});
-	return (path);
+	prompt = gnlxio_ft_strjoinfree(&(char *){ft_strdup(MINI)},
+			&(char *){ft_strdup(USER)});
+	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(data->user)});
+	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(PBEG)});
+	prompt = gnlxio_ft_strjoinfree(&prompt, &path);
+	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(PEND)});
+	return (prompt);
 }
 
 void	up_shlvl(t_data *data)
@@ -101,12 +126,12 @@ void	up_shlvl(t_data *data)
 	t_ints	num;
 	char	*temp;
 	char	*str;
-	
+
 	num.i = -1;
 	num.j = 0;
 	while (data->envp && data->envp[++(num.i)])
 		if (!ft_strncmp(data->envp[num.i], "SHLVL=", 6))
-			break;
+			break ;
 	if (!data->envp || !data->envp[num.i])
 		return ;
 	temp = ft_substr(data->envp[num.i], 6, -1);
@@ -123,7 +148,7 @@ void	up_shlvl(t_data *data)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	char	*path;
+	char	*prompt;
 
 	(void) argc;
 	(void) argv;
@@ -134,9 +159,9 @@ int	main(int argc, char **argv, char **envp)
 	{
 		signal(SIGINT, handler);
 		signal(SIGQUIT, SIG_IGN);
-		path = ft_generate_path(&data);
-		data.line = readline(path);
-		free(path);
+		prompt = ft_generate_path(&data);
+		data.line = readline(prompt);
+		free(prompt);
 		if (!data.line)
 			break ;
 		if (data.line[0])
