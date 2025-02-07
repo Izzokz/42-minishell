@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/04 15:31:10 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/06 19:28:02 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,26 @@ static int	set_data(t_data *data, char **envp)
 	{
 		ft_free_all(data);
 		return (ft_printf_err("Internal Error:ft_set_path(%*.)", 2));
+		exit (0);
 	}
 	return (0);
 }
 
-static char	*ft_generate_path(void)
+static void	ft_get_user(t_data *data)
+{
+	t_ints num;
+
+	num.i = -1;
+	while (data->envp && data->envp[++(num.i)])
+		if (!ft_strncmp(data->envp[num.i], "USER=", 5))
+			break;
+	if (!data->envp || !data->envp[num.i])
+		data->user = ft_strdup("user");
+	else
+		data->user = ft_substr(data->envp[num.i], 5, -1);
+}
+
+static char	*ft_generate_path(t_data *data)
 {
 	char	*path;
 	char	*tmp;
@@ -73,7 +88,10 @@ static char	*ft_generate_path(void)
 		i--;
 	path = ft_substr(tmp, i + 1, -1);
 	free(tmp);
-	path = gnlxio_ft_strjoinfree(&(char *){ft_strdup(PROMPT)}, &path);
+	ft_get_user(data);
+	data->user = gnlxio_ft_strjoinfree(&(char *){ft_strdup(PROMPT1)}, &data->user);
+	data->user = gnlxio_ft_strjoinfree(&data->user, &(char *){ft_strdup(PROMPT2)});
+	path = gnlxio_ft_strjoinfree(&data->user, &path);
 	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(LOCAL)});
 	return (path);
 }
@@ -84,14 +102,13 @@ void	up_shlvl(t_data *data)
 	char	*temp;
 	char	*str;
 	
-	num.i = 0;
+	num.i = -1;
 	num.j = 0;
-	while (data->envp[num.i])
-	{
+	while (data->envp && data->envp[++(num.i)])
 		if (!ft_strncmp(data->envp[num.i], "SHLVL=", 6))
 			break;
-		num.i++;
-	}
+	if (!data->envp || !data->envp[num.i])
+		return ;
 	temp = ft_substr(data->envp[num.i], 6, -1);
 	str = ft_substr(data->envp[num.i], 0, 6);
 	num.j = ft_atoi(temp);
@@ -117,7 +134,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		signal(SIGINT, handler);
 		signal(SIGQUIT, SIG_IGN);
-		path = ft_generate_path();
+		path = ft_generate_path(&data);
 		data.line = readline(path);
 		free(path);
 		if (!data.line)
