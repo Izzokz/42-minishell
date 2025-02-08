@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/06 19:28:02 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/08 16:44:30 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ static char	*ft_generate_path(t_data *data)
 	while (tmp[i] != '/')
 		i--;
 	path = ft_substr(tmp, i + 1, -1);
+	if (path[0] == 0)
+		path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup("/")});
 	free(tmp);
 	prompt = gnlxio_ft_strjoinfree(&(char *){ft_strdup(MINI)},
 			&(char *){ft_strdup(USER)});

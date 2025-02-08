@@ -6,27 +6,22 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 16:06:14 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/04 13:15:42 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:27:59 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_pwd(t_data *data, t_rlines cmd)
+int	ft_pwd(void)
 {
 	char	*path;
-	int		i;
 
-	(void) cmd;
-	i = 0;
-	while (data->envp[i])
+	path = getcwd(NULL, 0);
+	if (path)
 	{
-		if (!ft_strncmp(data->envp[i], "PWD=", 4))
-			break ;
-		i++;
+		ft_printf("%s\n", path);
+		free(path);
 	}
-	path = ft_substr(data->envp[i], 4, -1);
-	ft_printf("%s\n", path);
-	free(path);
+	path = NULL;
 	return (0);
 }

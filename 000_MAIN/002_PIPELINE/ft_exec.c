@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:55:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/30 05:05:03 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:51:38 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	handle_builtins(t_data *data, t_rlines cmd)
 	if (!ft_strncmp(cmd[0], "env", -1))
 		return (ft_printf("%*[\n]s\n", data->envp));
 	if (!ft_strncmp(cmd[0], "pwd", -1))
-		return (ft_pwd(data, cmd));
+		return (ft_pwd());
 	if (!ft_strncmp(cmd[0], "cd", -1))
 		return (ft_cd(data, cmd));
 	if (!ft_strncmp(cmd[0], "exit", -1))

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:01:50 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/07 14:35:12 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/08 17:04:03 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,46 +37,86 @@ void	ft_get_env(t_data *data, t_ints *num)
 	}
 }
 
+static void	ft_cd_no_args(t_data *data, t_ints i)
+{
+	char	*path;
+
+	path = ft_substr(data->envp[i.i], 5, -1);
+	if (path)
+	{
+		chdir(path);
+		free(path);
+	}
+	path = ft_substr(data->envp[i.j], 4, -1);
+	free(data->envp[i.k]);
+	data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
+			&path);
+	path = ft_substr(data->envp[i.i], 5, -1);
+	free(data->envp[i.j]);
+	data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
+			&path);
+}
+
+static void	ft_cd_reverse(t_data *data, t_ints i)
+{
+	char	*path;
+	char	*pwd;
+
+	path = ft_substr(data->envp[i.k], 7, -1);
+	pwd = NULL;
+	if (path)
+	{
+		chdir(path);
+		pwd = ft_strdup(path);
+		free(path);
+	}
+	path = ft_substr(data->envp[i.j], 4, -1);
+	free(data->envp[i.k]);
+	data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
+			&path);
+	free(data->envp[i.j]);
+	ft_printf("%s\n", pwd);
+	data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
+			&pwd);
+}
+
+static void	ft_cd_with_path(t_data *data, t_ints i, t_rlines cmd)
+{
+	char	*path;
+
+	if (chdir(cmd[1]) != -1)
+	{
+		path = ft_substr(data->envp[i.j], 4, -1);
+		free(data->envp[i.k]);
+		data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
+				&path);
+		path = getcwd(NULL, 0);
+		free(data->envp[i.j]);
+		data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
+				&path);
+		return ;
+	}
+	ft_printf_fd("\e[1;31m[Minishell] \e[0;97mNo such file or directory\e[0m\n",
+		2);
+}
+
 int	ft_cd(t_data *data, t_rlines cmd)
 {
-	char		*path;
-	char		*path2;
-	char		*temp;
 	t_ints		i;
 
 	ft_get_env(data, &i);
 	i.len = ft_rlines_len(cmd);
 	if (i.len > 2)
-		return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97mtoo many args\e[0m\n", 2));
-	if (i.len == 1)
+		return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97mtoo many args\e[0m\n",
+				2));
+	else if (i.len == 1)
+		ft_cd_no_args(data, i);
+	else
 	{
-		path = ft_substr(data->envp[i.i], 5, -1);
-		chdir(path);
-	}
-	if (i.len == 2)
-	{
-		if (cmd[1][0] == '.' && ft_strlen(cmd[1]) == 1)
-			return (0);
-		else if (!ft_strncmp("-", cmd[1], ft_strlen(cmd[1])))
-			path = ft_substr(data->envp[i.k], 7, -1);
+		if (cmd[1][0] == '-' && ft_strlen(cmd[1]) == 1)
+			ft_cd_reverse(data, i);
 		else
-		{
-			path = gnlxio_ft_strjoinfree(&(char *){ft_strdup("/")}, &(char *){ft_strdup(cmd[1])});
-			path = gnlxio_ft_strjoinfree(&(char *){ft_strdup(data->envp[i.j])}, &path);
-			path2 = ft_strdup(path);
-			free(path);
-			path = ft_substr(path2, 4, -1);
-			free(path2);
-		}
-		if (chdir(path) == -1)
-			return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97mNo such file or directory\e[0m\n", 2));
+			ft_cd_with_path(data, i, cmd);
 	}
-	free(data->envp[i.k]);
-	temp = ft_strdup("OLDPWD=");
-	data->envp[i.k] = gnlxio_ft_strjoinfree(&temp,
-			&(char *){ft_substr(data->envp[i.j], 4, -1)});
-	free(data->envp[i.j]);
-	data->envp[i.j] = ft_strjoin("PWD=", path);
-	free(path);
 	return (0);
 }

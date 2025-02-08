@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/07 14:30:41 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/08 13:51:26 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void		ft_exit(t_data *data, t_rlines cmd);
 /*	ft_cd.c */
 int			ft_cd(t_data *data, t_rlines cmd);
 /*	ft_pwd.c */
-int			ft_pwd(t_data *data, t_rlines cmd);
+int			ft_pwd(void);
 /*	ft_unset.c */
 int			ft_unset(t_data *data, t_rlines cmd);
 /*	ft_echo.c */
