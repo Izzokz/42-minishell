@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/08 16:44:30 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/09 15:39:13 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,31 @@ static char	*ft_generate_path(t_data *data)
 	return (prompt);
 }
 
+static void ft_launch(int i)
+{
+	int temp;
+	int len;
+	
+	temp = i;
+	len = 1;
+	while (i > 9)
+	{
+		i = i / 10;
+		len++;
+	}
+	i = temp;
+	temp = 6 - len;
+	ft_printf("\e[1;34m");
+	ft_printf("╔════════════════╗\n");
+	ft_printf("║ » \e[1;36mMinishell\e[1;34m    ║\n");
+	ft_printf("║ » \e[1;36mSHLVL\e[1;34m = \e[1;92m%d", i);
+	while (--temp)
+		ft_printf(" ");
+	ft_printf("\e[1;34m║\n");
+	ft_printf("╚════════════════╝\n");
+	ft_printf("\e[0;97m");
+}
+
 void	up_shlvl(t_data *data)
 {
 	t_ints	num;
@@ -145,6 +170,7 @@ void	up_shlvl(t_data *data)
 	free(data->envp[num.i]);
 	free(temp);
 	data->envp[num.i] = gnlxio_ft_strjoinfree(&str, &(char *){ft_itoa(num.j)});
+	ft_launch(num.j);
 }
 
 int	main(int argc, char **argv, char **envp)

@@ -91,6 +91,8 @@ fclean:
 
 re: fclean all
 
+chazzup:
+
 .PHONY: all clean fclean re libs
 
 -include $(DEP)
