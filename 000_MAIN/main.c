@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/09 18:17:30 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/10 14:50:22 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,29 +136,14 @@ static void ft_launch(int i)
 		len++;
 	}
 	i = temp;
-	temp = 4 - len;
-	ft_printf("\e[1;34m");
-	ft_printf("╔══════════════════════╗\n");
-	ft_printf("║\e[1;34m » \e[1;36mMinishell \e[1;97m[\e[1;32mLv. %d", i);
-	ft_printf("\e[1;97m]\e[1;34m");
-	while (--temp)
-		ft_printf(" ");
-	ft_printf("║\n");
-	ft_printf("╚══════════════════════╝\n");
-
-
-
-
 	temp = 5 - len;
-	ft_printf("VS\n\e[1;34m");
-	ft_printf("╔═══════════════╗\n");
-	ft_printf("║ » \e[1;36mMinishell\e[1;34m   ║\n");
-	ft_printf("║ » \e[1;36mSHLVL\e[1;34m = \e[1;92m%d", i);
+	ft_printf("\e[1;34m");
+	ft_printf("╔═══════════════════════╗\n");
+	ft_printf("║\e[1;34m » \e[1;36mMinishell \e[1;97m[\e[1;32mLv.");
 	while (--temp)
 		ft_printf(" ");
-	ft_printf("\e[1;34m║\n");
-	ft_printf("╚═══════════════╝\n");
-	ft_printf("\e[0;97m");
+	ft_printf("%d\e[1;97m]\e[1;34m ║\n", i);
+	ft_printf("╚═══════════════════════╝\n");
 }
 
 void	up_shlvl(t_data *data)
