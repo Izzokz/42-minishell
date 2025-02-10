@@ -18,11 +18,8 @@ int	ft_unset(t_data *data, t_rlines cmd)
 
 	ints.len = ft_rlines_len(cmd);
 	if (ints.len == 1)
-	{
-		ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s\e[0m\n", 2,
-			"not enough arguments");
-		return (0);
-	}
+		return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s\e[0m\n%*.", 2,
+				"not enough arguments") + 1);
 	ints.i = 0;
 	while (cmd[++ints.i])
 	{
@@ -30,9 +27,14 @@ int	ft_unset(t_data *data, t_rlines cmd)
 				&(char *){ft_strdup("=")});
 		ints.j = -1;
 		while (data->envp[++ints.j])
+		{
 			if (!ft_strncmp(data->envp[ints.j],
 					cmd[ints.i], ft_strlen(cmd[ints.i])))
+			{
 				ft_rlines_delete(&data->envp, ints.j);
+				break ;
+			}
+		}
 	}
 	return (0);
 }
