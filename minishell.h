@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/08 13:51:26 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:22:52 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_data
 	char				*user;
 	char				*line;
 	char				**path;
+	char				*history;
 	int					pid;
 	int					pipe[2];
 	int					swap_pipe;
@@ -55,6 +56,9 @@ typedef struct s_pipeline
 }	t_pipeline;
 
 //	000_MAIN
+	/*	ft_history.c */
+void		ft_gen_history(t_data *data);
+void		ft_add_history(t_data *data);
 //->	001_SPLIT_PARSING
 	/*	ft_split_redirec.c */
 int			ft_split_redirec(t_rlines *part, int j);

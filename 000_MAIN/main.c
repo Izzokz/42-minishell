@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/10 14:50:22 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:21:11 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ int	main(int argc, char **argv, char **envp)
 	if (set_data(&data, envp) == -1)
 		return (-1);
 	up_shlvl(&data);
+	ft_gen_history(&data);
 	while (1)
 	{
 		signal(SIGINT, handler);
@@ -190,6 +191,7 @@ int	main(int argc, char **argv, char **envp)
 		free(prompt);
 		if (!data.line)
 			break ;
+		ft_add_history(&data);
 		if (!ft_valid_input(data.line))
 			continue ;
 		if (data.line[0])
