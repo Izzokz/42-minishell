@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:03:54 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/11 16:32:48 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:42:06 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	ft_gen_history(t_data *data)
 	data->history = ft_get_abspath();
 	if (ft_gen_file(data->history, "0777") == -1)
 	{
-   		ft_printf_err("Internal Error:ft_gen_file()", 2);
-    	return ;
+		ft_printf_err("Internal Error:ft_gen_file()", 2);
+		return ;
 	}
 	hist = ft_readfile(data->history);
 	if (!hist)
@@ -49,7 +49,7 @@ void	ft_gen_history(t_data *data)
 
 void	ft_add_history(t_data *data)
 {
-	char *temp;
+	char	*temp;
 
 	add_history(data->line);
 	temp = ft_get_line(data->history, A_END);
