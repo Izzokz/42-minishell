@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/11 16:56:24 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:24:36 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,8 +182,6 @@ int	main(int argc, char **argv, char **envp)
 		return (-1);
 	up_shlvl(&data);
 	ft_gen_history(&data);
-	tcget
-	tcsetattr(0,)
 	while (1)
 	{
 		signal(SIGINT, handler);
