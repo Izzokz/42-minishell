@@ -11,8 +11,8 @@ MAINSRC = $(MAINDIR)main.c
 MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
 	$(MAIN1DIR)ft_fix_redirections.c \
 	$(MAIN1DIR)ft_split_redirec.c \
-	$(MAIN1DIR)ft_remove_quotes.c \
-	$(MAIN1DIR)ft_fix_order.c
+	$(MAIN1DIR)ft_fix_order.c \
+	$(MAIN1DIR)ft_valid_input.c
 MAIN2SRC = $(MAIN2DIR)ft_exec.c \
 	$(MAIN2DIR)ft_loop.c \
 	$(MAIN2DIR)ft_pipeline_function_set.c

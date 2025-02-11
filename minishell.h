@@ -19,6 +19,7 @@
 # include "020_LIBFT/libft.h"
 # include <signal.h>
 # include <sys/wait.h>
+# include <termios.h>
 
 # define MINI "\e[1;34m[\e[1;31mm\e[1;32mi\e[1;33mn\e[1;34mi\e[1;35mPK\e[1;34m]"
 # define USER "\e[1;33m@"
@@ -61,10 +62,10 @@ int			ft_split_redirec(t_rlines *part, int j);
 int			ft_fix_redirections(t_slines *input);
 	/*	ft_pipe_split.c */
 t_slines	ft_pipe_split(char *line, t_rlines envp);
-	/*	ft_remove_quotes.c */
-int			ft_remove_quotes(t_slines input);
 	/*	ft_fix_order.c */
 int			ft_fix_order(t_slines *input);
+	/*	ft_valid_input.c */
+int			ft_valid_input(char *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
 int			ft_loop(t_data *data);

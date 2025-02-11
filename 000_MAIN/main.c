@@ -127,7 +127,7 @@ static void ft_launch(int i)
 {
 	int temp;
 	int len;
-	
+
 	temp = i;
 	len = 1;
 	while (i > 9)
@@ -190,6 +190,8 @@ int	main(int argc, char **argv, char **envp)
 		free(prompt);
 		if (!data.line)
 			break ;
+		if (!ft_valid_input(data.line))
+			continue ;
 		if (data.line[0])
 		{
 			data.input = ft_pipe_split(data.line, data.envp);

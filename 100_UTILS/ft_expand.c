@@ -145,6 +145,35 @@ static int	del_index(char **part, int *i)
 	return (0);
 }
 
+static int	count_skip(char **line, t_ints *i)
+{
+	if (!(i->count2) && (*line)[i->i] == '\'')
+	{
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		while ((*line)[++(i->i)] && (*line)[i->i] != '\'')
+			;
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		return (1);
+	}
+	else if ((*line)[i->i] == '\\' && ((*line)[i->i + 1] == '"'
+			|| (*line)[i->i + 1] == '\\'))
+	{
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		return (1);
+	}
+	else if ((*line)[i->i] == '"')
+	{
+		i->count2 = !(i->count2);
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		return (1);
+	}
+	return (0);
+}
+
 /*
 i.count1 determines if a single quote is opened
 i.count2 determines if a double quote is opened
@@ -158,20 +187,12 @@ int	ft_expand_line(char **input, t_rlines envp)
 	i.count2 = 0;
 	while ((*input)[++(i.i)])
 	{
-		if (!i.count2 && (*input)[i.i] == '\'')
-			i.count1 = !i.count1;
-		else if (!i.count1 && (*input)[i.i] == '"')
-			i.count2 = !i.count2;
-		if ((!i.count1 && (((*input)[i.i] == '\\'
-					&& (*input)[i.i + 1] == '"')
-			|| (*input)[i.i] == '"'))
-			|| (!i.count2 && (*input)[i.i] == '\''))
-		{
-			if (del_index(input, &i.i) == -1)
-				return (-1);
+		i.tmp = count_skip(input, &i);
+		if (i.tmp == -1)
+			return (-1);
+		if (i.tmp)
 			continue ;
-		}
-		if (!i.count1 && remap(input, &i.i, envp, i.count2) == -1)
+		if (remap(input, &i.i, envp, i.count2) == -1)
 			return (-1);
 	}
 	return (0);
