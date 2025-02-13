@@ -15,8 +15,8 @@
 char	*ft_pick_env(char *var)
 {
 	t_rlines	envp;
-	char	*lim;
-	t_ints	num;
+	char		*lim;
+	t_ints		num;
 
 	envp = ((t_data *)ft_get_tdata())->envp;
 	lim = ft_strjoin(var, "=");
@@ -39,7 +39,6 @@ char	*ft_pick_env(char *var)
 	free(lim);
 	return (NULL);
 }
-
 
 int	ft_is_env(char *var)
 {

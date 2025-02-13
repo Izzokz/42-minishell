@@ -108,7 +108,8 @@ static char	*ft_env_var(char **line, char *var, t_rlines envp, t_ints *info)
 
 static int	remap2(char **line, char **tmp, char **var, t_ints *i)
 {
-	if (((!line || !*line) && i->count && i->tmp >= 0 && i->tmp1 >= 0) || !(*tmp))
+	if (((!line || !*line) && i->count && i->tmp >= 0 && i->tmp1 >= 0)
+		|| !(*tmp))
 		return (sizeof(free(*var)) == sizeof(free(*tmp)));
 	i->k = -1;
 	while (++(i->k) < i->tmp)
@@ -149,7 +150,7 @@ static int	remap(char **line, t_ints *i, t_rlines envp)
 		return (-1);
 	if (line && *line)
 		tmp = ft_calloc((ft_strlen(*line) - (j.i - i->i))
-			+ ft_strlen(var) + 1, 1);
+				+ ft_strlen(var) + 1, 1);
 	i->i += ft_strlen(var) - 1;
 	return (remap2(line, &tmp, &var, &j));
 }
