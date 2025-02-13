@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_expand_rlines.c                                 :+:      :+:    :+:   */
+/*   ft_is_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 11:59:20 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/04 11:59:21 by kzhen-cl         ###   ########.fr       */
+/*   Created: 2025/02/13 10:11:57 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2025/02/13 10:11:57 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_expand_rlines(t_rlines *input, int parent_i, t_rlines envp)
+int	ft_is_env(char *var)
 {
-	int	i;
+	t_rlines	envp;
+	char		*lim;
+	int			i;
 
+	envp = ((t_data *)ft_get_tdata())->envp;
+	lim = ft_strjoin(var, "=");
+	if (!lim)
+		return (ft_printf_err("Internal Error:ft_strjoin(%*.)", 2) + 1);
 	i = -1;
-	while ((*input)[++i])
-		if (ft_expand_line(&((*input)[i]), i, parent_i, envp) == -1)
-			return (-1);
-	return (0);
-}
-
-int	ft_expand_slines(t_slines *input, t_rlines envp)
-{
-	int	i;
-
-	i = -1;
-	while ((*input)[++i])
-		if (ft_expand_rlines(&((*input)[i]), i, envp) == -1)
-			return (-1);
+	while (envp[++i])
+	{
+		if (ft_strnstr(envp[i], lim, 5))
+		{
+			free(lim);
+			return (1);
+		}
+	}
+	free(lim);
 	return (0);
 }

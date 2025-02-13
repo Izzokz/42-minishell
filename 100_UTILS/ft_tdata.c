@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_expand_rlines.c                                 :+:      :+:    :+:   */
+/*   ft_tdata.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 11:59:20 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/04 11:59:21 by kzhen-cl         ###   ########.fr       */
+/*   Created: 2025/02/11 16:38:29 by kzhen-cl          #+#    #+#             */
+/*   Updated: 2025/02/11 16:38:29 by kzhen-cl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_expand_rlines(t_rlines *input, int parent_i, t_rlines envp)
+static t_data	*ft_tdata(t_data *info)
 {
-	int	i;
+	static t_data	*data = NULL;
 
-	i = -1;
-	while ((*input)[++i])
-		if (ft_expand_line(&((*input)[i]), i, parent_i, envp) == -1)
-			return (-1);
-	return (0);
+	if (info)
+		data = info;
+	return (data);
 }
 
-int	ft_expand_slines(t_slines *input, t_rlines envp)
+void	ft_set_tdata(t_data *info)
 {
-	int	i;
+	ft_tdata(info);
+}
 
-	i = -1;
-	while ((*input)[++i])
-		if (ft_expand_rlines(&((*input)[i]), i, envp) == -1)
-			return (-1);
-	return (0);
+t_data	*ft_get_tdata(void)
+{
+	return (ft_tdata(NULL));
 }

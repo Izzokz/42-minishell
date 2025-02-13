@@ -74,5 +74,6 @@ int	ft_fix_order(t_slines *input)
 		ft_free_rlines(&((*input)[i]));
 		(*input)[i] = tmp;
 	}
+	((t_data *)ft_get_tdata())->input = *input;
 	return (0);
 }

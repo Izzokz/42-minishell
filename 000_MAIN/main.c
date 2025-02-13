@@ -178,6 +178,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argc;
 	(void) argv;
+	ft_set_tdata(&data);
 	if (set_data(&data, envp) == -1)
 		return (-1);
 	up_shlvl(&data);
