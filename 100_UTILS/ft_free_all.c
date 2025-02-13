@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:07:10 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/16 13:07:12 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:02:34 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	ft_free_all(t_data *data)
 	ft_free_rlines(&data->path);
 	free(data->line);
 	free(data->user);
+	free(data->history);
 }

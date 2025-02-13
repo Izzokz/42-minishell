@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/11 16:22:52 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:19:27 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 
 # define MINI "\e[1;34m[\e[1;31mm\e[1;32mi\e[1;33mn\e[1;34mi\e[1;35mPK\e[1;34m]"
 # define USER "\e[1;33m@"
+# define SHLVL " \e[1;32m[Lv. "
 # define PBEG " \e[1;35m{"
 # define PEND "} \e[1;31m»\e[0;97m "
 
@@ -87,8 +88,6 @@ int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 //	100_UTILS
 /*	ft_free_all.c */
 void		ft_free_all(t_data *data);
-/*	ft_free_tab.c */
-void		ft_free_tab(t_rlines *rlines);
 /*	ft_path.c */
 void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);
@@ -102,6 +101,7 @@ int			ft_expand_slines(t_slines *slines, t_rlines envp);
 void		ft_set_tdata(t_data *info);
 t_data		*ft_get_tdata(void);
 /*	ft_is_env.c */
+char		*ft_pick_env(char *var);
 int			ft_is_env(char *var);
 
 //	110_BUILTINS

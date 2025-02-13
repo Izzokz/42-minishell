@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:01:50 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/08 17:04:03 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:22:59 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	ft_get_env(t_data *data, t_ints *num)
 {
-	num->i = 0;
-	num->j = 0;
-	num->k = 0;
+	*num = (t_ints){.i = 0, .j = 0, .k = 0};
 	while (data->envp[num->i])
 	{
 		if (!ft_strncmp(data->envp[num->i], "HOME=", 5))

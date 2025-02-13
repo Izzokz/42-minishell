@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/11 17:24:36 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:19:47 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,31 @@ static int	set_data(t_data *data, char **envp)
 	return (0);
 }
 
+static char	*ft_generate_prompt(t_data *data, char *path)
+{
+	char	*prompt;
+	char	*shlvl;
+	int		i;
+
+	i = -1;
+	shlvl = ft_pick_env("SHLVL");
+	if (!shlvl)
+		shlvl = ft_strdup("UNK");
+	prompt = gnlxio_ft_strjoinfree(&(char *){ft_strdup(MINI)},
+			&(char *){ft_strdup(USER)});
+	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(data->user)});
+	if (shlvl)
+	{
+		prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(SHLVL)});
+		prompt = gnlxio_ft_strjoinfree(&prompt, &shlvl);
+		prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup("]")});
+	}
+	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(PBEG)});
+	prompt = gnlxio_ft_strjoinfree(&prompt, &path);
+	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(PEND)});
+	return (prompt);
+}
+
 static char	*ft_generate_path(t_data *data)
 {
 	char	*path;
@@ -114,36 +139,8 @@ static char	*ft_generate_path(t_data *data)
 	if (path[0] == 0)
 		path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup("/")});
 	free(tmp);
-	prompt = gnlxio_ft_strjoinfree(&(char *){ft_strdup(MINI)},
-			&(char *){ft_strdup(USER)});
-	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(data->user)});
-	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(PBEG)});
-	prompt = gnlxio_ft_strjoinfree(&prompt, &path);
-	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(PEND)});
+	prompt = ft_generate_prompt(data, path);
 	return (prompt);
-}
-
-static void ft_launch(int i)
-{
-	int temp;
-	int len;
-
-	temp = i;
-	len = 1;
-	while (i > 9)
-	{
-		i = i / 10;
-		len++;
-	}
-	i = temp;
-	temp = 5 - len;
-	ft_printf("\e[1;34m");
-	ft_printf("╔═══════════════════════╗\n");
-	ft_printf("║\e[1;34m » \e[1;36mMinishell \e[1;97m[\e[1;32mLv.");
-	while (--temp)
-		ft_printf(" ");
-	ft_printf("%d\e[1;97m]\e[1;34m ║\n", i);
-	ft_printf("╚═══════════════════════╝\n");
 }
 
 void	up_shlvl(t_data *data)
@@ -168,7 +165,6 @@ void	up_shlvl(t_data *data)
 	free(data->envp[num.i]);
 	free(temp);
 	data->envp[num.i] = gnlxio_ft_strjoinfree(&str, &(char *){ft_itoa(num.j)});
-	ft_launch(num.j);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -183,10 +179,10 @@ int	main(int argc, char **argv, char **envp)
 		return (-1);
 	up_shlvl(&data);
 	ft_gen_history(&data);
+	signal(SIGINT, handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
-		signal(SIGINT, handler);
-		signal(SIGQUIT, SIG_IGN);
 		prompt = ft_generate_path(&data);
 		data.line = readline(prompt);
 		free(prompt);

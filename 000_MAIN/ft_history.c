@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:03:54 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/11 16:42:06 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:06:28 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*ft_get_abspath(void)
 {
 	char	*temp;
 
-	temp = ft_strdup(getenv("HOME"));
+	temp = ft_pick_env("HOME");
 	temp = gnlxio_ft_strjoinfree(&temp,
 			&(char *){ft_strdup("/.minipk_history")});
 	return (temp);
@@ -45,21 +45,26 @@ void	ft_gen_history(t_data *data)
 	i = -1;
 	while (hist[++i])
 		add_history(hist[i]);
+	ft_free_rlines(&hist);
 }
 
 void	ft_add_history(t_data *data)
 {
 	char	*temp;
 
-	add_history(data->line);
+	if (!data->line[0])
+		return ;
 	temp = ft_get_line(data->history, A_END);
-	if (!temp)
+	if (!temp && access(data->history, W_OK | R_OK))
 	{
-		ft_printf_err("Internal Error:ft_get_line()", 2);
+		add_history(data->line);
 		return ;
 	}
 	ft_rline_cutendl(&temp);
-	if (ft_strncmp(temp, data->line, -1))
+	if (!temp || ft_strncmp(temp, data->line, -1))
+	{
+		add_history(data->line);
 		ft_add_line(data->history, data->line, A_END);
+	}
 	free(temp);
 }
