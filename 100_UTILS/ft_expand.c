@@ -40,27 +40,29 @@ static void	secure_free(t_rlines *split, t_data *data, t_ints *info)
 	ft_free_slines(&(data->input));
 }
 
-static void	split_space2(char **line, char **var, t_ints *info)
+static void	split_space2(char ***line, char **var, t_ints *info)
 {
 	t_data		*data;
 	t_rlines	split;
 	int			len;
 
 	split = ft_split(*var, ' ');
-	free(*var);
 	data = ft_get_tdata();
 	if (!split)
 		return ((void)ft_printf_err("Internal Error:ft_split()", 2));
 	len = ft_rlines_len(split);
-	free(*line);
-	*line = split[++(info->tmp2)];
+	ft_rlines_delete(&(data->input[info->tmp]), info->tmp1);
 	while (++(info->tmp2) < len)
 		if (ft_rlines_add(&(data->input[info->tmp]), split[info->tmp2],
 				info->tmp1 + info->tmp2) == -1)
 			return (secure_free(&split, data, info));
+	free(split);
+	*line = NULL;
+	free(*var);
+	*var = data->input[info->tmp][info->tmp1];
 }
 
-static void	split_space(char **line, char **var, t_ints *info)
+static void	split_space(char ***line, char **var, t_ints *info)
 {
 	char	*tmp;
 	t_ints	i;
@@ -77,7 +79,7 @@ static void	split_space(char **line, char **var, t_ints *info)
 		return (split_space2(line, var, info));
 }
 
-static char	*ft_env_var(char **line, char *var, t_rlines envp, t_ints *info)
+static char	*ft_env_var(char ***line, char *var, t_rlines envp, t_ints *info)
 {
 	char	*output;
 	char	*temp;
@@ -106,41 +108,41 @@ static char	*ft_env_var(char **line, char *var, t_rlines envp, t_ints *info)
 	return (output);
 }
 
-static int	remap2(char **line, char **tmp, char **var, t_ints *i)
+static int	remap2(char ***line, char **tmp, char **var, t_ints *i)
 {
-	if (((!line || !*line) && i->count && i->tmp >= 0 && i->tmp1 >= 0)
+	if ((!*line && i->count && i->tmp >= 0 && i->tmp1 >= 0)
 		|| !(*tmp))
 		return (sizeof(free(*var)) == sizeof(free(*tmp)));
 	i->k = -1;
 	while (++(i->k) < i->tmp)
-		(*tmp)[i->k] = (*line)[i->k];
+		(*tmp)[i->k] = (**line)[i->k];
 	i->k--;
 	i->x = -1;
 	while ((*var)[++(i->x)])
 		(*tmp)[++(i->k)] = (*var)[i->x];
 	free(*var);
 	i->i--;
-	while ((*line)[++(i->i)])
-		(*tmp)[++(i->k)] = (*line)[i->i];
-	free(*line);
-	*line = *tmp;
+	while ((**line)[++(i->i)])
+		(*tmp)[++(i->k)] = (**line)[i->i];
+	free(**line);
+	**line = *tmp;
 	return (0);
 }
 
-static int	remap(char **line, t_ints *i, t_rlines envp)
+static int	remap(char ***line, t_ints *i, t_rlines envp)
 {
 	t_ints	j;
 	char	*tmp;
 	char	*var;
 
-	if ((*line)[i->i] != '$')
+	if ((**line)[i->i] != '$')
 		return (0);
 	j = (t_ints){.i = i->i, .tmp = i->i};
-	while ((*line)[++(j.i)] && ft_isalnum((*line)[j.i]))
+	while ((**line)[++(j.i)] && ft_isalnum((**line)[j.i]))
 		;
 	if (j.i - i->i - 1 <= 0)
 		return (0);
-	tmp = ft_substr((*line), i->i + 1, j.i - i->i - 1);
+	tmp = ft_substr((**line), i->i + 1, j.i - i->i - 1);
 	if (!tmp)
 		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
 	var = ft_env_var(line, tmp, envp, i);
@@ -148,8 +150,8 @@ static int	remap(char **line, t_ints *i, t_rlines envp)
 	tmp = NULL;
 	if (!var)
 		return (-1);
-	if (line && *line)
-		tmp = ft_calloc((ft_strlen(*line) - (j.i - i->i))
+	if (*line)
+		tmp = ft_calloc((ft_strlen(**line) - (j.i - i->i))
 				+ ft_strlen(var) + 1, 1);
 	i->i += ft_strlen(var) - 1;
 	return (remap2(line, &tmp, &var, &j));
@@ -220,9 +222,9 @@ int	ft_expand_line(char **input, int parent_i, int old_parent_i, t_rlines envp)
 			return (-1);
 		if (i.tmp)
 			continue ;
-		if (remap(input, &i, envp) == -1)
+		if (remap(&input, &i, envp) == -1)
 			return (ft_printf_err("Internal Error%*.", 2));
-		if (!input || !(*input))
+		if (!input)
 			break ;
 	}
 	return (0);
