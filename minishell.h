@@ -66,7 +66,7 @@ int			ft_split_redirec(t_rlines *part, int j);
 	/*	ft_fix_redirections.c */
 int			ft_fix_redirections(t_slines *input);
 	/*	ft_pipe_split.c */
-t_slines	ft_pipe_split(char *line, t_rlines envp);
+t_slines	ft_pipe_split(char *line);
 	/*	ft_fix_order.c */
 int			ft_fix_order(t_slines *input);
 	/*	ft_valid_input.c */
@@ -92,11 +92,9 @@ void		ft_free_all(t_data *data);
 void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);
 /*	ft_expand.c */
-int			ft_expand_line(char **input, int parent1,
-				int parent2, t_rlines envp);
-/*	ft_expand_rlines.c */
-int			ft_expand_rlines(t_rlines *rlines, int parent, t_rlines envp);
-int			ft_expand_slines(t_slines *slines, t_rlines envp);
+int			ft_expand_line(char **input, t_ints *info);
+/*	ft_expand_slines.c */
+int			ft_expand_slines(t_slines *slines);
 /*	ft_tdata.c */
 void		ft_set_tdata(t_data *info);
 t_data		*ft_get_tdata(void);

@@ -193,7 +193,7 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		if (data.line[0])
 		{
-			data.input = ft_pipe_split(data.line, data.envp);
+			data.input = ft_pipe_split(data.line);
 			print_slines_test(data.input);
 			free(data.line);
 			data.line = NULL;

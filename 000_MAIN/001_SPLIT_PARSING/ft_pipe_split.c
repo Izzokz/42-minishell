@@ -81,7 +81,7 @@ static void	*ft_free_input(t_rlines *pre_split, t_slines *split)
 	return (ft_free_slines(split));
 }
 
-t_slines	ft_pipe_split(char *line, t_rlines envp)
+t_slines	ft_pipe_split(char *line)
 {
 	t_rlines	pre_split;
 	t_slines	split;
@@ -105,7 +105,7 @@ t_slines	ft_pipe_split(char *line, t_rlines envp)
 	ft_free_rlines(&pre_split);
 	if (ft_fix_redirections(&split) == -1
 		|| ft_fix_order(&split) == -1
-		|| ft_expand_slines(&split, envp) == -1)
+		|| ft_expand_slines(&split) == -1)
 		return (ft_free_slines(&split));
 	return (split);
 }

@@ -47,19 +47,26 @@ static void	split_space2(char ***line, char **var, t_ints *info)
 	int			len;
 
 	split = ft_split(*var, ' ');
+	free(*var);
+	*var = NULL;
 	data = ft_get_tdata();
 	if (!split)
 		return ((void)ft_printf_err("Internal Error:ft_split()", 2));
 	len = ft_rlines_len(split);
+	split[0] = gnlxio_ft_strjoinfree(&(char *){ft_substr(**line, 0, info->i)},
+			&split[0]);
+	info->i = ft_strlen(split[len - 1]) - 1;
+	split[len - 1] = gnlxio_ft_strjoinfree(&(split[len - 1]),
+			&(char *){ft_strdup(**line + info->j)});
 	ft_rlines_delete(&(data->input[info->tmp]), info->tmp1);
 	while (++(info->tmp2) < len)
-		if (ft_rlines_add(&(data->input[info->tmp]), split[info->tmp2],
+		if (ft_rlines_add(&(data->input[info->height]), split[info->tmp2],
 				info->tmp1 + info->tmp2) == -1)
 			return (secure_free(&split, data, info));
+	info->tmp1 += len - 2;
 	free(split);
 	*line = NULL;
-	free(*var);
-	*var = data->input[info->tmp][info->tmp1];
+	*var = data->input[info->height][info->tmp1];
 }
 
 static void	split_space(char ***line, char **var, t_ints *info)
@@ -75,7 +82,7 @@ static void	split_space(char ***line, char **var, t_ints *info)
 	free(*var);
 	*var = tmp;
 	info->tmp2 = -1;
-	if (info->tmp >= 0 && info->tmp1 >= 0)
+	if (info->height >= 0 && info->tmp1 >= 0)
 		return (split_space2(line, var, info));
 }
 
@@ -129,34 +136,6 @@ static int	remap2(char ***line, char **tmp, char **var, t_ints *i)
 	return (0);
 }
 
-static int	remap(char ***line, t_ints *i, t_rlines envp)
-{
-	t_ints	j;
-	char	*tmp;
-	char	*var;
-
-	if ((**line)[i->i] != '$')
-		return (0);
-	j = (t_ints){.i = i->i, .tmp = i->i};
-	while ((**line)[++(j.i)] && ft_isalnum((**line)[j.i]))
-		;
-	if (j.i - i->i - 1 <= 0)
-		return (0);
-	tmp = ft_substr((**line), i->i + 1, j.i - i->i - 1);
-	if (!tmp)
-		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
-	var = ft_env_var(line, tmp, envp, i);
-	free(tmp);
-	tmp = NULL;
-	if (!var)
-		return (-1);
-	if (*line)
-		tmp = ft_calloc((ft_strlen(**line) - (j.i - i->i))
-				+ ft_strlen(var) + 1, 1);
-	i->i += ft_strlen(var) - 1;
-	return (remap2(line, &tmp, &var, &j));
-}
-
 static int	del_index(char **part, int *i)
 {
 	t_ints	j;
@@ -174,6 +153,43 @@ static int	del_index(char **part, int *i)
 	free(*part);
 	*part = tmp;
 	return (0);
+}
+
+static int	lone_identifier(char **line, int *i)
+{
+	if (ft_isalnum((*line)[*i + 1]))
+		return (0);
+	del_index(line, i);
+	return (1);
+}
+
+static int	remap(char ***line, t_ints *i, t_rlines envp)
+{
+	t_ints	j;
+	char	*tmp;
+	char	*var;
+
+	if ((**line)[i->i] != '$' || lone_identifier(*line, &(i->i)))
+		return (0);
+	j = (t_ints){.i = i->i, .tmp = i->i};
+	while (ft_isalnum((**line)[++(j.i)]))
+		;
+	if (j.i - i->i - 1 <= 0)
+		return (0);
+	tmp = ft_substr((**line), i->i + 1, j.i - i->i - 1);
+	i->j = i->i + j.i;
+	if (!tmp)
+		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+	var = ft_env_var(line, tmp, envp, i);
+	free(tmp);
+	tmp = NULL;
+	if (!var)
+		return (-1);
+	if (*line)
+		tmp = ft_calloc((ft_strlen(**line) - (j.i - i->i))
+				+ ft_strlen(var) + 1, 1);
+	i->i += ft_strlen(var) - 1;
+	return (remap2(line, &tmp, &var, &j));
 }
 
 static int	count_skip(char **line, t_ints *i)
@@ -209,23 +225,29 @@ static int	count_skip(char **line, t_ints *i)
 i.count1 determines if a single quote is opened
 i.count2 determines if a double quote is opened
 */
-int	ft_expand_line(char **input, int parent_i, int old_parent_i, t_rlines envp)
+int	ft_expand_line(char **input, t_ints *info)
 {
-	t_ints	i;
+	t_rlines	envp;
 
-	i = (t_ints){.i = -1, .count1 = 0, .count2 = 0,
-		.tmp = old_parent_i, .tmp1 = parent_i};
-	while ((*input)[++(i.i)])
+	envp = ((t_data *)ft_get_tdata())->envp;
+	info->count1 = 0;
+	info->count2 = 0;
+	while ((*input)[++(info->i)])
 	{
-		i.tmp = count_skip(input, &i);
-		if (i.tmp == -1)
+		info->tmp = count_skip(input, info);
+		if (info->tmp == -1)
 			return (-1);
-		if (i.tmp)
+		if (info->tmp)
 			continue ;
-		if (remap(&input, &i, envp) == -1)
+		if (remap(&input, info, envp) == -1)
 			return (ft_printf_err("Internal Error%*.", 2));
 		if (!input)
 			break ;
+		else if (!(*input)[info->i + 1])
+		{
+			info->i = -1;
+			break ;
+		}
 	}
 	return (0);
 }
