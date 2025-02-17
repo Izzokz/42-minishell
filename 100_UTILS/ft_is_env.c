@@ -45,15 +45,17 @@ int	ft_is_env(char *var)
 	t_rlines	envp;
 	char		*lim;
 	int			i;
+	int			len;
 
 	envp = ((t_data *)ft_get_tdata())->envp;
 	lim = ft_strjoin(var, "=");
 	if (!lim)
 		return (ft_printf_err("Internal Error:ft_strjoin(%*.)", 2) + 1);
 	i = -1;
+	len = ft_strlen(lim);
 	while (envp[++i])
 	{
-		if (ft_strnstr(envp[i], lim, 5))
+		if (ft_strnstr(envp[i], lim, len))
 		{
 			free(lim);
 			return (1);

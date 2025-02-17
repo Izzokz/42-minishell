@@ -52,9 +52,10 @@ static void	split_space2(char ***line, char **var, t_ints *info)
 	data = ft_get_tdata();
 	if (!split)
 		return ((void)ft_printf_err("Internal Error:ft_split()", 2));
+	*var = split[0];
 	len = ft_rlines_len(split);
-	split[0] = gnlxio_ft_strjoinfree(&(char *){ft_substr(**line, 0, info->i)},
-			&split[0]);
+	split[0] = gnlxio_ft_strjoinfree(&(char *){ft_substr(**line, 0,
+				info->i + 1)}, &split[0]);
 	info->i = ft_strlen(split[len - 1]) - 2;
 	split[len - 1] = gnlxio_ft_strjoinfree(&(split[len - 1]),
 			&(char *){gnlxio_ft_strdup(**line + info->j)});
@@ -66,7 +67,6 @@ static void	split_space2(char ***line, char **var, t_ints *info)
 	info->tmp1 += len - 2;
 	free(split);
 	*line = NULL;
-	*var = data->input[info->height][info->tmp1];
 }
 
 static void	split_space(char ***line, char **var, t_ints *info)
@@ -108,7 +108,7 @@ static int	remap2(char ***line, char **tmp, char **var, t_ints *j)
 	if (!*tmp)
 		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
 	j->k = -1;
-	while (++(j->k) < j->tmp)
+	while (++(j->k) < j->tmp + 1)
 		(*tmp)[j->k] = (**line)[j->k];
 	j->k--;
 	j->x = -1;
@@ -153,7 +153,7 @@ static int	remap(char ***line, t_ints *i)
 		;
 	if (j.i == i->i + 1)
 		return (0);
-	tmp = ft_substr((**line), ++(i->i), j.i - i->i);
+	tmp = ft_substr((**line), i->i + 1, j.i - (i->i + 1));
 	if (!tmp)
 		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
 	var = ft_env_var(line, tmp, i, j.i);
@@ -162,7 +162,7 @@ static int	remap(char ***line, t_ints *i)
 	if (!var)
 		return (-1);
 	if (*line)
-		tmp = ft_calloc((ft_strlen(**line) - (j.i - i->i))
+		tmp = ft_calloc((ft_strlen(**line) - (j.i - (i->i + 1)))
 				+ ft_strlen(var) + 1, 1);
 	return (remap2(line, &tmp, &var, &j));
 }
@@ -209,11 +209,10 @@ int	ft_expand_line(char **input, t_ints *info)
 		info->tmp = count_skip(input, info);
 		if (info->tmp == -1)
 			return (-1);
-		if (info->tmp)
-			continue ;
-		if ((*input)[info->i] == '$' && del_index(input, &(info->i)) != -1)
-			if (remap(&input, info) == -1)
-				return (ft_printf_err("Internal Error%*.", 2));
+		if (!(info->tmp))
+			if ((*input)[info->i] == '$' && del_index(input, &(info->i)) != -1)
+				if (remap(&input, info) == -1)
+					return (ft_printf_err("Internal Error%*.", 2));
 		if (!input)
 			break ;
 		else if (!(*input)[info->i + 1])
