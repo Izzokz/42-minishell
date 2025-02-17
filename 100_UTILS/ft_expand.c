@@ -55,9 +55,9 @@ static void	split_space2(char ***line, char **var, t_ints *info)
 	len = ft_rlines_len(split);
 	split[0] = gnlxio_ft_strjoinfree(&(char *){ft_substr(**line, 0, info->i)},
 			&split[0]);
-	info->i = ft_strlen(split[len - 1]) - 1;
+	info->i = ft_strlen(split[len - 1]) - 2;
 	split[len - 1] = gnlxio_ft_strjoinfree(&(split[len - 1]),
-			&(char *){ft_strdup(**line + info->j)});
+			&(char *){gnlxio_ft_strdup(**line + info->j)});
 	ft_rlines_delete(&(data->input[info->tmp]), info->tmp1);
 	while (++(info->tmp2) < len)
 		if (ft_rlines_add(&(data->input[info->height]), split[info->tmp2],
@@ -86,51 +86,38 @@ static void	split_space(char ***line, char **var, t_ints *info)
 		return (split_space2(line, var, info));
 }
 
-static char	*ft_env_var(char ***line, char *var, t_rlines envp, t_ints *info)
+static char	*ft_env_var(char ***line, char *var, t_ints *info, int i)
 {
 	char	*output;
-	char	*temp;
-	int		len;
-	int		i;
 
-	info->count = ft_is_env(var);
-	temp = gnlxio_ft_strjoinfree(&(char *){ft_strdup(var)},
-			&(char *){ft_strdup("=")});
-	if (!temp)
-	{
-		ft_printf_err("Internal Error:ft_realloc(%*.)", 2);
-		return (NULL);
-	}
-	output = NULL;
-	len = ft_strlen(temp);
-	i = -1;
-	while (!output && envp[++i])
-		if (ft_strnstr(envp[i], temp, len))
-			output = ft_substr(envp[i], len, -1);
-	free(temp);
-	if (!(info->count))
+	if (!ft_is_env(var))
 		return (ft_calloc(1, 1));
-	if (!info->count2)
+	output = ft_pick_env(var);
+	if (!info->count2 && output)
+	{
+		info->j = i;
 		split_space(line, &output, info);
+	}
 	return (output);
 }
 
-static int	remap2(char ***line, char **tmp, char **var, t_ints *i)
+static int	remap2(char ***line, char **tmp, char **var, t_ints *j)
 {
-	if ((!*line && i->count && i->tmp >= 0 && i->tmp1 >= 0)
-		|| !(*tmp))
+	if (!*line)
 		return (sizeof(free(*var)) == sizeof(free(*tmp)));
-	i->k = -1;
-	while (++(i->k) < i->tmp)
-		(*tmp)[i->k] = (**line)[i->k];
-	i->k--;
-	i->x = -1;
-	while ((*var)[++(i->x)])
-		(*tmp)[++(i->k)] = (*var)[i->x];
+	if (!*tmp)
+		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
+	j->k = -1;
+	while (++(j->k) < j->tmp)
+		(*tmp)[j->k] = (**line)[j->k];
+	j->k--;
+	j->x = -1;
+	while ((*var)[++(j->x)])
+		(*tmp)[++(j->k)] = (*var)[j->x];
 	free(*var);
-	i->i--;
-	while ((**line)[++(i->i)])
-		(*tmp)[++(i->k)] = (**line)[i->i];
+	j->i--;
+	while ((**line)[++(j->i)])
+		(*tmp)[++(j->k)] = (**line)[j->i];
 	free(**line);
 	**line = *tmp;
 	return (0);
@@ -155,32 +142,21 @@ static int	del_index(char **part, int *i)
 	return (0);
 }
 
-static int	lone_identifier(char **line, int *i)
-{
-	if (ft_isalnum((*line)[*i + 1]))
-		return (0);
-	del_index(line, i);
-	return (1);
-}
-
-static int	remap(char ***line, t_ints *i, t_rlines envp)
+static int	remap(char ***line, t_ints *i)
 {
 	t_ints	j;
 	char	*tmp;
 	char	*var;
 
-	if ((**line)[i->i] != '$' || lone_identifier(*line, &(i->i)))
-		return (0);
 	j = (t_ints){.i = i->i, .tmp = i->i};
 	while (ft_isalnum((**line)[++(j.i)]))
 		;
-	if (j.i - i->i - 1 <= 0)
+	if (j.i == i->i + 1)
 		return (0);
-	tmp = ft_substr((**line), i->i + 1, j.i - i->i - 1);
-	i->j = i->i + j.i;
+	tmp = ft_substr((**line), ++(i->i), j.i - i->i);
 	if (!tmp)
 		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
-	var = ft_env_var(line, tmp, envp, i);
+	var = ft_env_var(line, tmp, i, j.i);
 	free(tmp);
 	tmp = NULL;
 	if (!var)
@@ -188,7 +164,6 @@ static int	remap(char ***line, t_ints *i, t_rlines envp)
 	if (*line)
 		tmp = ft_calloc((ft_strlen(**line) - (j.i - i->i))
 				+ ft_strlen(var) + 1, 1);
-	i->i += ft_strlen(var) - 1;
 	return (remap2(line, &tmp, &var, &j));
 }
 
@@ -227,9 +202,6 @@ i.count2 determines if a double quote is opened
 */
 int	ft_expand_line(char **input, t_ints *info)
 {
-	t_rlines	envp;
-
-	envp = ((t_data *)ft_get_tdata())->envp;
 	info->count1 = 0;
 	info->count2 = 0;
 	while ((*input)[++(info->i)])
@@ -239,8 +211,9 @@ int	ft_expand_line(char **input, t_ints *info)
 			return (-1);
 		if (info->tmp)
 			continue ;
-		if (remap(&input, info, envp) == -1)
-			return (ft_printf_err("Internal Error%*.", 2));
+		if ((*input)[info->i] == '$' && del_index(input, &(info->i)) != -1)
+			if (remap(&input, info) == -1)
+				return (ft_printf_err("Internal Error%*.", 2));
 		if (!input)
 			break ;
 		else if (!(*input)[info->i + 1])
