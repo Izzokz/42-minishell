@@ -68,7 +68,8 @@ int	ft_expand_line(char **input, t_ints *info)
 {
 	info->count1 = 0;
 	info->count2 = 0;
-	if (info->i == -1 && (*input)[info->i + 1] == '<' && (*input)[info->i + 2] == '<')
+	if (info->i == -1 && (*input)[info->i + 1] == '<'
+		&& (*input)[info->i + 2] == '<')
 		return (0);
 	while ((*input)[++(info->i)])
 	{
@@ -76,7 +77,9 @@ int	ft_expand_line(char **input, t_ints *info)
 		if (info->tmp == -1)
 			return (-1);
 		if (!(info->tmp))
-			if ((*input)[info->i] == '$' && del_index(input, &(info->i)) != -1)
+			if ((*input)[info->i] == '$' && (ft_isalnum((*input)[info->i + 1])
+					|| (*input)[info->i + 1] == '?')
+				&& del_index(input, &(info->i)) != -1)
 				if (remap(&input, info) == -1)
 					return (ft_printf_err("Internal Error%*.", 2));
 		if (!input)

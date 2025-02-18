@@ -16,6 +16,8 @@ static char	*ft_env_var(char ***line, char *var, t_ints *info, int i)
 {
 	char	*output;
 
+	if (var[0] == '?')
+		return (ft_itoa(errno));
 	if (!ft_is_env(var))
 		return (ft_calloc(1, 1));
 	output = ft_pick_env(var);
@@ -58,7 +60,7 @@ int	remap(char ***line, t_ints *i)
 	j = (t_ints){.i = i->i, .tmp = i->i};
 	while (ft_isalnum((**line)[++(j.i)]))
 		;
-	if (j.i == i->i + 1)
+	if (j.i == i->i + 1 && (**line)[++j.i - 1] != '?')
 		return (0);
 	tmp = ft_substr((**line), i->i + 1, j.i - (i->i + 1));
 	if (!tmp)
