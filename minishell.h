@@ -91,9 +91,12 @@ void		ft_free_all(t_data *data);
 /*	ft_path.c */
 void		ft_set_path(t_data *data);
 char		*ft_get_path(char *filename, char **all_path);
-/*	ft_expand.c */
-int			ft_expand_line(char **input, t_ints *info);
+/*	ft_expand_split.c */
+void		split_space(char ***line, char **var, t_ints *info);
+/*	ft_expand_remap.c */
+int			remap(char ***line, t_ints *i);
 /*	ft_expand_slines.c */
+int			ft_expand_line(char **input, t_ints *info);
 int			ft_expand_slines(t_slines *slines);
 /*	ft_tdata.c */
 void		ft_set_tdata(t_data *info);

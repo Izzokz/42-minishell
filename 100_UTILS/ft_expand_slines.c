@@ -12,6 +12,82 @@
 
 #include "minishell.h"
 
+static int	del_index(char **part, int *i)
+{
+	t_ints	j;
+	char	*tmp;
+
+	tmp = ft_calloc(ft_strlen(*part), sizeof(char));
+	if (!tmp)
+		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
+	j = (t_ints){.i = -1, .j = -1};
+	while ((*part)[++(j.i)])
+		if (j.i != *i)
+			tmp[++(j.j)] = (*part)[j.i];
+	if ((*part)[*i] != '\\')
+		(*i)--;
+	free(*part);
+	*part = tmp;
+	return (0);
+}
+
+static int	count_skip(char **line, t_ints *i)
+{
+	if (!(i->count2) && (*line)[i->i] == '\'')
+	{
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		while ((*line)[++(i->i)] && (*line)[i->i] != '\'')
+			;
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		return (1);
+	}
+	else if ((*line)[i->i] == '\\' && ((*line)[i->i + 1] == '"'
+			|| (*line)[i->i + 1] == '\\'))
+	{
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		return (1);
+	}
+	else if ((*line)[i->i] == '"')
+	{
+		i->count2 = !(i->count2);
+		if (del_index(line, &(i->i)) == -1)
+			return (-1);
+		return (1);
+	}
+	return (0);
+}
+
+/*
+i.count1 determines if a single quote is opened
+i.count2 determines if a double quote is opened
+*/
+int	ft_expand_line(char **input, t_ints *info)
+{
+	info->count1 = 0;
+	info->count2 = 0;
+	while ((*input)[++(info->i)])
+	{
+		info->tmp = count_skip(input, info);
+		if (info->tmp == -1)
+			return (-1);
+		if (!(info->tmp))
+			if ((*input)[info->i] == '$' && del_index(input, &(info->i)) != -1)
+				if (remap(&input, info) == -1)
+					return (ft_printf_err("Internal Error%*.", 2));
+		if (!input)
+			break ;
+		else if (!(*input)[info->i + 1])
+		{
+			info->i = -1;
+			break ;
+		}
+	}
+	return (0);
+}
+
 static int	ft_expand_rlines(t_rlines *input, t_ints *info)
 {
 	*info = (t_ints){.height = info->height, .tmp1 = -1, .i = -1};

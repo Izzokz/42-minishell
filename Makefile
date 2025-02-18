@@ -19,7 +19,8 @@ MAIN2SRC = $(MAIN2DIR)ft_exec.c \
 	$(MAIN2DIR)ft_pipeline_function_set.c
 UTILSSRC = $(UTILSDIR)ft_free_all.c \
 	$(UTILSDIR)ft_path.c \
-	$(UTILSDIR)ft_expand.c \
+	$(UTILSDIR)ft_expand_split.c \
+	$(UTILSDIR)ft_expand_remap.c \
 	$(UTILSDIR)ft_expand_slines.c \
 	$(UTILSDIR)ft_tdata.c \
 	$(UTILSDIR)ft_is_env.c
