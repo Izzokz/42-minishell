@@ -15,25 +15,10 @@
 static int	ft_set_cmd(t_data *data, t_ints *i)
 {
 	t_rlines	dup;
-	char		*tmp;
-	int			len;
 
-	len = i->count;
-	if (!len)
-		return (0);
-	dup = ft_calloc(1, sizeof(char *));
+	dup = ft_rlines_dup(data->input + i->i + i->j);
 	if (!dup)
 		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
-	len = i->j - len - 1;
-	while (data->input[i->i][++len])
-	{
-		tmp = ft_strdup(data->input[i->i][++len]);
-		if (!tmp || ft_rlines_add(&dup, tmp, A_END) == -1)
-		{
-			free(tmp);
-			return (-1);
-		}
-	}
 	if (!ft_add_pipeline(data->pipeline, ft_exec, &dup, ft_free_tab))
 		data->pipeline = ft_new_pipeline(ft_exec, &dup, ft_free_tab);
 	return (0);
@@ -47,8 +32,6 @@ static int	ft_set_redirec(t_data *data, char *filename,
 	dup = ft_strdup(filename);
 	if (!dup)
 		return (-1);
-	if (i->count)
-		ft_set_cmd(data, i);
 	if (!ft_add_pipeline(data->pipeline, func, dup, free))
 		data->pipeline = ft_new_pipeline(func, dup, free);
 	return (0);
@@ -57,21 +40,19 @@ static int	ft_set_redirec(t_data *data, char *filename,
 static int	ft_set_operation(t_data *data, t_ints *i)
 {
 	if (data->input[i->i][i->j][0] == '<' && data->input[i->i][i->j][1] == '<')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 2,
+		return (ft_set_redirec(data, data->input + i->i + i->j + 2,
 			ft_here_doc, i));
 	else if (data->input[i->i][i->j][0] == '<')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 1,
+		return (ft_set_redirec(data, data->input + i->i + i->j + 1,
 			ft_open_read, i));
 	else if (data->input[i->i][i->j][0] == '>'
 		&& data->input[i->i][i->j][1] == '>')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 2,
+		return (ft_set_redirec(data, data->input + i->i + i->j + 2,
 			ft_open_append, i));
 	else if (data->input[i->i][i->j][0] == '>')
-		return (ft_set_redirec(data, data->input[i->i][i->j] + 1,
+		return (ft_set_redirec(data, data->input + i->i + i->j + 1,
 			ft_open_trunc, i));
 	else
-		i->count++;
-	if (!data->input[i->i][i->j + 1])
 		return (ft_set_cmd(data, i));
 	return (0);
 }

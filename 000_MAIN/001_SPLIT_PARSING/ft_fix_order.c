@@ -41,11 +41,11 @@ static int	reorder(t_rlines *part, t_rlines *tmp, int pos)
 				if (add_to_tmp(tmp, (*part)[i]) == -1)
 					return (!!ft_free_rlines(tmp) - 1);
 		if (pos == 3)
-			if ((*part)[i][0] != '<' && (*part)[i][0] != '>')
+			if ((*part)[i][0] == '>')
 				if (add_to_tmp(tmp, (*part)[i]) == -1)
 					return (!!ft_free_rlines(tmp) - 1);
 		if (pos == 4)
-			if ((*part)[i][0] == '>')
+			if ((*part)[i][0] != '<' && (*part)[i][0] != '>')
 				if (add_to_tmp(tmp, (*part)[i]) == -1)
 					return (!!ft_free_rlines(tmp) - 1);
 	}

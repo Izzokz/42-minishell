@@ -68,6 +68,8 @@ int	ft_expand_line(char **input, t_ints *info)
 {
 	info->count1 = 0;
 	info->count2 = 0;
+	if (info->i == -1 && (*input)[info->i + 1] == '<' && (*input)[info->i + 2] == '<')
+		return (0);
 	while ((*input)[++(info->i)])
 	{
 		info->tmp = count_skip(input, info);
