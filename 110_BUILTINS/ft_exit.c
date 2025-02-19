@@ -99,6 +99,8 @@ void	ft_exit(t_data *data, t_rlines cmd)
 	}
 	else if (len == 2)
 		errno = (char)exit_id;
+	if (!data->input || ft_slines_rlen(data->input) == 1)
+		ft_printf("exit\n");
 	ft_free_all(data);
 	exit(errno);
 }

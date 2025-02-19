@@ -16,10 +16,14 @@ static void	handler(int n)
 {
 	if (n == SIGINT)
 	{
+		errno = 130;
 		ft_printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
+		if (!(((t_data *)ft_get_tdata())->input))
+		{
+			rl_on_new_line();
+			rl_replace_line("", 0);
+			rl_redisplay();
+		}
 	}
 }
 
@@ -207,7 +211,6 @@ int	main(int argc, char **argv, char **envp)
 		free(data.line);
 		data.line = NULL;
 	}
-	ft_free_all(&data);
-	ft_printf("exit\n");
+	ft_exit(&data, NULL);
 	return (0);
 }

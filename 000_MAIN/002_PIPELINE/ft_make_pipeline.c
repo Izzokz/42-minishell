@@ -41,17 +41,17 @@ static int	ft_set_operation(t_data *data, t_ints *i)
 {
 	if (data->input[i->i][i->j][0] == '<' && data->input[i->i][i->j][1] == '<')
 		return (ft_set_redirec(data, data->input + i->i + i->j + 2,
-			ft_here_doc, i));
+				ft_here_doc, i));
 	else if (data->input[i->i][i->j][0] == '<')
 		return (ft_set_redirec(data, data->input + i->i + i->j + 1,
-			ft_open_read, i));
+				ft_open_read, i));
 	else if (data->input[i->i][i->j][0] == '>'
 		&& data->input[i->i][i->j][1] == '>')
 		return (ft_set_redirec(data, data->input + i->i + i->j + 2,
-			ft_open_append, i));
+				ft_open_append, i));
 	else if (data->input[i->i][i->j][0] == '>')
 		return (ft_set_redirec(data, data->input + i->i + i->j + 1,
-			ft_open_trunc, i));
+				ft_open_trunc, i));
 	else
 		return (ft_set_cmd(data, i));
 	return (0);
