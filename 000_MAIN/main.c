@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/13 15:19:47 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:34:27 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,8 +108,9 @@ static char	*ft_generate_prompt(t_data *data, char *path)
 	shlvl = ft_pick_env("SHLVL");
 	if (!shlvl)
 		shlvl = ft_strdup("UNK");
-	prompt = gnlxio_ft_strjoinfree(&(char *){ft_strdup(MINI)},
-			&(char *){ft_strdup(USER)});
+	prompt = gnlxio_ft_strjoinfree(&(char *){ft_strdup(MI)},
+			&(char *){ft_strdup(NI)});
+	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(USER)});
 	prompt = gnlxio_ft_strjoinfree(&prompt, &(char *){ft_strdup(data->user)});
 	if (shlvl)
 	{

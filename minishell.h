@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/13 15:19:27 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:41:25 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@
 # include <sys/wait.h>
 # include <termios.h>
 
-# define MINI "\e[1;34m[\e[1;31mm\e[1;32mi\e[1;33mn\e[1;34mi\e[1;35mPK\e[1;34m]"
+# define MI "\1\e[1;34m[\e[1;31mm\e[1;32mi"
+# define NI "\e[1;33mn\e[1;34mi\e[1;35mPK\e[1;34m]"
 # define USER "\e[1;33m@"
 # define SHLVL " \e[1;32m[Lv. "
 # define PBEG " \e[1;35m{"
-# define PEND "} \e[1;31m»\e[0;97m "
+# define PEND "} \e[1;31m»\e[0;97m \2"
 
 # define ERRORCD "\e[1;31m[Minishell] \e[0;97mNo such file or directory\e[0m\n"
 
