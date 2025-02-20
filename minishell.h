@@ -40,12 +40,14 @@ typedef struct s_data
 	char				*history;
 	int					pid;
 	int					pipe[2];
+	int					input_fd;
+	int					output_fd;
 	int					swap_pipe;
 	int					fd;
 	int					exe;
 	t_rlines			envp;
 	t_slines			input;
-	struct s_pipeline	*pipeline;
+	struct s_pipeline	**pipeline;
 	struct sigaction	usr;
 }	t_data;
 
@@ -83,6 +85,7 @@ int			ft_make_pipeline(t_data *data);
 t_pipeline	*ft_new_pipeline(int (*func)(t_data *, void *),
 				void *param, void (*free)());
 void		ft_destroy_pipeline(t_pipeline *start);
+void		ft_destroy_all_pipelines(t_pipeline **all);
 int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 				void *param, void (*free)());
 

@@ -19,8 +19,8 @@ static int	ft_set_cmd(t_data *data, t_ints *i)
 	dup = ft_rlines_dup(data->input + i->i + i->j);
 	if (!dup)
 		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
-	if (!ft_add_pipeline(data->pipeline, ft_exec, &dup, ft_free_tab))
-		data->pipeline = ft_new_pipeline(ft_exec, &dup, ft_free_tab);
+	if (!ft_add_pipeline(data->pipeline[i->i], ft_exec, &dup, ft_free_tab))
+		data->pipeline[i->i] = ft_new_pipeline(ft_exec, &dup, ft_free_tab);
 	return (0);
 }
 
@@ -32,8 +32,8 @@ static int	ft_set_redirec(t_data *data, char *filename,
 	dup = ft_strdup(filename);
 	if (!dup)
 		return (-1);
-	if (!ft_add_pipeline(data->pipeline, func, dup, free))
-		data->pipeline = ft_new_pipeline(func, dup, free);
+	if (!ft_add_pipeline(data->pipeline[i->i], func, dup, free))
+		data->pipeline[i->i] = ft_new_pipeline(func, dup, free);
 	return (0);
 }
 
@@ -61,6 +61,13 @@ int	ft_make_pipeline(t_data *data)
 {
 	t_ints	i;
 
+	data->pipeline = ft_calloc(ft_slines_rlen(data->input) + 1,
+			sizeof(t_pipeline *));
+	if (!(data->pipeline))
+	{
+		ft_printf_err("Internal Error:ft_calloc(%*.)", 2);
+		return (-1);
+	}
 	i.i = -1;
 	while (data->input[++(i.i)])
 	{
@@ -70,7 +77,7 @@ int	ft_make_pipeline(t_data *data)
 		{
 			if (ft_set_operation(data, &i) == -1)
 			{
-				ft_destroy_pipeline(data->pipeline);
+				ft_destroy_all_pipelines(data->pipeline);
 				data->pipeline = NULL;
 				break ;
 			}

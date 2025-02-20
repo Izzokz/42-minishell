@@ -42,6 +42,15 @@ void	ft_destroy_pipeline(t_pipeline *start)
 	}
 }
 
+void	ft_destroy_all_pipelines(t_pipeline **all)
+{
+	int	i;
+
+	i = -1;
+	while (all[++i])
+		ft_destroy_pipeline(all[i]);
+}
+
 int	ft_add_pipeline(t_pipeline *start, int (*func)(t_data *, void *),
 	void *param, void (*free)())
 {
