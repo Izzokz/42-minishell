@@ -23,6 +23,8 @@ int	ft_unset(t_data *data, t_rlines cmd)
 	ints.i = 0;
 	while (cmd[++ints.i])
 	{
+		if (!ft_strncmp(cmd[ints.i], "PATH", -1))
+			ft_free_rlines(&(data->path));
 		cmd[ints.i] = gnlxio_ft_strjoinfree(&cmd[ints.i],
 				&(char *){ft_strdup("=")});
 		ints.j = -1;

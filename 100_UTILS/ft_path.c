@@ -32,17 +32,6 @@ static void	ft_realloc(char **buffer, unsigned int ext)
 	free(temp_buffer);
 }
 
-static char	*get_in_dir(char *filename)
-{
-	char	*path;
-
-	path = ft_calloc(1000, sizeof(char));
-	getcwd(path, 1000);
-	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup("/")});
-	path = gnlxio_ft_strjoinfree(&path, &(char *){ft_strdup(filename)});
-	return (path);
-}
-
 void	ft_set_path(t_data *data)
 {
 	char	*path_line;
@@ -79,22 +68,22 @@ char	*ft_get_path(char *file, char **all_path)
 
 	if (!ft_strncmp(file, "exit", -1))
 		return (ft_strdup(file));
-	if (file[0] == '/')
+	if (file[0] == '/' || file[0] == '.')
 		if (access(file, X_OK) != -1)
 			return (ft_strdup(file));
 	i = -1;
-	while (all_path && all_path[++i])
+	if (all_path)
 	{
-		path = ft_strjoin(all_path[i], file);
-		if (!path)
-			return (NULL);
-		if (access(path, X_OK) != -1)
-			return (path);
-		free(path);
+		while (all_path[++i])
+		{
+			path = ft_strjoin(all_path[i], file);
+			if (!path)
+				return (NULL);
+			if (access(path, X_OK) != -1)
+				return (path);
+			free(path);
+		}
 	}
-	if (ft_strlen(file) > 1 && file[0] == '.' && file[1] == '/'
-		&& access(file, X_OK) != -1)
-		return (get_in_dir(file));
 	ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s: not found\e[0m\n", 2, file);
 	return (NULL);
 }
