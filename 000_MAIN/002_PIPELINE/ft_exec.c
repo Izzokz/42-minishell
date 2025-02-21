@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:55:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/08 13:51:38 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:08:46 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	ft_exec(t_data *data, t_rlines cmd)
 		return (ft_printf_err("Internal Error:fork(%*.)", 2));
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		path = ft_get_path(cmd[0], data->path);
 		if (path && ft_strncmp(cmd[0], "exit", -1))
 			execve(path, cmd, data->envp);
