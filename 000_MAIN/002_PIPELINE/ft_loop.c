@@ -36,8 +36,8 @@ int	ft_loop(t_data *data)
 
 	i.i = -1;
 	data->swap_pipe = -1;
-	data->input_fd = -2; // if -1 : err; else if -2 : unset
-	data->output_fd = -2; // if -1 : err; else if -2 : unset
+	data->input_fd = -42; // if -1 : err; else if -42 : unset
+	data->output_fd = -42; // if -1 : err; else if -42 : unset
 	while (data->input[++(i.i)])
 	{
 		i.j = -1;

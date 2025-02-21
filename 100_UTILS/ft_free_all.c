@@ -17,7 +17,13 @@ void	ft_free_all(t_data *data)
 	ft_free_rlines(&data->envp);
 	ft_free_slines(&data->input);
 	ft_free_rlines(&data->path);
+	if (data->pipeline)
+		ft_destroy_all_pipelines(data->pipeline);
 	free(data->line);
 	free(data->user);
 	free(data->history);
+	if (data->input_fd >= 0)
+		close(data->input_fd);
+	if (data->output_fd >= 0)
+		close(data->output_fd);
 }

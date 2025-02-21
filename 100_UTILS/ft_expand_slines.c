@@ -75,7 +75,7 @@ int	ft_expand_line(char **input, t_ints *info)
 	{
 		info->tmp = count_skip(input, info);
 		if (info->tmp == -1)
-			return (-1);
+			return (ft_printf_err("Internal Error%*.", 2));
 		if (!(info->tmp))
 			if ((*input)[info->i] == '$' && (ft_isalnum((*input)[info->i + 1])
 					|| (*input)[info->i + 1] == '?')
