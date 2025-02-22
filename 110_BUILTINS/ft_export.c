@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/19 14:46:06 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:54:20 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,51 @@ static int	ft_print_export(t_data *data)
 {
 	char		*max;
 	t_ints		num;
-	t_rlines	envp;
+	t_rlines	var;
 
-	envp = ft_rlines_dup(data->envp);
-	num.len = ft_rlines_len(envp);
+	var = ft_rlines_dup(data->var);
+	num.len = ft_rlines_len(var);
 	while (--num.len >= 0)
 	{
 		max = "\0";
 		num = (t_ints){.count = num.len + 1, .j = num.len, .len = num.len};
 		while (--num.count >= 0)
 		{
-			if (is_greater(envp[num.count], max))
+			if (is_greater(var[num.count], max))
 			{
-				max = envp[num.count];
+				max = var[num.count];
 				num.i = num.count;
 			}
 		}
-		max = envp[num.i];
-		envp[num.i] = envp[num.j];
-		envp[num.j] = max;
+		max = var[num.i];
+		var[num.i] = var[num.j];
+		var[num.j] = max;
 	}
-	ft_printf("declare -x %*[\ndeclare -x ]s\n", envp);
-	ft_free_rlines(&envp);
+	ft_printf("declare -x %*[\ndeclare -x ]s\n", var);
+	ft_free_rlines(&var);
 	return (0);
+}
+
+static void ft_export_var(t_data *data, t_rlines cmd, t_ints *ints)
+{
+	ints->k = -1;
+	ints->count = 0;
+	while (data->var[++ints->k])
+	{
+		ints->count1 = ft_strncmp(data->var[ints->k], dup, ft_strlen(dup));
+		if (!ints->count1)
+		{
+			ints->count++;
+			break ;
+		}
+	}
+	if (ints->count)
+	{
+		free(data->var[ints->k]);
+		data->var[ints->k] = ft_strdup(cmd[ints->i]);
+	}
+	else
+		ft_rlines_add(&(data->var), dup, A_END);
 }
 
 int	ft_export(t_data *data, t_rlines cmd)
@@ -106,6 +128,8 @@ int	ft_export(t_data *data, t_rlines cmd)
 	while (cmd[++(ints.i)])
 	{
 		ints.j = ft_chr(cmd[ints.i]);
+		if (!ft_isdigit(cmd[ints.i][0]))
+			ft_export_var(data, cmd, &ints);
 		if (ints.j)
 		{
 			dup = ft_substr(cmd[ints.i], 0, ints.j + 1);

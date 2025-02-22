@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/20 15:10:41 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:21:55 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_data
 	int					fd;
 	int					exe;
 	t_rlines			envp;
+	t_rlines			var;
 	t_slines			input;
 	struct s_pipeline	**pipeline;
 	struct sigaction	usr;

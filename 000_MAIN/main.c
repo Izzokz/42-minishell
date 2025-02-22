@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/19 15:34:27 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/22 15:23:36 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static int	set_data(t_data *data, char **envp)
 	data->envp = NULL;
 	data->path = NULL;
 	data->envp = ft_rlines_dup(envp);
+	data->var = ft_rlines_dup(envp);
 	if (!invalid_rlines(envp) && invalid_rlines(data->envp))
 		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
 	ft_get_user(data);

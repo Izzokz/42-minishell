@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:55:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/21 14:08:46 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:45:05 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ static int	handle_builtins(t_data *data, t_rlines cmd)
 	return (-1);
 }
 
+static void	ft_handler(int n)
+{
+	(void)n;
+	signal(SIGQUIT, SIG_DFL);
+	kill(0, SIGQUIT);
+	write(0, "Quit\n", 5);
+}
+
 int	ft_exec(t_data *data, t_rlines cmd)
 {
 	int		pid;
@@ -59,7 +67,8 @@ int	ft_exec(t_data *data, t_rlines cmd)
 		return (ft_printf_err("Internal Error:fork(%*.)", 2));
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
+		signal(SIGQUIT, ft_handler);
+		signal(SIGINT, SIG_DFL);
 		path = ft_get_path(cmd[0], data->path);
 		if (path && ft_strncmp(cmd[0], "exit", -1))
 			execve(path, cmd, data->envp);
