@@ -33,7 +33,7 @@ static int	del_index(char **part, int *i)
 
 static int	count_skip(char **line, t_ints *i)
 {
-	if (!(i->count2) && (*line)[i->i] == '\'')
+	if (i->tmp1 != 42 && !(i->count2) && (*line)[i->i] == '\'')
 	{
 		if (del_index(line, &(i->i)) == -1)
 			return (-1);
@@ -43,14 +43,14 @@ static int	count_skip(char **line, t_ints *i)
 			return (-1);
 		return (1);
 	}
-	else if ((*line)[i->i] == '\\' && ((*line)[i->i + 1] == '"'
+	else if (i->tmp1 != 42 && (*line)[i->i] == '\\' && ((*line)[i->i + 1] == '"'
 			|| (*line)[i->i + 1] == '\\'))
 	{
 		if (del_index(line, &(i->i)) == -1)
 			return (-1);
 		return (1);
 	}
-	else if ((*line)[i->i] == '"')
+	else if (i->tmp1 != 42 && (*line)[i->i] == '"')
 	{
 		i->count2 = !(i->count2);
 		if (del_index(line, &(i->i)) == -1)

@@ -82,6 +82,5 @@ void	split_space(char ***line, char **var, t_ints *info)
 	free(*var);
 	*var = tmp;
 	info->tmp2 = -1;
-	if (info->height >= 0 && info->tmp1 >= 0)
-		return (split_space2(line, var, info));
+	return (split_space2(line, var, info));
 }
