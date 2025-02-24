@@ -27,6 +27,7 @@ UTILSSRC = $(UTILSDIR)ft_free_all.c \
 BUILTINSSRC = $(BUILTINSDIR)ft_exit.c \
 	$(BUILTINSDIR)ft_pwd.c \
 	$(BUILTINSDIR)ft_export.c \
+	$(BUILTINSDIR)ft_export2.c \
 	$(BUILTINSDIR)ft_unset.c \
 	$(BUILTINSDIR)ft_echo.c \
 	$(BUILTINSDIR)ft_cd.c \

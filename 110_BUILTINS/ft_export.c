@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/24 13:30:18 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:29:13 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static int	ft_chr(char *cmd)
 {
-	t_ints	i;
+	int	i;
 
 	if (ft_isdigit(cmd[0]))
-		return (0);
-	i.i = -1;
-	while (cmd[++(i.i)])
-		if (cmd[i.i] == '=')
-			return (i.i);
+		return (-1);
+	i = -1;
+	while (cmd[++(i)])
+		if (cmd[i] == '=')
+			return (i);
 	return (0);
 }
 
@@ -64,35 +64,6 @@ int	is_greater(char *s1, char *s2)
 	return (0);
 }
 
-static int	ft_print_export(t_data *data)
-{
-	char		*max;
-	t_ints		num;
-	t_rlines	envp;
-
-	envp = ft_rlines_dup(data->envp);
-	num.len = ft_rlines_len(envp);
-	while (--num.len >= 0)
-	{
-		max = "\0";
-		num = (t_ints){.count = num.len + 1, .j = num.len, .len = num.len};
-		while (--num.count >= 0)
-		{
-			if (is_greater(envp[num.count], max))
-			{
-				max = envp[num.count];
-				num.i = num.count;
-			}
-		}
-		max = envp[num.i];
-		envp[num.i] = envp[num.j];
-		envp[num.j] = max;
-	}
-	ft_printf("declare -x %*[\ndeclare -x ]s\n", envp);
-	ft_free_rlines(&envp);
-	return (0);
-}
-
 int	ft_export(t_data *data, t_rlines cmd)
 {
 	t_ints	ints;
@@ -112,6 +83,17 @@ int	ft_export(t_data *data, t_rlines cmd)
 			if (!dup)
 				return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
 			ft_make_export(data, cmd, &ints, dup);
+			dup = ft_substr(cmd[ints.i], 0, ints.j);
+			if (!dup)
+				return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+			ft_make_var(data, cmd, &ints, dup);
+		}
+		else if (ints.j == 0)
+		{
+			dup = ft_substr(cmd[ints.i], 0, -1);
+			if (!dup)
+				return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+			ft_make_var(data, cmd, &ints, dup);
 		}
 		else
 			ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s\e[0m\n", 2,
