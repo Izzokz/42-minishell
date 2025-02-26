@@ -14,8 +14,11 @@ MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
 	$(MAIN1DIR)ft_split_redirec.c \
 	$(MAIN1DIR)ft_fix_order.c \
 	$(MAIN1DIR)ft_valid_input.c
-MAIN2SRC = $(MAIN2DIR)ft_exec.c \
-	$(MAIN2DIR)ft_loop.c \
+MAIN2SRC = $(MAIN2DIR)ft_exec_tmp.c \
+	$(MAIN2DIR)ft_loop_tmp.c \
+	$(MAIN2DIR)ft_make_pipeline.c \
+	$(MAIN2DIR)ft_open.c \
+	$(MAIN2DIR)ft_heredoc.c \
 	$(MAIN2DIR)ft_pipeline_function_set.c
 UTILSSRC = $(UTILSDIR)ft_free_all.c \
 	$(UTILSDIR)ft_path.c \

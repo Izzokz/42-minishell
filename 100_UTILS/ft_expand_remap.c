@@ -21,7 +21,7 @@ static char	*ft_env_var(char ***line, char *var, t_ints *info, int i)
 	if (!ft_is_env(var))
 		return (ft_calloc(1, 1));
 	output = ft_pick_env(var);
-	if (!info->count2 && output && info->height >= -42 && info->tmp1 > -42)
+	if (!info->count2 && output && info->height > -42 && info->tmp1 > -42)
 	{
 		info->j = i;
 		split_space(line, &output, info);

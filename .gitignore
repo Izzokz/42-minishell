@@ -4,3 +4,4 @@
 *.o
 minishell
 .nfs*
+..!minipk_hd42

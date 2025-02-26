@@ -18,7 +18,7 @@ static void	handler(int n)
 	{
 		errno = 130;
 		ft_printf("\n");
-		if (!(((t_data *)ft_get_tdata())->input))
+		if (!(((t_data *)ft_get_tdata())->pipeline))
 		{
 			rl_on_new_line();
 			rl_replace_line("", 0);
@@ -26,7 +26,7 @@ static void	handler(int n)
 		}
 	}
 }
-
+/*
 static void	print_slines_test(t_slines slines)
 {
 	int	i;
@@ -40,7 +40,7 @@ static void	print_slines_test(t_slines slines)
 		ft_printf("\n");
 	}
 }
-
+*/
 static void	ft_get_user(t_data *data)
 {
 	t_ints	num;
@@ -78,13 +78,9 @@ static int	is_env_var(char *var, char **envp)
 
 static int	set_data(t_data *data, char **envp)
 {
-	data->input = NULL;
-	data->pipeline = NULL;
-	data->line = NULL;
-	data->envp = NULL;
-	data->path = NULL;
-	data->envp = ft_rlines_dup(envp);
-	data->var = ft_rlines_dup(envp);
+	*data = (t_data){.input_fd = -42, .output_fd = -42, .input = NULL,
+			.pipeline = NULL, .line = NULL, .path = NULL,
+			.envp = ft_rlines_dup(envp), .var = ft_rlines_dup(envp)};
 	if (!invalid_rlines(envp) && invalid_rlines(data->envp))
 		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
 	ft_get_user(data);
@@ -200,14 +196,14 @@ int	main(int argc, char **argv, char **envp)
 		if (data.line[0])
 		{
 			data.input = ft_pipe_split(data.line);
-			print_slines_test(data.input);
 			free(data.line);
 			data.line = NULL;
-			//data.pipeline = ft_make_pipeline(&data);
-			//ft_printf("%*.2[\n]s\n", data.input); //just testing the parsing.
-			if (!data.input) // if exit in the pipeline, frees input and returns instantly.
+			if (!data.input)
+				break ;
+			if (ft_make_pipeline(&data) == -1)
 				break ;
 			ft_loop(&data);
+			ft_destroy_all_pipelines(&(data.pipeline));
 			ft_free_slines(&data.input);
 		}
 		free(data.line);

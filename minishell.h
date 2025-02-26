@@ -40,9 +40,10 @@ typedef struct s_data
 	char				*history;
 	int					pid;
 	int					pipe[2];
+	int					prevpipe;
+	int					endpipe;
 	int					input_fd;
 	int					output_fd;
-	int					swap_pipe;
 	int					fd;
 	int					exe;
 	t_rlines			envp;
@@ -55,8 +56,8 @@ typedef struct s_data
 typedef struct s_pipeline
 {
 	int		(*func)(t_data *, void *);
-	void	(*free)();
 	void	*param;
+	void	(*free)();
 	void	*next;
 }	t_pipeline;
 
@@ -77,21 +78,32 @@ int			ft_fix_order(t_slines *input);
 int			ft_valid_input(char *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
-int			ft_loop(t_data *data);
+//int			ft_loop(t_data *data);
 	/*	ft_exec.c */
-int			ft_exec(t_data *data, t_rlines cmd);
+//int			ft_exec(t_data *data, t_rlines cmd);
+	/*	ft_loop_tmp.c */
+int			ft_loop(t_data *data);
+	/*	ft_exec_tmp.c */
+int			ft_exec(t_data *data, void *cmd);
+	/*	ft_heredoc.c */
+int			ft_here_doc(t_data *data, void *lim);
+	/*	ft_open.c */
+int			ft_open_read(t_data *data, void *filename);
+int			ft_open_trunc(t_data *data, void *filename);
+int			ft_open_append(t_data *data, void *filename);
 	/*	ft_make_pipeline.c */
 int			ft_make_pipeline(t_data *data);
 	/*	ft_pipeline_function_set.c */
 t_pipeline	*ft_new_pipeline(int (*func)(t_data *, void *),
 				void *param, void (*free)());
 void		ft_destroy_pipeline(t_pipeline *start);
-void		ft_destroy_all_pipelines(t_pipeline **all);
+void		ft_destroy_all_pipelines(t_pipeline ***all);
 int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 				void *param, void (*free)());
 
 //	100_UTILS
 /*	ft_free_all.c */
+void		ft_free_tab(t_rlines rlines);
 void		ft_free_all(t_data *data);
 /*	ft_path.c */
 void		ft_set_path(t_data *data);
