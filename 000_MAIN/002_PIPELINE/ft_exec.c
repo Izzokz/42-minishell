@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:55:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/21 15:45:05 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:26:56 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ static void	ft_handler(int n)
 {
 	(void)n;
 	signal(SIGQUIT, SIG_DFL);
-	kill(0, SIGQUIT);
 	write(0, "Quit\n", 5);
+	kill(0, SIGQUIT);
 }
 
 int	ft_exec(t_data *data, t_rlines cmd)
