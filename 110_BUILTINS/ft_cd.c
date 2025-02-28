@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:01:50 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/19 15:38:18 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:53:16 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ static void	ft_cd_with_path(t_data *data, t_ints i, t_rlines cmd)
 				&path);
 		return ;
 	}
-	ft_printf_fd("\e[1;31m[Minishell] \e[0;97mNo such file or directory\e[0m\n",
-		2);
+	ft_printf_fd(ERROR_CD, 2, cmd[1]);
 }
 
 int	ft_cd(t_data *data, t_rlines cmd)
@@ -105,8 +104,7 @@ int	ft_cd(t_data *data, t_rlines cmd)
 	ft_get_env(data, &i);
 	i.len = ft_rlines_len(cmd);
 	if (i.len > 2)
-		return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97mtoo many args\e[0m\n",
-				2));
+		return (ft_printf_fd(ERROR_TMA, 2));
 	else if (i.len == 1)
 		ft_cd_no_args(data, i);
 	else

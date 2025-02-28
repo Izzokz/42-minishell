@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/24 14:06:22 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:52:52 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,24 @@
 # include <sys/wait.h>
 # include <termios.h>
 
+/* Prompt of Minishell */
 # define MI "\1\e[1;34m\2[\1\e[1;31m\2m\1\e[1;32m\2i"
 # define NI "\1\e[1;33m\2n\1\e[1;34m\2i\1\e[1;35m\2PK\1\e[1;34m]\2"
 # define USER "\1\e[1;33m\2@"
 # define SHLVL " \1\e[1;32m\2[Lv. "
 # define PBEG " \1\e[1;35m\2{"
-# define PEND "} \1\e[1;31m\2»\1\e[0;97m\2 "
+# define PEND "} \1\e[1;31m\2»\1\e[0m\2 "
 
-# define ERRORCD "\e[1;31m[Minishell] \e[0;97mNo such file or directory\e[0m\n"
+/* All Error MSG, expect Internal Error */
+# define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: %s: No such file or directory\n"
+# define ERROR_TMA "\e[1;31m[Minishell] \e[0mToo many arguments\n"
+# define ERROR_CCH "\e[1;31m[Minishell] \e[0mCannot create history\n"
+# define ERROR_UQ "\e[1;31m[Minishell] \e[0mUnfinished quotes\n%*."
+# define ERROR_FDE "\e[1;31m[Minishell] \e[0m%s doesn't exist\n"
+# define ERROR_FNF "\e[1;31m[Minishell] \e[0m%s: not found\n"
+# define ERROR_NV "\e[1;31m[Minishell] \e[0m%s: not valid\n"
+# define ERROR_NVI "\e[1;31m[Minishell] \e[0mNot a valid identifier\n"
+# define ERROR_NEA "\e[1;31m[Minishell] \e[0mNot enough arguments\n%*."
 
 struct	s_pipeline;
 

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:03:54 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/19 15:43:01 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:31:29 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	ft_gen_history(t_data *data)
 	data->history = ft_get_abspath();
 	if (ft_gen_file(data->history, "0777") == -1)
 	{
-		ft_printf_fd("\e[1;31m[Minishell] \e[0;97mCannot create history\e[0m\n",
-			2);
+		ft_printf_fd(ERROR_CCH, 2);
 		return ;
 	}
 	hist = ft_readfile(data->history);

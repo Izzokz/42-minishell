@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:50:34 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/24 13:55:42 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:38:43 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,12 @@ void	ft_exit(t_data *data, t_rlines cmd)
 	len = ft_rlines_len(cmd);
 	if (len > 1 && !numerical(cmd[1], &exit_id))
 	{
-		ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s: not valid\e[0m\n",
-			2, cmd[1]);
+		ft_printf_fd(ERROR_NV, 2, cmd[1]);
 		errno = 2;
 	}
 	else if (len > 2)
 	{
-		ft_printf_fd("\e[1;31m[Minishell] \e[0;97mtoo many args\e[0m\n", 2);
+		ft_printf_fd(ERROR_TMA, 2);
 		errno = 1;
 		if (ft_slines_rlen(data->input) == 1)
 			return ;

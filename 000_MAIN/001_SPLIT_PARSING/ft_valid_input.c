@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_valid_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/10 17:46:32 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:50:41 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	ft_valid_input(char *input)
 	if (i.count1 + i.count2)
 	{
 		free(input);
-		return (ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s\e[0m\n%*.",
-				2, "Unfinished quotes") + 1);
+		return (ft_printf_fd(ERROR_UQ, 2) + 1);
 	}
 	return (1);
 }

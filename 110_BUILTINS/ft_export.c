@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/25 17:29:09 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:41:17 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,7 @@ int	ft_export(t_data *data, t_rlines cmd)
 			ft_make_var(data, cmd, &ints, dup);
 		}
 		else
-			ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s\e[0m\n", 2,
-				"not a valid identifier");
+			ft_printf_fd(ERROR_NVI, 2);
 	}
 	return (0);
 }

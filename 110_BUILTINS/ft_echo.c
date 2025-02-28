@@ -6,11 +6,16 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:15 by pboucher          #+#    #+#             */
-/*   Updated: 2025/01/29 19:10:25 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:00:43 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static void ft_check_option(t_rlines cmd)
+{
+	
+}
 
 int	ft_echo(t_rlines cmd)
 {

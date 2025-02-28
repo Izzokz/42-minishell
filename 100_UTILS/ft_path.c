@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 14:52:47 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:02 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:36:30 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ char	*ft_get_path(char *file, char **all_path)
 			free(path);
 		}
 	}
-	ft_printf_fd("\e[1;31m[Minishell] \e[0;97m%s: not found\e[0m\n", 2, file);
+	ft_printf_fd(ERROR_FNF, 2, file);
 	return (NULL);
 }
