@@ -31,9 +31,11 @@ void	ft_free_all(t_data *data)
 		close(data->input_fd);
 	if (data->output_fd >= 0)
 		close(data->output_fd);
-	if (data->pipe[0])
+	if (data->pipe[0] >= 0)
 		close(data->pipe[0]);
-	if (data->pipe[1])
+	if (data->pipe[1] >= 0)
 		close(data->pipe[1]);
+	if (data->prevpipe >= 0)
+		close(data->prevpipe);
 	rl_clear_history();
 }

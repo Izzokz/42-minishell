@@ -79,7 +79,8 @@ static int	is_env_var(char *var, char **envp)
 static int	set_data(t_data *data, char **envp)
 {
 	*data = (t_data){.input_fd = -42, .output_fd = -42, .input = NULL,
-			.pipeline = NULL, .line = NULL, .path = NULL,
+			.pipeline = NULL, .line = NULL, .path = NULL, .pipe = {-1, -1},
+			.prevpipe = -1, .endpipe = 0, .history = NULL, .user = NULL,
 			.envp = ft_rlines_dup(envp), .var = ft_rlines_dup(envp)};
 	if (!invalid_rlines(envp) && invalid_rlines(data->envp))
 		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
@@ -192,7 +193,11 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 		ft_add_history(&data);
 		if (!ft_valid_input(data.line))
+		{
+			free(data.line);
+			data.line = NULL;
 			continue ;
+		}
 		if (data.line[0])
 		{
 			data.input = ft_pipe_split(data.line);
