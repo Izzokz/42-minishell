@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/28 18:41:17 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:28:55 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,36 @@ int	is_greater(char *s1, char *s2)
 	return (0);
 }
 
+static int	ft_execute(t_data *data, t_rlines cmd, t_ints *ints)
+{
+	char	*dup;
+
+	if (ints->j)
+	{
+		dup = ft_substr(cmd[ints->i], 0, ints->j + 1);
+		if (!dup)
+			return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+		ft_make_export(data, cmd, ints, dup);
+		dup = ft_substr(cmd[ints->i], 0, ints->j);
+		if (!dup)
+			return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+		ft_make_var(data, cmd, ints, dup);
+	}
+	else if (ints->j == 0)
+	{
+		dup = ft_substr(cmd[ints->i], 0, -1);
+		if (!dup)
+			return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+		ft_make_var(data, cmd, ints, dup);
+	}
+	else
+		ft_printf_fd(ERROR_NVI, 2);
+	return (0);
+}
+
 int	ft_export(t_data *data, t_rlines cmd)
 {
 	t_ints	ints;
-	char	*dup;
 
 	(void)data;
 	ints.len = ft_rlines_len(cmd);
@@ -77,26 +103,7 @@ int	ft_export(t_data *data, t_rlines cmd)
 	while (cmd[++(ints.i)])
 	{
 		ints.j = ft_chr(cmd[ints.i]);
-		if (ints.j)
-		{
-			dup = ft_substr(cmd[ints.i], 0, ints.j + 1);
-			if (!dup)
-				return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
-			ft_make_export(data, cmd, &ints, dup);
-			dup = ft_substr(cmd[ints.i], 0, ints.j);
-			if (!dup)
-				return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
-			ft_make_var(data, cmd, &ints, dup);
-		}
-		else if (ints.j == 0)
-		{
-			dup = ft_substr(cmd[ints.i], 0, -1);
-			if (!dup)
-				return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
-			ft_make_var(data, cmd, &ints, dup);
-		}
-		else
-			ft_printf_fd(ERROR_NVI, 2);
+		ft_execute(data, cmd, &ints);
 	}
 	return (0);
 }

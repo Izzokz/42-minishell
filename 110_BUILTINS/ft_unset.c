@@ -6,23 +6,22 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/28 18:40:08 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:23:50 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void ft_check_export(t_data *data, t_rlines cmd, t_ints *ints)
+static void	ft_check_export(t_data *data, t_rlines cmd, t_ints *ints)
 {
 	char	*str;
 
-	str = ft_substr(cmd[ints->i], 0, ft_strlen(cmd[ints->i]) -1);
+	str = ft_substr(cmd[ints->i], 0, ft_strlen(cmd[ints->i]) - 1);
 	ints->j = -1;
 	while (data->var[++ints->j])
 	{
-		if (!ft_strncmp(data->var[ints->j],
-				str, ft_strlen(str))
-				&& (ft_strlen(str) == ft_strlen(data->var[ints->j])))
+		if (!ft_strncmp(data->var[ints->j], str, ft_strlen(str))
+			&& (ft_strlen(str) == ft_strlen(data->var[ints->j])))
 		{
 			ft_rlines_delete(&data->var, ints->j);
 			break ;
@@ -31,10 +30,10 @@ static void ft_check_export(t_data *data, t_rlines cmd, t_ints *ints)
 	free(str);
 }
 
-static void ft_remove_unset(t_data *data, t_rlines cmd, t_ints *ints)
+static void	ft_remove_unset(t_data *data, t_rlines cmd, t_ints *ints)
 {
 	cmd[ints->i] = gnlxio_ft_strjoinfree(&cmd[ints->i],
-		&(char *){ft_strdup("=")});
+			&(char *){ft_strdup("=")});
 	ints->j = -1;
 	while (data->envp[++ints->j])
 	{
