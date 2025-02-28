@@ -48,6 +48,7 @@ typedef struct s_data
 	char				*line;
 	char				**path;
 	char				*history;
+	int					bcase;
 	int					pid;
 	int					pipe[2];
 	int					prevpipe;
@@ -88,12 +89,8 @@ int			ft_fix_order(t_slines *input);
 int			ft_valid_input(char *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
-//int			ft_loop(t_data *data);
-	/*	ft_exec.c */
-//int			ft_exec(t_data *data, t_rlines cmd);
-	/*	ft_loop_tmp.c */
 int			ft_loop(t_data *data);
-	/*	ft_exec_tmp.c */
+	/*	ft_exec.c */
 int			ft_exec(t_data *data, void *cmd);
 	/*	ft_heredoc.c */
 int			ft_here_doc(t_data *data, void *lim);

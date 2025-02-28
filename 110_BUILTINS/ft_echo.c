@@ -12,11 +12,6 @@
 
 #include "../minishell.h"
 
-static void ft_check_option(t_rlines cmd)
-{
-	
-}
-
 int	ft_echo(t_rlines cmd)
 {
 	t_ints	ints;
