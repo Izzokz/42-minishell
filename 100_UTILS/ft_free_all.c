@@ -6,11 +6,17 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:07:10 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/26 15:47:12 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:27:40 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_free_line(t_data *data)
+{
+	free(data->line);
+	data->line = NULL;
+}
 
 void	ft_free_tab(t_rlines rlines)
 {

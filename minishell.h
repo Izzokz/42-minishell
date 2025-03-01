@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/28 18:52:52 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/01 15:39:27 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,18 @@ typedef struct s_pipeline
 }	t_pipeline;
 
 //	000_MAIN
+	/*	main.c */
+int			is_env_var(char *var, char **envp);
+void		ft_get_user(t_data *data);
 	/*	ft_history.c */
 void		ft_gen_history(t_data *data);
 void		ft_add_history(t_data *data);
+	/*	ft_utils.c*/
+int			set_data(t_data *data, char **envp);
+char		*ft_generate_prompt(t_data *data, char *path);
+char		*ft_generate_path(t_data *data);
+void		up_shlvl(t_data *data);
+void		ft_show_prompt(t_data *data);
 //->	001_SPLIT_PARSING
 	/*	ft_split_redirec.c */
 int			ft_split_redirec(t_rlines *part, int j);
@@ -110,6 +119,7 @@ int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 
 //	100_UTILS
 /*	ft_free_all.c */
+void		ft_free_line(t_data *data);
 void		ft_free_tab(t_rlines rlines);
 void		ft_free_all(t_data *data);
 /*	ft_path.c */

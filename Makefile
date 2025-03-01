@@ -8,6 +8,7 @@ MAIN2DIR = $(MAINDIR)002_PIPELINE/
 UTILSDIR = 100_UTILS/
 BUILTINSDIR = 110_BUILTINS/
 MAINSRC = $(MAINDIR)main.c \
+	$(MAINDIR)ft_utils.c \
 	$(MAINDIR)ft_history.c
 MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
 	$(MAIN1DIR)ft_fix_redirections.c \
