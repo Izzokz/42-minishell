@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **envp)
 			ft_free_line(&data);
 			if (!data.input || ft_make_pipeline(&data) == -1)
 				break ;
-			ft_loop(&data);
+			ft_hd_loop(&data);
 			ft_destroy_all_pipelines(&(data.pipeline));
 			ft_free_slines(&data.input);
 		}

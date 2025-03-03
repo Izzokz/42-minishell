@@ -49,6 +49,7 @@ typedef struct s_data
 	char				**path;
 	char				*history;
 	int					bcase;
+	int					hd_i;
 	int					pid;
 	int					pipe[2];
 	int					prevpipe;
@@ -99,6 +100,10 @@ int			ft_valid_input(char *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
 int			ft_loop(t_data *data);
+	/*	ft_hd_loop.c */
+int			ft_hd_loop(t_data *data);
+	/*	ft_unlink_hd_exit_status */
+void		ft_unlink_hd(t_data *data);
 	/*	ft_exec.c */
 int			ft_exec(t_data *data, void *cmd);
 	/*	ft_heredoc.c */
@@ -116,6 +121,8 @@ void		ft_destroy_pipeline(t_pipeline *start);
 void		ft_destroy_all_pipelines(t_pipeline ***all);
 int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 				void *param, void (*free)());
+int			ft_add_front_pipeline(t_pipeline **start,
+				int (*func)(t_data *, void *), void *param, void (*free)());
 
 //	100_UTILS
 /*	ft_free_all.c */
