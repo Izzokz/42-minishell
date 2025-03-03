@@ -29,7 +29,7 @@
 # define PBEG " \1\e[1;35m\2{"
 # define PEND "} \1\e[1;31m\2»\1\e[0m\2 "
 
-/* All Error MSG, expect Internal Error */
+/* All Error MSG, expect Internal Errors */
 # define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: %s: No such file or directory\n"
 # define ERROR_TMA "\e[1;31m[Minishell] \e[0mToo many arguments\n"
 # define ERROR_CCH "\e[1;31m[Minishell] \e[0mCannot create history\n"
@@ -119,7 +119,7 @@ int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 
 //	100_UTILS
 /*	ft_free_all.c */
-void		ft_free_line(t_data *data);
+int			ft_free_line(t_data *data);
 void		ft_free_tab(t_rlines rlines);
 void		ft_free_all(t_data *data);
 /*	ft_path.c */

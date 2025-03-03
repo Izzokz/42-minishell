@@ -12,10 +12,11 @@
 
 #include "minishell.h"
 
-void	ft_free_line(t_data *data)
+int	ft_free_line(t_data *data)
 {
 	free(data->line);
 	data->line = NULL;
+	return (1);
 }
 
 void	ft_free_tab(t_rlines rlines)
