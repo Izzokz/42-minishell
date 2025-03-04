@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/01 15:39:27 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/01 17:26:00 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define ERROR_CCH "\e[1;31m[Minishell] \e[0mCannot create history\n"
 # define ERROR_UQ "\e[1;31m[Minishell] \e[0mUnfinished quotes\n%*."
 # define ERROR_FDE "\e[1;31m[Minishell] \e[0m%s doesn't exist\n"
-# define ERROR_FNF "\e[1;31m[Minishell] \e[0m%s: not found\n"
+# define ERROR_FNF "\e[1;31m[Minishell] \e[0m%s: command not found\n"
 # define ERROR_NV "\e[1;31m[Minishell] \e[0m%s: not valid\n"
 # define ERROR_NVI "\e[1;31m[Minishell] \e[0mNot a valid identifier\n"
 # define ERROR_NEA "\e[1;31m[Minishell] \e[0mNot enough arguments\n%*."
