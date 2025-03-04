@@ -17,6 +17,8 @@ MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
 	$(MAIN1DIR)ft_valid_input.c
 MAIN2SRC = $(MAIN2DIR)ft_exec.c \
 	$(MAIN2DIR)ft_loop.c \
+	$(MAIN2DIR)ft_hd_loop.c \
+	$(MAIN2DIR)ft_unlink_hd.c \
 	$(MAIN2DIR)ft_make_pipeline.c \
 	$(MAIN2DIR)ft_open.c \
 	$(MAIN2DIR)ft_heredoc.c \

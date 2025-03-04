@@ -88,15 +88,15 @@ int	main(int argc, char **argv, char **envp)
 		if (!data.line)
 			break ;
 		ft_add_history(&data);
-		if (!ft_valid_input(data.line))
-			ft_free_line(&data);
+		if (!ft_valid_input(data.line) && ft_free_line(&data))
+			continue ;
 		if (data.line[0])
 		{
 			data.input = ft_pipe_split(data.line);
 			ft_free_line(&data);
 			if (!data.input || ft_make_pipeline(&data) == -1)
 				break ;
-			ft_loop(&data);
+			ft_hd_loop(&data);
 			ft_destroy_all_pipelines(&(data.pipeline));
 			ft_free_slines(&data.input);
 		}

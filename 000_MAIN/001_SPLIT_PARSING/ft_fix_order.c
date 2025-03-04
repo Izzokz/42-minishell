@@ -33,18 +33,14 @@ static int	reorder(t_rlines *part, t_rlines *tmp, int pos)
 	while ((*part)[++i])
 	{
 		if (pos == 1)
-			if ((*part)[i][0] == '<' && (*part)[i][1] == '<')
+			if ((*part)[i][0] == '<')
 				if (add_to_tmp(tmp, (*part)[i]) == -1)
 					return (!!ft_free_rlines(tmp) - 1);
 		if (pos == 2)
-			if ((*part)[i][0] == '<' && (*part)[i][1] != '<')
-				if (add_to_tmp(tmp, (*part)[i]) == -1)
-					return (!!ft_free_rlines(tmp) - 1);
-		if (pos == 3)
 			if ((*part)[i][0] == '>')
 				if (add_to_tmp(tmp, (*part)[i]) == -1)
 					return (!!ft_free_rlines(tmp) - 1);
-		if (pos == 4)
+		if (pos == 3)
 			if ((*part)[i][0] != '<' && (*part)[i][0] != '>')
 				if (add_to_tmp(tmp, (*part)[i]) == -1)
 					return (!!ft_free_rlines(tmp) - 1);
@@ -68,8 +64,6 @@ int	ft_fix_order(t_slines *input)
 		if (reorder(&((*input)[i]), &tmp, 2) == -1)
 			return (-1);
 		if (reorder(&((*input)[i]), &tmp, 3) == -1)
-			return (-1);
-		if (reorder(&((*input)[i]), &tmp, 4) == -1)
 			return (-1);
 		ft_free_rlines(&((*input)[i]));
 		(*input)[i] = tmp;

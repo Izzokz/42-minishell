@@ -31,14 +31,10 @@ static int	ft_execute_pipeline(t_pipeline *pl)
 	{
 		signal(SIGPIPE, SIG_IGN);
 		if (tmp->func((t_data *)ft_get_tdata(), tmp->param) == -1)
-		{
-			unlink("..!minipk_hd42");
 			return (-1);
-		}
 		signal(SIGPIPE, SIG_DFL);
 		tmp = tmp->next;
 	}
-	unlink("..!minipk_hd42");
 	return (0);
 }
 

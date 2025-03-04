@@ -29,7 +29,7 @@
 # define PBEG " \1\e[1;35m\2{"
 # define PEND "} \1\e[1;31m\2»\1\e[0m\2 "
 
-/* All Error MSG, expect Internal Error */
+/* All Error MSG, expect Internal Errors */
 # define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: %s: No such file or directory\n"
 # define ERROR_TMA "\e[1;31m[Minishell] \e[0mToo many arguments\n"
 # define ERROR_CCH "\e[1;31m[Minishell] \e[0mCannot create history\n"
@@ -49,6 +49,7 @@ typedef struct s_data
 	char				**path;
 	char				*history;
 	int					bcase;
+	int					hd_i;
 	int					pid;
 	int					pipe[2];
 	int					prevpipe;
@@ -99,6 +100,10 @@ int			ft_valid_input(char *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
 int			ft_loop(t_data *data);
+	/*	ft_hd_loop.c */
+int			ft_hd_loop(t_data *data);
+	/*	ft_unlink_hd_exit_status */
+void		ft_unlink_hd(t_data *data);
 	/*	ft_exec.c */
 int			ft_exec(t_data *data, void *cmd);
 	/*	ft_heredoc.c */
@@ -116,10 +121,12 @@ void		ft_destroy_pipeline(t_pipeline *start);
 void		ft_destroy_all_pipelines(t_pipeline ***all);
 int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 				void *param, void (*free)());
+int			ft_add_front_pipeline(t_pipeline **start,
+				int (*func)(t_data *, void *), void *param, void (*free)());
 
 //	100_UTILS
 /*	ft_free_all.c */
-void		ft_free_line(t_data *data);
+int			ft_free_line(t_data *data);
 void		ft_free_tab(t_rlines rlines);
 void		ft_free_all(t_data *data);
 /*	ft_path.c */
