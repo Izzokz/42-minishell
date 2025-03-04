@@ -68,7 +68,7 @@ static int	ft_execute(t_data *data, t_rlines cmd, t_ints *ints)
 {
 	char	*dup;
 
-	if (ints->j)
+	if (ints->j >= 0)
 	{
 		dup = ft_substr(cmd[ints->i], 0, ints->j + 1);
 		if (!dup)

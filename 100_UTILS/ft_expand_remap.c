@@ -58,8 +58,9 @@ int	remap(char ***line, t_ints *i)
 	char	*var;
 
 	j = (t_ints){.i = i->i, .tmp = i->i};
-	while (ft_isalnum((**line)[++(j.i)]))
-		;
+	while (ft_isalnum((**line)[++(j.i)]) || (**line)[j.i] == '_')
+		if (j.i == 1 && ft_isdigit((**line)[j.i - 1]))
+			break ;
 	if (j.i == i->i + 1 && (**line)[++j.i - 1] != '?')
 		return (0);
 	tmp = ft_substr((**line), i->i + 1, j.i - (i->i + 1));

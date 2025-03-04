@@ -12,24 +12,42 @@
 
 #include "minishell.h"
 
+static int	do_hd(t_data *data, t_pipeline **prev, t_pipeline **pl, char *did_hd)
+{
+	t_pipeline	*tmp;
+
+	tmp = (*pl)->next;
+	if ((*pl)->func == ft_here_doc)
+	{
+		*did_hd = 1;
+		if ((*pl)->func(data, (*pl)->param) == -1)
+			return (-1);
+		(*pl)->free((*pl)->param);
+		free(*pl);
+		if (*prev)
+			(*prev)->next = tmp;
+	}
+	*pl = tmp;
+	return (0);
+}
+
 static int	ft_pre_hd(t_data *data, t_pipeline *pl)
 {
-	int			did_hd;
-	t_pipeline	*tmp;
+	char		did_hd;
+	t_pipeline	*prev;
 	char		*hd_name;
 
 	did_hd = 0;
-	while (pl->func == ft_here_doc)
+	prev = NULL;
+	while (pl)
 	{
-		did_hd = 1;
-		tmp = pl->next;
-		if (pl->func(data, pl->param) == -1)
+		if (pl->func == ft_here_doc && do_hd(data, &prev, &pl, &did_hd) == -1)
 			return (-1);
-		pl->free(pl->param);
-		free(pl);
-		pl = tmp;
+		if (pl != prev)
+			prev = pl;
+		pl = pl->next;
 	}
-	if (!did_hd)
+	if (!did_hd || prev->func != ft_here_doc)
 		return (1);
 	data->pipeline[data->hd_i] = pl;
 	hd_name = gnlxio_ft_strjoinfree(&(char *){ft_strdup(".minipk_hd")},
