@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:15 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/28 19:22:55 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:05:52 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_echo(t_rlines cmd)
 	ints.i = 0;
 	ft_check_option(cmd, &ints);
 	ft_printf("%*[ ]s", cmd + ints.i);
-	if (ints.count == 0)
+	if (!ints.count)
 		ft_printf("\n");
 	return (0);
 }

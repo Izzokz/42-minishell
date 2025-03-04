@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/28 19:28:55 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:20:37 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ static int	ft_chr(char *cmd)
 		return (-1);
 	i = -1;
 	while (cmd[++(i)])
+	{
+		if (cmd[i] == '+' && cmd[i + 1] != '=')
+			return (-1);
 		if (cmd[i] == '=')
 			return (i);
+	}
 	return (0);
 }
 
