@@ -19,7 +19,7 @@ int	is_valid_var_name(char *name)
     i = 0;
     while (name[++i] && name[i] != '=')
     {
-        if (!ft_isalnum(name[i]) && name[i] != '_' && name[i] != '+')
+        if (!ft_isalnum(name[i]) && name[i] != '_')
             return (0);
     }
     return (1);
@@ -33,12 +33,8 @@ int	ft_chr(char *cmd)
         return (-1);
     i = -1;
     while (cmd[++(i)])
-    {
-        if (cmd[i] == '+' && cmd[i + 1] == '=')
-            return (i + 1);
         if (cmd[i] == '=')
             return (i);
-    }
     return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:01:50 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/28 18:53:16 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:10:56 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,26 @@ static void	ft_cd_no_args(t_data *data, t_ints i)
 
 	path = ft_substr(data->envp[i.i], 5, -1);
 	if (path)
-	{
 		chdir(path);
-		free(path);
-	}
+	free(path);
 	path = ft_substr(data->envp[i.j], 4, -1);
-	free(data->envp[i.k]);
-	data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
-			&path);
+	if (!ft_is_env("OLDPWD"))
+	{
+		free(data->envp[i.k]);
+		data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
+				&path);
+	}
+	else
+		free(path);
 	path = ft_substr(data->envp[i.i], 5, -1);
-	free(data->envp[i.j]);
-	data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
-			&path);
+	if (!ft_is_env("PWD"))
+	{
+		free(data->envp[i.j]);
+		data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
+				&path);
+	}
+	else
+		free(path);
 }
 
 static void	ft_cd_reverse(t_data *data, t_ints i)

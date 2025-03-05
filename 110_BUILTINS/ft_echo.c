@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:15 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/05 00:56:47 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:10:49 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ int	ft_echo(t_rlines cmd)
         return (ft_printf("\n"));
     ints.i = 0;
     ft_check_option(cmd, &ints);
-    if (ints.i < ints.len && cmd[ints.i][0] == '\0')
-    {
-        ft_printf("\n");
-        return (0);
-    }
     ft_printf("%*[ ]s", cmd + ints.i);
     if (!ints.count)
         ft_printf("\n");
