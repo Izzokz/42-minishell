@@ -52,6 +52,8 @@ static int	handle_bcase(t_pipeline *pipeline)
 	tmp = pipeline;
 	while (tmp->next)
 		tmp = tmp->next;
+	if (tmp->func != ft_exec)
+		return (0);
 	cmd = ((t_rlines)tmp->param)[0];
 	if (!ft_strncmp(cmd, "export", -1) || !ft_strncmp(cmd, "env", -1)
 		|| !ft_strncmp(cmd, "unset", -1) || !ft_strncmp(cmd, "echo", -1)
