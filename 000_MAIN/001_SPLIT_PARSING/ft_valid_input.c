@@ -94,9 +94,6 @@ int	ft_valid_input(char *input)
 	if (!pipe_redirec_cases(0, i))
 		return (0);
 	if (i.count1 + i.count2)
-	{
-		free(input);
 		return (ft_printf_fd(ERROR_UQ, 2) + 1);
-	}
 	return (1);
 }

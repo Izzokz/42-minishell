@@ -20,7 +20,7 @@ void	ft_unlink_hd(t_data *data)
 	i = -1;
 	while (data->pipeline[++i])
 	{
-		hd_name = gnlxio_ft_strjoinfree(&(char *){ft_strdup(".minipk_hd")},
+		hd_name = gnlxio_ft_strjoinfree(&(char *){ft_strdup("..!minipk_hd")},
 				&(char *){ft_itoa(i)});
 		if (!hd_name)
 		{

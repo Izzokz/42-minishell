@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static int	ft_execute(t_data *data, t_rlines cmd, t_ints *ints)
 {

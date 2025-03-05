@@ -49,7 +49,7 @@ static char	*get_hd_name(t_data *data)
 {
 	char	*name;
 
-	name = gnlxio_ft_strjoinfree(&(char *){ft_strdup(".minipk_hd")},
+	name = gnlxio_ft_strjoinfree(&(char *){ft_strdup("..!minipk_hd")},
 			&(char *){ft_itoa(data->hd_i)});
 	return (name);
 }

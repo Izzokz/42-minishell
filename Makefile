@@ -73,6 +73,9 @@ $(OBJDIR)%.o: $(UTILSDIR)%.c | $(OBJDIR)
 $(OBJDIR)%.o: $(BUILTINSDIR)%.c | $(OBJDIR)
 	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $< -I.
 
+$(OBJDIR)%.o: $(BUILTINSDIR)111_EXPORT/%.c | $(OBJDIR)
+	@cc -Wall -Werror -Wextra -MP -MMD -g3 -o $@ -c $< -I.
+
 libs:
 	@rm -rf 010_FT_PRINTF/
 	@git clone https://github.com/Izzokz/42-ft_printf.git 010_FT_PRINTF/

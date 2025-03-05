@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "minishell.h"
 
 static void	update_var(t_data *data, t_rlines cmd, t_ints *ints, char *dup)
 {
