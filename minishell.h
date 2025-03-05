@@ -30,13 +30,13 @@
 # define PEND "} \1\e[1;31m\2»\1\e[0m\2 "
 
 /* All Error MSG, expect Internal Errors */
-# define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: %s: No such file or directory\n"
+# define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: -|%s|-: No such file or directory\n"
 # define ERROR_TMA "\e[1;31m[Minishell] \e[0mToo many arguments\n"
 # define ERROR_CCH "\e[1;31m[Minishell] \e[0mCannot create history\n"
 # define ERROR_UQ "\e[1;31m[Minishell] \e[0mUnfinished quotes\n%*."
-# define ERROR_FDE "\e[1;31m[Minishell] \e[0m%s doesn't exist\n"
-# define ERROR_FNF "\e[1;31m[Minishell] \e[0m%s: command not found\n"
-# define ERROR_NV "\e[1;31m[Minishell] \e[0m%s: not valid\n"
+# define ERROR_FDE "\e[1;31m[Minishell] \e[0m-|%s|- doesn't exist\n"
+# define ERROR_FNF "\e[1;31m[Minishell] \e[0m-|%s|-: command not found\n"
+# define ERROR_NV "\e[1;31m[Minishell] \e[0m-|%s|-: not valid\n"
 # define ERROR_NVI "\e[1;31m[Minishell] \e[0mNot a valid identifier\n"
 # define ERROR_NEA "\e[1;31m[Minishell] \e[0mNot enough arguments\n%*."
 
@@ -121,8 +121,6 @@ void		ft_destroy_pipeline(t_pipeline *start);
 void		ft_destroy_all_pipelines(t_pipeline ***all);
 int			ft_add_pipeline(t_pipeline *prev, int (*func)(t_data *, void *),
 				void *param, void (*free)());
-int			ft_add_front_pipeline(t_pipeline **start,
-				int (*func)(t_data *, void *), void *param, void (*free)());
 
 //	100_UTILS
 /*	ft_free_all.c */

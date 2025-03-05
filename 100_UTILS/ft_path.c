@@ -66,6 +66,11 @@ char	*ft_get_path(char *file, char **all_path)
 	int		i;
 	char	*path;
 
+	if (!file[0])
+	{
+		ft_printf_fd(ERROR_FNF, 2, file);
+		return (NULL);
+	}
 	if (access(file, X_OK) != -1)
 		return (ft_strdup(file));
 	i = -1;

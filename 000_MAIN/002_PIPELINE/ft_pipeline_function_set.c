@@ -65,18 +65,3 @@ int	ft_add_pipeline(t_pipeline *start, int (*func)(t_data *, void *),
 	start->next = ft_new_pipeline(func, param, free);
 	return (!!start->next);
 }
-
-int	ft_add_front_pipeline(t_pipeline **start,
-	int (*func)(t_data *, void *), void *param, void (*free)())
-{
-	t_pipeline	*new_start;
-
-	if (!(*start))
-		return (0);
-	new_start = ft_new_pipeline(func, param, free);
-	if (!new_start)
-		return (0);
-	new_start->next = *start;
-	*start = new_start;
-	return (1);
-}
