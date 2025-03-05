@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/01 17:26:00 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:13:51 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,8 +159,12 @@ int			ft_unset(t_data *data, t_rlines cmd);
 int			ft_echo(t_rlines cmd);
 /*	ft_export.c */
 int			ft_export(t_data *data, t_rlines cmd);
-int			ft_print_export(t_data *data);
+void		ft_make_export(t_data *data, t_rlines cmd, t_ints *ints, char *dup);
 void		ft_make_var(t_data *data, t_rlines cmd, t_ints *ints, char *dup);
+int			is_valid_var_name(char *name);
+int			ft_chr(char *cmd);
+void		ft_print_var(t_rlines var);
+int			ft_print_export(t_data *data);
 int			is_greater(char *s1, char *s2);
 
 #endif
