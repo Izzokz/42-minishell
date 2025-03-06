@@ -30,6 +30,7 @@ void	ft_free_all(t_data *data)
 	ft_free_rlines(&data->var);
 	ft_free_slines(&data->input);
 	ft_free_rlines(&data->path);
+	ft_free_rlines(&data->rcases);
 	ft_destroy_all_pipelines(&(data->pipeline));
 	free(data->line);
 	free(data->user);

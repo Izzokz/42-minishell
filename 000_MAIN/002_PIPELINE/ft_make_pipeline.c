@@ -12,10 +12,37 @@
 
 #include "minishell.h"
 
+static int	fix_rcases(t_data *data, t_ints i)
+{
+	int		j;
+	char	*old;
+
+	i.j--;
+	while (data->input[i.i][++(i.j)])
+	{
+		j = -1;
+		while (data->rcases[++j])
+		{
+			if (data->rcases[j][0] == i.i + 1 && data->rcases[j][1] == i.j + 1)
+			{
+				old = data->input[i.i][i.j];
+				data->input[i.i][i.j] = ft_substr(old, 1,
+						ft_strlen(old) - 2);
+				free(old);
+				if (!data->input[i.i][i.j])
+					return (-1);
+				break ;
+			}
+		}
+	}
+	return (0);
+}
+
 static int	ft_set_cmd(t_data *data, t_ints *i)
 {
 	t_rlines	dup;
 
+	fix_rcases(data, *i);
 	dup = ft_rlines_dup(data->input[i->i] + i->j);
 	if (!dup)
 		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
@@ -83,5 +110,6 @@ int	ft_make_pipeline(t_data *data)
 			}
 		}
 	}
+	ft_free_rlines(&(data->rcases));
 	return (!!data->pipeline - 1);
 }

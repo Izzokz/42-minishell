@@ -12,11 +12,23 @@
 
 #include "minishell.h"
 
-static int	del_index(char **part, int *i)
+/*
+rcase is for commands that look like a redirection but are not. (`"<i"` != `<i`)
+*/
+static int	del_index(char **part, int *i, int x, int y)
 {
-	t_ints	j;
-	char	*tmp;
+	t_ints		j;
+	char		*tmp;
+	static char	rcase = 0;
 
+	if (rcase || (!(*i) && ((*part)[*i + 1] == '<' || (*part)[*i + 1] == '>')))
+	{
+		if (!rcase && ft_rlines_add(&(ft_get_tdata()->rcases),
+				ft_strdup((char []){x + 1, y + 1, 0}), A_END) == -1)
+			return (ft_printf_err("Internal Error:ft_rlines_add(%*.)", 2));
+		rcase = !rcase;
+		return (0);
+	}
 	tmp = ft_calloc(ft_strlen(*part), sizeof(char));
 	if (!tmp)
 		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
@@ -35,25 +47,25 @@ static int	count_skip(char **line, t_ints *i)
 {
 	if (i->tmp1 != -42 && !(i->count2) && (*line)[i->i] == '\'')
 	{
-		if (del_index(line, &(i->i)) == -1)
+		if (del_index(line, &(i->i), i->height, i->tmp1) == -1)
 			return (-1);
 		while ((*line)[++(i->i)] && (*line)[i->i] != '\'')
 			;
-		if (del_index(line, &(i->i)) == -1)
+		if (del_index(line, &(i->i), i->height, i->tmp1) == -1)
 			return (-1);
 		return (1);
 	}
 	else if (i->tmp1 > -42 && (*line)[i->i] == '\\' && ((*line)[i->i +1] == '"'
 			|| (*line)[i->i + 1] == '\\'))
 	{
-		if (del_index(line, &(i->i)) == -1)
+		if (del_index(line, &(i->i), 0, 0) == -1)
 			return (-1);
 		return (1);
 	}
 	else if (i->tmp1 != -42 && (*line)[i->i] == '"')
 	{
 		i->count2 = !(i->count2);
-		if (del_index(line, &(i->i)) == -1)
+		if (del_index(line, &(i->i), i->height, i->tmp1) == -1)
 			return (-1);
 		return (1);
 	}
@@ -79,7 +91,7 @@ int	ft_expand_line(char **input, t_ints *info)
 		if (!(info->tmp))
 			if ((*input)[info->i] == '$' && (ft_isalnum((*input)[info->i + 1])
 					|| (*input)[info->i + 1] == '?')
-				&& del_index(input, &(info->i)) != -1)
+				&& del_index(input, &(info->i), info->height, info->tmp1) != -1)
 				if (remap(&input, info) == -1)
 					return (ft_printf_err("Internal Error%*.", 2));
 		if (!input)
@@ -119,13 +131,18 @@ info.tmp2 is used to cross split in split_space2()
 int	ft_expand_slines(t_slines *input)
 {
 	t_ints	info;
+	t_data	*data;
 
+	data = ft_get_tdata();
+	data->rcases = ft_calloc(1, sizeof(char *));
+	if (!(data->rcases))
+		return (-1);
 	info.height = -1;
 	while ((*input)[++info.height])
 	{
 		if (ft_expand_rlines(&((*input)[info.height]), &info) == -1)
 			return (-1);
-		*input = ((t_data *)ft_get_tdata())->input;
+		*input = data->input;
 	}
 	return (0);
 }

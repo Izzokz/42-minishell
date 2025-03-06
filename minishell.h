@@ -58,6 +58,7 @@ typedef struct s_data
 	int					output_fd;
 	int					fd;
 	int					exe;
+	t_rlines			rcases;
 	t_rlines			envp;
 	t_rlines			var;
 	t_slines			input;
