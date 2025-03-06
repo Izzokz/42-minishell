@@ -14,41 +14,41 @@
 
 int	ft_print_export(t_data *data)
 {
-    char		*max;
-    t_ints		num;
-    t_rlines	var;
+	char		*max;
+	t_ints		num;
+	t_rlines	var;
 
-    var = ft_rlines_dup(data->var);
-    num.len = ft_rlines_len(var);
-    while (--num.len >= 0)
-    {
-        max = "\0";
-        num = (t_ints){.count = num.len + 1, .j = num.len, .len = num.len};
-        while (--num.count >= 0)
-        {
-            if (is_greater(var[num.count], max))
-            {
-                max = var[num.count];
-                num.i = num.count;
-            }
-        }
-        max = var[num.i];
-        var[num.i] = var[num.j];
-        var[num.j] = max;
-    }
-    ft_print_var(var);
-    ft_free_rlines(&var);
-    return (0);
+	var = ft_rlines_dup(data->var);
+	num.len = ft_rlines_len(var);
+	while (--num.len >= 0)
+	{
+		max = "\0";
+		num = (t_ints){.count = num.len + 1, .j = num.len, .len = num.len};
+		while (--num.count >= 0)
+		{
+			if (is_greater(var[num.count], max))
+			{
+				max = var[num.count];
+				num.i = num.count;
+			}
+		}
+		max = var[num.i];
+		var[num.i] = var[num.j];
+		var[num.j] = max;
+	}
+	ft_print_var(var);
+	ft_free_rlines(&var);
+	return (0);
 }
 
 int	is_greater(char *s1, char *s2)
 {
-    int	index;
+	int	index;
 
-    index = 0;
-    while (s1[index] && s1[index] == s2[index])
-        index++;
-    if (s1[index] > s2[index])
-        return (1);
-    return (0);
+	index = 0;
+	while (s1[index] && s1[index] == s2[index])
+		index++;
+	if (s1[index] > s2[index])
+		return (1);
+	return (0);
 }

@@ -14,52 +14,52 @@
 
 int	is_valid_var_name(char *name)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (name[++i] && name[i] != '=')
-    {
-        if (!ft_isalnum(name[i]) && name[i] != '_')
-            return (0);
-    }
-    return (1);
+	i = 0;
+	while (name[++i] && name[i] != '=')
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (0);
+	}
+	return (1);
 }
 
 int	ft_chr(char *cmd)
 {
-    int	i;
+	int	i;
 
-    if (ft_isdigit(cmd[0]) || !is_valid_var_name(cmd))
-        return (-1);
-    i = -1;
-    while (cmd[++(i)])
-        if (cmd[i] == '=')
-            return (i);
-    return (0);
+	if (ft_isdigit(cmd[0]) || !is_valid_var_name(cmd))
+		return (-1);
+	i = -1;
+	while (cmd[++(i)])
+		if (cmd[i] == '=')
+			return (i);
+	return (0);
 }
 
 void	ft_print_var(t_rlines var)
 {
-    t_ints	num;
+	t_ints	num;
 
-    num.i = -1;
-    while (var[++(num.i)])
-    {
-        num = (t_ints){.i = num.i, .j = -1, .tmp = 0};
-        ft_printf("declare -x ");
-        while (var[num.i][++(num.j)])
-        {
-            ft_printf("%c", var[num.i][num.j]);
-            if (var[num.i][num.j] == '=')
-            {
-                num.tmp = 1;
-                ft_printf("\"");
-                break ;
-            }
-        }
-        if (num.tmp)
-            ft_printf("%s\"\n", var[num.i] + num.j + 1);
-        else
-            ft_printf("\n");
-    }
+	num.i = -1;
+	while (var[++(num.i)])
+	{
+		num = (t_ints){.i = num.i, .j = -1, .tmp = 0};
+		ft_printf("declare -x ");
+		while (var[num.i][++(num.j)])
+		{
+			ft_printf("%c", var[num.i][num.j]);
+			if (var[num.i][num.j] == '=')
+			{
+				num.tmp = 1;
+				ft_printf("\"");
+				break ;
+			}
+		}
+		if (num.tmp)
+			ft_printf("%s\"\n", var[num.i] + num.j + 1);
+		else
+			ft_printf("\n");
+	}
 }

@@ -6,25 +6,23 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:15 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/05 14:10:49 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:24:48 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	ft_check_option(t_rlines cmd, t_ints *ints)
+static bool ft_valid(char *cmd)
 {
-    while (cmd[++ints->i])
-    {
-        ints->j = -1;
-        while (cmd[ints->i][++ints->j])
-        {
-            if (cmd[ints->i][0] != '-' || (cmd[ints->i][ints->j] != 'n'
-                && ints->j != 0))
-                return ;
-        }
-        ints->count++;
-    }
+    int i;
+
+    if (cmd[0] != '-')
+        return (false);
+    i = 0;
+    while (cmd[++i])
+        if (cmd[i] != 'n')
+            return (false);
+    return (true);
 }
 
 int	ft_echo(t_rlines cmd)
@@ -36,9 +34,10 @@ int	ft_echo(t_rlines cmd)
     if (ints.len == 1)
         return (ft_printf("\n"));
     ints.i = 0;
-    ft_check_option(cmd, &ints);
+    while (ft_valid(cmd[ints.i]))
+        ints.i++;
     ft_printf("%*[ ]s", cmd + ints.i);
-    if (!ints.count)
+    if (ints.i != 1)
         ft_printf("\n");
     return (0);
 }
