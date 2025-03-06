@@ -29,10 +29,8 @@ static int	ft_execute_pipeline(t_pipeline *pl)
 	tmp = pl;
 	while (tmp)
 	{
-		signal(SIGPIPE, SIG_IGN);
 		if (tmp->func((t_data *)ft_get_tdata(), tmp->param) == -1)
 			return (-1);
-		signal(SIGPIPE, SIG_DFL);
 		tmp = tmp->next;
 	}
 	return (0);
