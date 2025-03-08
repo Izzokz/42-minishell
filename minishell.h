@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/08 10:13:36 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:38:24 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # define PEND "} \1\e[1;31m\2»\1\e[0m\2 "
 
 /* All Error MSG, expect Internal Errors */
-# define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: -|%s|-: No such file or directory\n"
+# define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: -|%s|-: No such file or \
+directory\n"
 # define ERROR_TMA "\e[1;31m[Minishell] \e[0mToo many arguments\n"
 # define ERROR_CCH "\e[1;31m[Minishell] \e[0mCannot create history\n"
 # define ERROR_UQ "\e[1;31m[Minishell] \e[0mUnfinished quotes\n%*."

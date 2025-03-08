@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/08 10:47:13 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 11:38:07 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	handler(int n)
 {
-	t_data *data;
+	t_data	*data;
 
 	if (n == SIGINT)
 	{
