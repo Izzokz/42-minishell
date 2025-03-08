@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:14:57 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/01 17:14:11 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:56:41 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	add_to_tmp(t_rlines *tmp, char *part)
 	dup = NULL;
 	dup = ft_strdup(part);
 	if (!dup)
-		return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_strdup(%*.)", 2));
 	if (ft_rlines_add(tmp, dup, A_END) == -1)
 		return (!!(((void *[2]){(free(dup), NULL), (void *)42}[1])) - 2);
 	return (0);
@@ -58,7 +58,7 @@ int	ft_fix_order(t_slines *input)
 	{
 		tmp = ft_calloc(1, sizeof(char *));
 		if (!tmp)
-			return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
+			return (ft_printf_err(ERROR_IE"ft_calloc(%*.)", 2));
 		if (reorder(&((*input)[i]), &tmp, 1) == -1)
 			return (-1);
 		if (reorder(&((*input)[i]), &tmp, 2) == -1)

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:03:54 by pboucher          #+#    #+#             */
-/*   Updated: 2025/02/28 18:31:29 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:04:52 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_gen_history(t_data *data)
 	hist = ft_readfile(data->history);
 	if (!hist)
 	{
-		ft_printf_err("Internal Error:ft_readfile()", 2);
+		ft_printf_err(ERROR_IE"ft_readfile()", 2);
 		return ;
 	}
 	if (zombie_rlines_free(&hist))

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:50:34 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/28 18:38:43 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:11:33 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,19 @@ void	ft_exit(t_data *data, t_rlines cmd)
 	if (len > 1 && !numerical(cmd[1], &exit_id))
 	{
 		ft_printf_fd(ERROR_NV, 2, cmd[1]);
-		errno = 2;
+		data->err_num = 2;
 	}
 	else if (len > 2)
 	{
 		ft_printf_fd(ERROR_TMA, 2);
-		errno = 1;
+		data->err_num = 1;
 		if (ft_slines_rlen(data->input) == 1)
 			return ;
 	}
 	else if (len == 2)
-		errno = (char)exit_id;
+		data->err_num = (char)exit_id;
 	if (!data->input || ft_slines_rlen(data->input) == 1)
 		ft_printf("exit\n");
 	ft_free_all(data);
-	exit(errno);
+	exit(data->err_num);
 }

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 17:36:53 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/24 15:21:39 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:04:16 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	ft_set_cmd(t_data *data, t_ints *i)
 	fix_rcases(data, *i);
 	dup = ft_rlines_dup(data->input[i->i] + i->j);
 	if (!dup)
-		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_calloc(%*.)", 2));
 	if (!ft_add_pipeline(data->pipeline[i->i], ft_exec, dup, ft_free_tab))
 		data->pipeline[i->i] = ft_new_pipeline(ft_exec, dup, ft_free_tab);
 	i->z = -42;
@@ -93,7 +93,7 @@ int	ft_make_pipeline(t_data *data)
 			sizeof(t_pipeline *));
 	if (!(data->pipeline))
 	{
-		ft_printf_err("Internal Error:ft_calloc(%*.)", 2);
+		ft_printf_err(ERROR_IE"ft_calloc(%*.)", 2);
 		return (-1);
 	}
 	i.i = -1;

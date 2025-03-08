@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:55:33 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/01 15:43:43 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:05:15 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	set_data(t_data *data, char **envp)
 		.prevpipe = -1, .endpipe = 0, .history = NULL, .user = NULL,
 		.envp = ft_rlines_dup(envp), .var = ft_rlines_dup(envp)};
 	if (!invalid_rlines(envp) && invalid_rlines(data->envp))
-		return (ft_printf_err("Internal Error:ft_rlines_dup(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_rlines_dup(%*.)", 2));
 	ft_get_user(data);
 	if (!data->user)
-		ft_printf_err("Internal Error:ft_get_user()", 2);
+		ft_printf_err(ERROR_IE"ft_get_user()", 2);
 	ft_set_path(data);
 	if (is_env_var("PATH", data->envp) && invalid_rlines(data->path))
 	{
 		ft_free_all(data);
-		return (ft_printf_err("Internal Error:ft_set_path(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_set_path(%*.)", 2));
 	}
 	return (0);
 }
@@ -68,7 +68,7 @@ char	*ft_generate_path(t_data *data)
 	tmp = getcwd(NULL, 0);
 	if (!tmp)
 	{
-		ft_printf_err("Internal Error:getcwd(%*.)", 2);
+		ft_printf_err(ERROR_IE"getcwd(%*.)", 2);
 		return (NULL);
 	}
 	i = ft_strlen(tmp) - 1;

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 13:49:23 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/26 15:50:20 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:03:44 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	hd_free(t_rlines *buffer, char *line, char *name, int is_add_func)
 	free(name);
 	ft_free_rlines(buffer);
 	if (is_add_func)
-		ft_printf_err("Internal Error:ft_rlines_add(%*.)", 2);
+		ft_printf_err(ERROR_IE"ft_rlines_add(%*.)", 2);
 	return (-1);
 }
 
@@ -63,9 +63,9 @@ int	ft_here_doc(t_data *data, void *lim)
 
 	hd_name = get_hd_name(data);
 	if (!hd_name)
-		return (ft_printf_err("Internal Error:get_hd_name(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"get_hd_name(%*.)", 2));
 	if (ft_gen_file(hd_name, "0744") == -1)
-		return (ft_printf_err("Internal Error:ft_gen_file(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_gen_file(%*.)", 2));
 	buffer = ft_calloc(1, sizeof(char *));
 	while (1)
 	{

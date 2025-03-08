@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/06 16:20:26 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:13:36 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define ERROR_NV "\e[1;31m[Minishell] \e[0m-|%s|-: not valid\n"
 # define ERROR_NVI "\e[1;31m[Minishell] \e[0mNot a valid identifier\n"
 # define ERROR_NEA "\e[1;31m[Minishell] \e[0mNot enough arguments\n%*."
+# define ERROR_US "\e[1;31m[Minishell] \e[0mUnexpected syntax"
+# define ERROR_IE "Internal Error:"
 
 struct	s_pipeline;
 
@@ -59,6 +61,7 @@ typedef struct s_data
 	int					output_fd;
 	int					fd;
 	int					exe;
+	int					err_num;
 	t_rlines			rcases;
 	t_rlines			envp;
 	t_rlines			var;

@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 16:47:11 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/01 17:14:52 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:57:39 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ static int	ft_edit_split(t_rlines *split, char *line_part, char *ch)
 
 	ft_realloc_rlines(split, 1);
 	if (!split)
-		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_calloc(%*.)", 2));
 	i.len = ft_rlines_len(*split);
 	(*split)[i.len] = ft_strdup(line_part);
 	if (!(*split)[i.len])
-		return (ft_printf_err("Internal Error:ft_strdup(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_strdup(%*.)", 2));
 	i.count1 = 0;
 	i.count2 = 0;
 	i.i = -1;
@@ -42,7 +42,7 @@ static int	ft_edit_split(t_rlines *split, char *line_part, char *ch)
 
 static void	*ft_calloc_err(void)
 {
-	ft_printf_err("Internal Error:ft_calloc()", 2);
+	ft_printf_err(ERROR_IE"ft_calloc()", 2);
 	return (NULL);
 }
 

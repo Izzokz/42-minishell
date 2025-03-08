@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_slines.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:59:20 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/15 16:58:46 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:06:21 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static int	del_index(char **part, int *i, int x, int y)
 	{
 		if (!rcase && ft_rlines_add(&(ft_get_tdata()->rcases),
 				ft_strdup((char []){x + 1, y + 1, 0}), A_END) == -1)
-			return (ft_printf_err("Internal Error:ft_rlines_add(%*.)", 2));
+			return (ft_printf_err(ERROR_IE"ft_rlines_add(%*.)", 2));
 		rcase = !rcase;
 		return (0);
 	}
 	tmp = ft_calloc(ft_strlen(*part), sizeof(char));
 	if (!tmp)
-		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_calloc(%*.)", 2));
 	j = (t_ints){.i = -1, .j = -1};
 	while ((*part)[++(j.i)])
 		if (j.i != *i)

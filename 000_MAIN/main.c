@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/01 15:42:54 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:13:27 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 
 static void	handler(int n)
 {
+	t_data *data;
+
 	if (n == SIGINT)
 	{
-		errno = 130;
+		data = ft_get_tdata();
+		data->err_num = 130;
 		ft_printf("\n");
-		if (!(((t_data *)ft_get_tdata())->pipeline))
+		if (!data->pipeline)
 		{
 			rl_on_new_line();
 			rl_replace_line("", 0);
@@ -62,7 +65,7 @@ int	is_env_var(char *var, char **envp)
 
 	lim = ft_strjoin(var, "=");
 	if (!lim)
-		return (ft_printf_err("Internal Error:ft_strjoin(%*.)", 2) + 1);
+		return (ft_printf_err(ERROR_IE"ft_strjoin(%*.)", 2) + 1);
 	i = -1;
 	while (envp[++i])
 	{

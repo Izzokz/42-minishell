@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_loop_tmp.c                                      :+:      :+:    :+:   */
+/*   ft_loop.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:36:43 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/25 11:36:44 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:10:44 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,19 @@ int	ft_loop(t_data *data)
 	{
 		data->endpipe = i.i == i.len - 1;
 		if (pipe(data->pipe) < 0)
-			return (ft_printf_err("Internal Error:pipe(%*.)", 2));
+			return (ft_printf_err(ERROR_IE"pipe(%*.)", 2));
 		i.tmp = fork();
 		if (i.tmp < 0)
-			return (ft_printf_err("Internal Error:fork(%*.)", 2));
+			return (ft_printf_err(ERROR_IE"fork(%*.)", 2));
 		if (i.tmp == 0)
 		{
 			ft_execute_pipeline(data->pipeline[i.i]);
 			ft_free_all(data);
-			exit(errno);
+			exit(data->err_num);
 		}
 		ft_pipe_swap(data->pipe, &data->prevpipe, i);
 	}
 	while (waitpid(-1, &i.tmp1, 0) > 0)
-		errno = WEXITSTATUS(i.tmp1);
+		data->err_num = WEXITSTATUS(i.tmp1);
 	return (0);
 }

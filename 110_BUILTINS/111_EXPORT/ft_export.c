@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/06 13:11:56 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:06:33 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ static int	ft_execute(t_data *data, t_rlines cmd, t_ints *ints)
 	{
 		dup = ft_substr(cmd[ints->i], 0, ints->j + 1);
 		if (!dup)
-			return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+			return (ft_printf_err(ERROR_IE"ft_substr(%*.)", 2));
 		ft_make_export(data, cmd, ints, dup);
 		dup = ft_substr(cmd[ints->i], 0, ints->j);
 		if (!dup)
-			return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+			return (ft_printf_err(ERROR_IE"ft_substr(%*.)", 2));
 		ft_make_var(data, cmd, ints, dup);
 	}
 	else if (ints->j == 0)
 	{
 		dup = ft_substr(cmd[ints->i], 0, -1);
 		if (!dup)
-			return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+			return (ft_printf_err(ERROR_IE"ft_substr(%*.)", 2));
 		ft_make_var(data, cmd, ints, dup);
 	}
 	else

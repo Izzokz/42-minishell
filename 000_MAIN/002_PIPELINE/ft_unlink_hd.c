@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unlink_hd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 14:30:08 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/03 14:42:47 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:04:37 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_unlink_hd(t_data *data)
 				&(char *){ft_itoa(i)});
 		if (!hd_name)
 		{
-			ft_printf_err("Internal Error:gnlxio_ft_strjoinfree()", 2);
+			ft_printf_err(ERROR_IE"gnlxio_ft_strjoinfree()", 2);
 			return ;
 		}
 		unlink(hd_name);

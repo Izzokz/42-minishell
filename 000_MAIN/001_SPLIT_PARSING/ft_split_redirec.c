@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_redirec.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:40:22 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/25 10:40:23 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:57:55 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ static int	rewrite(t_rlines *part, int j, int x)
 
 	pop = ft_rlines_pop(part, j);
 	if (!pop)
-		return (ft_printf_err("Internal Error:ft_rlines_pop(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_rlines_pop(%*.)", 2));
 	add = ft_substr(pop, x, -1);
 	if (!add)
-		return (free_return("Internal Error:ft_substr()", pop, NULL));
+		return (free_return(ERROR_IE"ft_substr()", pop, NULL));
 	if (ft_rlines_add(part, add, j) == -1)
-		return (free_return("Internal Error:ft_rlines_add()", add, pop));
+		return (free_return(ERROR_IE"ft_rlines_add()", add, pop));
 	rewrite = ft_substr(pop, 0, x);
 	if (!rewrite)
-		return (free_return("Internal Error:ft_substr()", pop, NULL));
+		return (free_return(ERROR_IE"ft_substr()", pop, NULL));
 	if (ft_rlines_add(part, rewrite, j) == -1)
-		return (free_return("Internal Error:ft_substr()", rewrite, pop));
+		return (free_return(ERROR_IE"ft_substr()", rewrite, pop));
 	free(pop);
 	return (0);
 }

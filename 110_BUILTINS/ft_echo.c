@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 18:22:15 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/07 15:56:28 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:52:08 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool ft_valid(char *cmd)
     int i;
 
     if (!cmd)
-        return (true);
+        return (false);
     if (cmd[0] != '-')
         return (false);
     i = 0;

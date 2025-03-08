@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_split.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 07:41:30 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/18 07:41:34 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:06:23 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	secure_free(t_rlines *split, t_data *data, t_ints *info)
 	t_rlines	part;
 
 	part = *(data->input + info->tmp + info->tmp1 + info->tmp2);
-	ft_printf_err("Internal Error:ft_rlines_add()", 2);
+	ft_printf_err(ERROR_IE"ft_rlines_add()", 2);
 	ft_free_rlines(&part);
 	ft_free_rlines(split);
 	ft_free_slines(&(data->input));
@@ -51,7 +51,7 @@ static void	split_space2(char ***line, char **var, t_ints *info)
 	*var = NULL;
 	data = ft_get_tdata();
 	if (!split)
-		return ((void)ft_printf_err("Internal Error:ft_split()", 2));
+		return ((void)ft_printf_err(ERROR_IE"ft_split()", 2));
 	*var = split[0];
 	len = ft_rlines_len(split);
 	split[0] = gnlxio_ft_strjoinfree(&(char *){ft_substr(**line, 0,

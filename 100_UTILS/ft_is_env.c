@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:11:57 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/13 15:20:11 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:06:26 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_pick_env(char *var)
 	lim = ft_strjoin(var, "=");
 	if (!lim)
 	{
-		ft_printf_err("Internal Error:ft_strjoin(%*.)", 2);
+		ft_printf_err(ERROR_IE"ft_strjoin(%*.)", 2);
 		return (NULL);
 	}
 	num.i = -1;
@@ -50,7 +50,7 @@ int	ft_is_env(char *var)
 	envp = ((t_data *)ft_get_tdata())->envp;
 	lim = ft_strjoin(var, "=");
 	if (!lim)
-		return (ft_printf_err("Internal Error:ft_strjoin(%*.)", 2) + 1);
+		return (ft_printf_err(ERROR_IE"ft_strjoin(%*.)", 2) + 1);
 	i = -1;
 	len = ft_strlen(lim);
 	while (envp[++i])

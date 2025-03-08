@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_expand.c                                        :+:      :+:    :+:   */
+/*   ft_expand_remap.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 20:40:08 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/01/29 20:40:09 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:14:50 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	*ft_env_var(char ***line, char *var, t_ints *info, int i)
 	char	*output;
 
 	if (var[0] == '?')
-		return (ft_itoa(errno));
+		return (ft_itoa(ft_get_tdata()->err_num));
 	if (!ft_is_env(var))
 		return (ft_calloc(1, 1));
 	output = ft_pick_env(var);
@@ -34,7 +34,7 @@ static int	remap2(char ***line, char **tmp, char **var, t_ints *j)
 	if (!*line)
 		return (sizeof(free(*var)) == sizeof(free(*tmp)));
 	if (!*tmp)
-		return (ft_printf_err("Internal Error:ft_calloc(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_calloc(%*.)", 2));
 	j->k = -1;
 	while (++(j->k) < j->tmp + 1)
 		(*tmp)[j->k] = (**line)[j->k];
@@ -65,7 +65,7 @@ int	remap(char ***line, t_ints *i)
 		return (0);
 	tmp = ft_substr((**line), i->i + 1, j.i - (i->i + 1));
 	if (!tmp)
-		return (ft_printf_err("Internal Error:ft_substr(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_substr(%*.)", 2));
 	var = ft_env_var(line, tmp, i, j.i);
 	free(tmp);
 	tmp = NULL;

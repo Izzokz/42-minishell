@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 09:02:47 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/01 17:14:36 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 09:57:19 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static int	concat(t_rlines *part, int j)
 	tmp = NULL;
 	tmp = ft_strjoin((*part)[j], (*part)[j + 1]);
 	if (!tmp)
-		return (ft_printf_err("Internal Error:ft_strjoin(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_strjoin(%*.)", 2));
 	if (ft_rlines_delete(part, j) == -1 || ft_rlines_delete(part, j) == -1)
-		return (ft_printf_err("Internal Error:ft_rlines_delete(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_rlines_delete(%*.)", 2));
 	if (ft_rlines_add(part, tmp, j) == -1)
 	{
 		free(tmp);
-		return (ft_printf_err("Internal Error:ft_rlines_add(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_rlines_add(%*.)", 2));
 	}
 	return (0);
 }
@@ -50,11 +50,11 @@ static int	fin_fix_redirec(t_rlines *part, int j, char **tmp, int len)
 		|| (*part)[j][len - 1] == '<'))
 		(*part)[j][len - 1] = 0;
 	if (ft_rlines_delete(part, j + 1) == -1)
-		return (ft_printf_err("Internal Error:ft_rlines_delete(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_rlines_delete(%*.)", 2));
 	if (ft_rlines_add(part, *tmp, j + 1) == -1)
 	{
 		free(*tmp);
-		return (ft_printf_err("Internal Error:ft_rlines_add(%*.)", 2));
+		return (ft_printf_err(ERROR_IE"ft_rlines_add(%*.)", 2));
 	}
 	return (0);
 }

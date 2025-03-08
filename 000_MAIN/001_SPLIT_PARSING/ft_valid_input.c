@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:46:31 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/28 18:50:41 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:03:12 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,13 @@ static int	pipe_redirec_cases(char actual, t_ints i)
 	else
 		ft_bzero(cnt, 3);
 	if (cnt[0] > 2)
-		return (ft_printf_fd("ERROR_TOO_MANY_<%*.\n", 2) + 1);
+		return (ft_printf_fd(ERROR_TMA"<%*.\n", 2) + 1);
 	if (cnt[1] > 2)
-		return (ft_printf_fd("ERROR_TOO_MANY_>%*.\n", 2) + 1);
+		return (ft_printf_fd(ERROR_TMA">%*.\n", 2) + 1);
 	if (cnt[2] > 1)
-		return (ft_printf_fd("ERROR_TOO_MANY_|%*.\n", 2) + 1);
+		return (ft_printf_fd(ERROR_TMA"|%*.\n", 2) + 1);
 	if ((cnt[0] && cnt[1]) || (cnt[0] && cnt[2]) || (cnt[1] && cnt[2]))
-		return (ft_printf_fd("ERROR_UNEXPECTED_SYNTAX%*.\n", 2) + 1);
+		return (ft_printf_fd(ERROR_US"%*.\n", 2) + 1);
 	return (1);
 }
 
