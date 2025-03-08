@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:36:43 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/08 10:10:44 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/08 10:49:47 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ static void	ft_pipe_swap(int tube[2], int *prev, t_ints i)
 		close(tube[0]);
 }
 
+static void sg(int n)
+{
+	if (n == SIGQUIT)
+	{
+		ft_get_tdata()->err_num = 131;
+		signal(SIGQUIT, SIG_DFL);
+	}
+}
+
 int	ft_loop(t_data *data)
 {
 	t_ints	i;
@@ -92,6 +101,7 @@ int	ft_loop(t_data *data)
 			return (ft_printf_err(ERROR_IE"fork(%*.)", 2));
 		if (i.tmp == 0)
 		{
+			signal(SIGQUIT, sg);
 			ft_execute_pipeline(data->pipeline[i.i]);
 			ft_free_all(data);
 			exit(data->err_num);
@@ -100,5 +110,7 @@ int	ft_loop(t_data *data)
 	}
 	while (waitpid(-1, &i.tmp1, 0) > 0)
 		data->err_num = WEXITSTATUS(i.tmp1);
+	if (data->err_num == 131)
+		ft_printf("Quit\n");
 	return (0);
 }
