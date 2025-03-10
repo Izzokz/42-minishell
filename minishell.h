@@ -100,6 +100,8 @@ t_slines	ft_pipe_split(char *line);
 int			ft_fix_order(t_slines *input);
 	/*	ft_valid_input.c */
 int			ft_valid_input(char *input);
+	/*	ft_export_quotes.c */
+int			ft_export_quotes(t_slines *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
 int			ft_loop(t_data *data);
