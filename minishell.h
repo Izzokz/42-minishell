@@ -48,11 +48,11 @@ struct	s_pipeline;
 
 typedef struct s_data
 {
+	unsigned char		bcase : 2;
 	char				*user;
 	char				*line;
 	char				**path;
 	char				*history;
-	int					bcase;
 	int					hd_i;
 	int					pipe[2];
 	int					prevpipe;
