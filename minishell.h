@@ -54,14 +54,11 @@ typedef struct s_data
 	char				*history;
 	int					bcase;
 	int					hd_i;
-	int					pid;
 	int					pipe[2];
 	int					prevpipe;
 	int					endpipe;
 	int					input_fd;
 	int					output_fd;
-	int					fd;
-	int					exe;
 	int					err_num;
 	t_rlines			rcases;
 	t_rlines			envp;

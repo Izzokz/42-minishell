@@ -58,8 +58,6 @@ static int	handle_bcase(t_pipeline *pipeline)
 		|| !ft_strncmp(cmd, "cd", -1) || !ft_strncmp(cmd, "pwd", -1)
 		|| !ft_strncmp(cmd, "exit", -1))
 		data->bcase = 1;
-	else
-		data->bcase = 0;
 	return (data->bcase);
 }
 

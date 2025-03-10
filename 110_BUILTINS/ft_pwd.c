@@ -22,6 +22,5 @@ int	ft_pwd(void)
 		ft_printf("%s\n", path);
 		free(path);
 	}
-	path = NULL;
 	return (0);
 }

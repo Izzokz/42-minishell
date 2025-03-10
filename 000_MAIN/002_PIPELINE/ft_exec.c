@@ -23,20 +23,33 @@ static int	is_builtin(char *cmd)
 		|| !ft_strncmp(cmd, "exit", -1));
 }
 
-static void	ft_redirec2(int saveio[2])
+static void	ft_redirec2(t_data *data, int saveio[2])
 {
-	dup2(saveio[0], 0);
-	dup2(saveio[1], 1);
-	close(saveio[0]);
-	close(saveio[1]);
+	if (saveio[0] >= 0)
+	{
+		dup2(saveio[0], 0);
+		close(saveio[0]);
+	}
+	if (saveio[1] >= 0)
+	{
+		dup2(saveio[1], 1);
+		close(saveio[1]);
+	}
+	if (data->input_fd >= 0)
+		close(data->input_fd);
+	if (data->output_fd >= 0)
+		close(data->output_fd);
+	data->input_fd = -42;
+	data->output_fd = -42;
+	data->bcase = 0;
 }
 
 static void	ft_redirec(t_data *data)
 {
-	static int	saveio[2];
+	static int	saveio[2] = {-1, -1};
 
 	if (data->bcase == 2)
-		return (ft_redirec2(saveio));
+		return (ft_redirec2(data, saveio));
 	if (data->bcase == 1)
 	{
 		saveio[0] = dup(0);
