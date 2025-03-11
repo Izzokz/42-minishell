@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:07:10 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/11 16:59:28 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/11 18:27:13 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_free_all(t_data *data)
 	ft_free_slines(&data->input);
 	ft_free_rlines(&data->path);
 	ft_free_rlines(&data->rcases);
+	ft_free_rlines(&data->temp_history);
 	ft_destroy_all_pipelines(&(data->pipeline));
 	free(data->line);
 	free(data->user);
