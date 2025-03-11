@@ -34,9 +34,7 @@ UTILSSRC = $(UTILSDIR)ft_free_all.c \
 BUILTINSSRC = $(BUILTINSDIR)ft_exit.c \
 	$(BUILTINSDIR)ft_pwd.c \
 	$(BUILTINSDIR)111_EXPORT/ft_export.c \
-	$(BUILTINSDIR)111_EXPORT/ft_export2.c \
-	$(BUILTINSDIR)111_EXPORT/ft_export3.c \
-	$(BUILTINSDIR)111_EXPORT/ft_export4.c \
+	$(BUILTINSDIR)111_EXPORT/ft_export_utils.c \
 	$(BUILTINSDIR)ft_unset.c \
 	$(BUILTINSDIR)ft_echo.c \
 	$(BUILTINSDIR)ft_cd.c \
@@ -106,8 +104,6 @@ fclean:
 	@printf "\033[38m\033[1mMinishell: \033[1;37mCleaned !\033[0m\n"
 
 re: fclean all
-
-chazzup:
 
 .PHONY: all clean fclean re libs
 
