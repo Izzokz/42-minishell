@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 13:07:10 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/01 15:27:40 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:59:28 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ft_free_all(t_data *data)
 	free(data->line);
 	free(data->user);
 	free(data->history);
+	if (data->last_history)
+		free(data->last_history);
 	if (data->input_fd >= 0)
 		close(data->input_fd);
 	if (data->output_fd >= 0)

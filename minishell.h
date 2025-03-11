@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/08 11:38:24 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:45:20 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_data
 	char				*line;
 	char				**path;
 	char				*history;
+	char				*last_history;
 	int					hd_i;
 	int					pipe[2];
 	int					prevpipe;
@@ -60,6 +61,7 @@ typedef struct s_data
 	int					input_fd;
 	int					output_fd;
 	int					err_num;
+	t_rlines			temp_history;
 	t_rlines			rcases;
 	t_rlines			envp;
 	t_rlines			var;
@@ -83,6 +85,7 @@ void		ft_get_user(t_data *data);
 	/*	ft_history.c */
 void		ft_gen_history(t_data *data);
 void		ft_add_history(t_data *data);
+void		ft_add_all_history(t_data *data);
 	/*	ft_utils.c*/
 int			set_data(t_data *data, char **envp);
 char		*ft_generate_prompt(t_data *data, char *path);
