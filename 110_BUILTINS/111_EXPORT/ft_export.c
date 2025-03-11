@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/11 14:57:37 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:34:05 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	ft_make_var(t_data *data, t_rlines cmd, t_ints *ints, char *dup)
 	else
 	{
 		free(dup);
-		dup = ft_strdup(cmd[ints->i]);
-		ft_rlines_add(&(data->var), dup, A_END);
+		ft_rlines_add(&(data->var), (char *){ft_strdup(cmd[ints->i])}, A_END);
 	}
 }
 
@@ -63,8 +62,7 @@ void	ft_make_export(t_data *data, t_rlines cmd, t_ints *ints, char *dup)
 	else
 	{
 		free(dup);
-		dup = ft_strdup(cmd[ints->i]);
-		ft_rlines_add(&(data->envp), dup, A_END);
+		ft_rlines_add(&(data->envp), (char *){ft_strdup(cmd[ints->i])}, A_END);
 	}
 }
 
@@ -72,7 +70,7 @@ static int	ft_execute(t_data *data, t_rlines cmd, t_ints *ints)
 {
 	char	*dup;
 
-	if (ints->j >= 0)
+	if (ints->j > 0)
 	{
 		dup = ft_substr(cmd[ints->i], 0, ints->j + 1);
 		if (!dup)
