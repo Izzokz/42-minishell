@@ -23,6 +23,11 @@ static int	get_assign_index(char *set)
 	return (-1);
 }
 
+static char	is_quote(char c)
+{
+	return (c == '\'' || c == '"');
+}
+
 static int	handle_ecase(t_slines *input, t_ints i)
 {
 	char	*varname;
@@ -32,7 +37,7 @@ static int	handle_ecase(t_slines *input, t_ints i)
 	while (*(*((*input) + i.i) + ++i.j))
 	{
 		index = get_assign_index(*(*((*input) + i.i) + i.j));
-		if (index < 0)
+		if (index < 0 || !is_quote(*(*(*((*input) + i.i) + i.j) + index)))
 			continue ;
 		varname = ft_substr(*(*((*input) + i.i) + i.j), 0, index);
 		if (!varname)
