@@ -6,121 +6,89 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:01:50 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/05 16:10:56 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:43:06 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_get_env(t_data *data, t_ints *num)
-{
-	*num = (t_ints){.i = 0, .j = 0, .k = 0};
-	while (data->envp[num->i])
-	{
-		if (!ft_strncmp(data->envp[num->i], "HOME=", 5))
-			break ;
-		num->i++;
-	}
-	while (data->envp[num->j])
-	{
-		if (!ft_strncmp(data->envp[num->j], "PWD=", 4))
-			break ;
-		num->j++;
-	}
-	while (data->envp[num->k])
-	{
-		if (!ft_strncmp(data->envp[num->k], "OLDPWD=", 7))
-			break ;
-		num->k++;
-	}
-}
-
-static void	ft_cd_no_args(t_data *data, t_ints i)
+static void	ft_cd_no_args(t_data *data)
 {
 	char	*path;
+	char	*pwd;
+	int		check;
 
-	path = ft_substr(data->envp[i.i], 5, -1);
-	if (path)
-		chdir(path);
+	path = ft_pick_env("HOME");
+	if (!path)
+		return ;
+	chdir(path);
+	pwd = ft_pick_env("PWD");
+	check = ft_is_env("OLDPWD");
+	if (check)
+		ft_modify_env(data, "OLDPWD", pwd);
+	check = ft_is_env("PWD");
+	if (check)
+		ft_modify_env(data, "PWD", path);
+	free(pwd);
 	free(path);
-	path = ft_substr(data->envp[i.j], 4, -1);
-	if (!ft_is_env("OLDPWD"))
-	{
-		free(data->envp[i.k]);
-		data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
-				&path);
-	}
-	else
-		free(path);
-	path = ft_substr(data->envp[i.i], 5, -1);
-	if (!ft_is_env("PWD"))
-	{
-		free(data->envp[i.j]);
-		data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
-				&path);
-	}
-	else
-		free(path);
 }
 
-static void	ft_cd_reverse(t_data *data, t_ints i)
+static void	ft_cd_reverse(t_data *data)
 {
 	char	*path;
 	char	*pwd;
 
-	path = ft_substr(data->envp[i.k], 7, -1);
-	pwd = NULL;
-	if (path)
+	path = ft_pick_env("OLDPWD");
+	pwd = ft_pick_env("PWD");
+	if (!path || !pwd)
 	{
-		chdir(path);
-		pwd = ft_strdup(path);
+		free(pwd);
 		free(path);
+		return ;
 	}
-	path = ft_substr(data->envp[i.j], 4, -1);
-	free(data->envp[i.k]);
-	data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
-			&path);
-	free(data->envp[i.j]);
-	ft_printf("%s\n", pwd);
-	data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
-			&pwd);
+	chdir(path);
+	ft_printf("%s\n", path);
+	ft_modify_env(data, "OLDPWD", pwd);
+	ft_modify_env(data, "PWD", path);
+	free(pwd);
+	free(path);
 }
 
-static void	ft_cd_with_path(t_data *data, t_ints i, t_rlines cmd)
+static void	ft_cd_with_path(t_data *data, t_rlines cmd)
 {
 	char	*path;
 
 	if (chdir(cmd[1]) != -1)
 	{
-		path = ft_substr(data->envp[i.j], 4, -1);
-		free(data->envp[i.k]);
-		data->envp[i.k] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("OLDPWD=")},
-				&path);
+		path = ft_pick_env("PWD");
+		if (path)
+			ft_modify_env(data, "OLDPWD", path);
+		free(path);
 		path = getcwd(NULL, 0);
-		free(data->envp[i.j]);
-		data->envp[i.j] = gnlxio_ft_strjoinfree(&(char *){ft_strdup("PWD=")},
-				&path);
+		if (path)
+			ft_modify_env(data, "PWD", path);
+		free(path);
 		return ;
 	}
 	ft_printf_fd(ERROR_CD, 2, cmd[1]);
+	data->err_num = 1;
 }
 
 int	ft_cd(t_data *data, t_rlines cmd)
 {
 	t_ints		i;
 
-	ft_get_env(data, &i);
 	i.len = ft_rlines_len(cmd);
 	if (i.len > 2)
 		return (ft_printf_fd(ERROR_TMA, 2));
 	else if (i.len == 1)
-		ft_cd_no_args(data, i);
+		ft_cd_no_args(data);
 	else
 	{
 		if (cmd[1][0] == '-' && ft_strlen(cmd[1]) == 1)
-			ft_cd_reverse(data, i);
+			ft_cd_reverse(data);
 		else
-			ft_cd_with_path(data, i, cmd);
+			ft_cd_with_path(data, cmd);
 	}
 	return (0);
 }

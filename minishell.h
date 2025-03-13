@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/11 16:45:20 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/13 14:49:50 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ typedef struct s_pipeline
 
 //	000_MAIN
 	/*	main.c */
-int			is_env_var(char *var, char **envp);
 void		ft_get_user(t_data *data);
 	/*	ft_history.c */
 void		ft_gen_history(t_data *data);
@@ -151,6 +150,8 @@ t_data		*ft_get_tdata(void);
 /*	ft_is_env.c */
 char		*ft_pick_env(char *var);
 int			ft_is_env(char *var);
+void		ft_modify_env(t_data *data, char *env, char *value);
+int			is_env_var(char *var, char **envp);
 
 //	110_BUILTINS
 /*	ft_exit.c */

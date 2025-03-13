@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/11 19:08:00 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/13 15:51:20 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,10 @@ void	ft_get_user(t_data *data)
 		data->user = ft_substr(data->envp[num.i], 5, -1);
 }
 
-int	is_env_var(char *var, char **envp)
+static int	finish(t_data *data)
 {
-	char	*lim;
-	int		i;
-
-	lim = ft_strjoin(var, "=");
-	if (!lim)
-		return (ft_printf_err(ERROR_IE"ft_strjoin(%*.)", 2) + 1);
-	i = -1;
-	while (envp[++i])
-	{
-		if (ft_strnstr(envp[i], lim, 5))
-		{
-			free(lim);
-			return (1);
-		}
-	}
-	free(lim);
+	ft_add_all_history(data);
+	ft_exit(data, NULL);
 	return (0);
 }
 
@@ -105,5 +91,5 @@ int	main(int argc, char **argv, char **envp)
 		}
 		ft_free_line(&data);
 	}
-	ft_add_all_history(&data);
+	return (finish(&data));
 }
