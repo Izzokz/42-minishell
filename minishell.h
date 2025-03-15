@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/14 15:47:05 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:51:31 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,17 @@ void		ft_get_user(t_data *data);
 void		ft_gen_history(t_data *data);
 void		ft_add_history(t_data *data);
 void		ft_add_all_history(t_data *data);
-	/*	ft_utils.c*/
+	/*	ft_utils.c */
 int			set_data(t_data *data, char **envp);
 char		*ft_generate_prompt(t_data *data, char *path);
 char		*ft_generate_path(t_data *data);
 void		up_shlvl(t_data *data);
 void		ft_show_prompt(t_data *data);
+	/*	ft_signals.c */
+void		sig_restore(void);
+void		handler(int n);
+void		check_signal(t_data *data, t_ints *signal);
+int			find_err_num(t_data *data, t_ints *i);
 //->	001_SPLIT_PARSING
 	/*	ft_split_redirec.c */
 int			ft_split_redirec(t_rlines *part, int j);

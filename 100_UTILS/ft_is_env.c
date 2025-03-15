@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 10:11:57 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/13 14:48:35 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 11:51:06 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	ft_modify_env(t_data *data, char *env, char *value)
 		{
 			free(data->envp[num.i]);
 			data->envp[num.i] = gnlxio_ft_strjoinfree(&lim,
-				&(char *){ft_strdup(value)});
+					&(char *){ft_strdup(value)});
 			return ;
 		}
 	}

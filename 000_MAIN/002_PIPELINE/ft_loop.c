@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:36:43 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/14 17:40:57 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:58:46 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,22 @@ static void	ft_pipe_swap(int tube[2], int *prev, t_ints i)
 		close(tube[0]);
 }
 
+void init_loop(t_data *data, t_ints *i)
+{
+	data->err_num = 0;
+	i->len = ft_pipeline_tab_len(data->pipeline);
+	i->i = -1;
+	i->tmp2 = -127;
+}
+
 int	ft_loop(t_data *data)
 {
 	t_ints	i;
 
+	init_loop(data, &i);
 	data->err_num = 0;
-	i = (t_ints){.len = ft_pipeline_tab_len(data->pipeline), .i = -1};
+	i = (t_ints){.len = ft_pipeline_tab_len(data->pipeline), .i = -1,
+		.tmp2 = -127};
 	if (i.len == 1 && handle_bcase(data->pipeline[0]))
 		return (ft_execute_pipeline(data->pipeline[0]));
 	data->prevpipe = -1;
@@ -91,22 +101,12 @@ int	ft_loop(t_data *data)
 			return (ft_printf_err(ERROR_IE"fork(%*.)", 2));
 		if (i.tmp == 0)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
+			sig_restore();
 			ft_execute_pipeline(data->pipeline[i.i]);
 			ft_free_all(data);
 			exit(data->err_num);
 		}
 		ft_pipe_swap(data->pipe, &data->prevpipe, i);
 	}
-	while (waitpid(-1, &i.tmp1, 0) > 0)
-	{
-		if (i.tmp1 != i.tmp)
-			continue ;
-		if (WIFSIGNALED(i.tmp1) && WTERMSIG(i.tmp1) == 3)
-			ft_printf("Quit\n");
-		else 
-			data->err_num = WEXITSTATUS(i.tmp1);
-	}
-	return (0);
+	return (find_err_num(data, &i));
 }

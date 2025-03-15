@@ -6,29 +6,11 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/13 15:51:20 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 12:00:51 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	handler(int n)
-{
-	t_data	*data;
-
-	if (n == SIGINT)
-	{
-		data = ft_get_tdata();
-		data->err_num = 130;
-		ft_printf("\n");
-		if (!data->pipeline)
-		{
-			rl_on_new_line();
-			rl_replace_line("", 0);
-			rl_redisplay();
-		}
-	}
-}
 
 static int	ft_init(int ac, char **av, char **envp, t_data *data)
 {

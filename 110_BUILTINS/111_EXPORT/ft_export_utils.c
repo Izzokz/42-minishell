@@ -47,7 +47,7 @@ void	ft_print_var(t_rlines var)
 	{
 		num = (t_ints){.i = num.i, .j = -1, .tmp = 0};
 		if (var[num.i][0] == '_' && var[num.i][1] == '=')
-			continue;
+			continue ;
 		ft_printf("declare -x ");
 		while (var[num.i][++(num.j)])
 		{
