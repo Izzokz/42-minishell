@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/15 12:51:31 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:25:54 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void		ft_get_user(t_data *data);
 void		ft_gen_history(t_data *data);
 void		ft_add_history(t_data *data);
 void		ft_add_all_history(t_data *data);
+char		*ft_get_abspath(void);
 	/*	ft_utils.c */
 int			set_data(t_data *data, char **envp);
 char		*ft_generate_prompt(t_data *data, char *path);
@@ -96,6 +97,10 @@ void		sig_restore(void);
 void		handler(int n);
 void		check_signal(t_data *data, t_ints *signal);
 int			find_err_num(t_data *data, t_ints *i);
+	/*	ft_init.c */
+int			ft_init(int ac, char **av, char **envp, t_data *data);
+int			ft_init_history(t_data *data);
+void		init_loop(t_data *data, t_ints *i);
 //->	001_SPLIT_PARSING
 	/*	ft_split_redirec.c */
 int			ft_split_redirec(t_rlines *part, int j);
@@ -112,6 +117,7 @@ int			ft_export_quotes(t_slines *input);
 //->	002_PIPELINE
 	/*	ft_loop.c */
 int			ft_loop(t_data *data);
+int			ft_pipeline_tab_len(t_pipeline **tab);
 	/*	ft_hd_loop.c */
 int			ft_hd_loop(t_data *data);
 	/*	ft_unlink_hd_exit_status */

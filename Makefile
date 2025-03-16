@@ -8,6 +8,7 @@ MAIN2DIR = $(MAINDIR)002_PIPELINE/
 UTILSDIR = 100_UTILS/
 BUILTINSDIR = 110_BUILTINS/
 MAINSRC = $(MAINDIR)main.c \
+	$(MAINDIR)ft_init.c \
 	$(MAINDIR)ft_signals.c \
 	$(MAINDIR)ft_utils.c \
 	$(MAINDIR)ft_history.c
@@ -44,14 +45,14 @@ OBJDIR = 666_OBJ/
 OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(MAIN1SRC) $(MAIN2SRC) $(UTILSSRC) $(BUILTINSSRC)))
 DEP = $(patsubst %.c,$(OBJDIR)%.d,$(notdir $(MAINSRC) $(MAIN1SRC) $(MAIN2SRC) $(UTILSSRC) $(BUILTINSSRC)))
 
-CCA = cc -Wall -Werror -Wextra -L/usr/local/lib -I/usr/local/include -lreadline -MP -MMD -g3
+CCA = cc -Wall -Werror -Wextra -L/usr/local/lib -I/usr/local/include -lreadline -lhistory -MP -MMD -g3
 
 MAKEFLAGS += --no-print-directory
 
 all: $(NAME)
 
 $(NAME): $(LIBS) $(OBJ)
-	@$(CCA) -o $(NAME) $(OBJ) $(LIBS)
+	@$(CCA) -o $(NAME) $(OBJ) $(LIBS) -lreadline -lhistory
 	@printf "\n\033[38m\033[1mMinishell: \033[1;97mBuild Complete !\033[0m\n"
 
 $(OBJDIR):

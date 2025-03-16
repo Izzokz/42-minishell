@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:03:54 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/15 12:53:28 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:25:40 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*ft_get_abspath(void)
+char	*ft_get_abspath(void)
 {
 	char	*temp;
 
@@ -22,36 +22,13 @@ static char	*ft_get_abspath(void)
 	return (temp);
 }
 
-static void	add_hist(t_data *data, t_rlines *hist)
-{
-	int	i;
-
-	ft_rlines_cutendl(hist);
-	i = -1;
-	while (*hist[++i])
-		add_history(*hist[i]);
-	if (i - 1 > 0)
-		data->last_history = ft_strdup(*hist[i - 1]);
-	ft_free_rlines(hist);
-}
-
 void	ft_gen_history(t_data *data)
 {
+	int			i;
 	t_rlines	hist;
 
-	data->last_history = NULL;
-	data->temp_history = ft_calloc(1, sizeof(char *));
-	if (!data->temp_history)
-	{
-		ft_printf_err(ERROR_IE"ft_calloc(%*.)", 2);
+	if (!ft_init_history(data))
 		return ;
-	}
-	data->history = ft_get_abspath();
-	if (ft_gen_file(data->history, "0777") == -1)
-	{
-		ft_printf_fd(ERROR_CCH, 2);
-		return ;
-	}
 	hist = ft_readfile(data->history);
 	if (!hist)
 	{
@@ -60,7 +37,13 @@ void	ft_gen_history(t_data *data)
 	}
 	if (zombie_rlines_free(&hist))
 		return ;
-	add_hist(data, &hist);
+	ft_rlines_cutendl(&hist);
+	i = -1;
+	while (hist[++i])
+		add_history(hist[i]);
+	if (i - 1 > 0)
+		data->last_history = ft_strdup(hist[i - 1]);
+	ft_free_rlines(&hist);
 }
 
 void	ft_add_history(t_data *data)

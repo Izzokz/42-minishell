@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_loop.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 11:36:43 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/15 12:58:46 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:25:13 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	ft_pipeline_tab_len(t_pipeline **tab)
-{
-	int	i;
-
-	i = -1;
-	while (tab[++i])
-		;
-	return (i);
-}
 
 static int	ft_execute_pipeline(t_pipeline *pl)
 {
@@ -72,12 +62,14 @@ static void	ft_pipe_swap(int tube[2], int *prev, t_ints i)
 		close(tube[0]);
 }
 
-void init_loop(t_data *data, t_ints *i)
+int	ft_pipeline_tab_len(t_pipeline **tab)
 {
-	data->err_num = 0;
-	i->len = ft_pipeline_tab_len(data->pipeline);
-	i->i = -1;
-	i->tmp2 = -127;
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		;
+	return (i);
 }
 
 int	ft_loop(t_data *data)
@@ -85,9 +77,6 @@ int	ft_loop(t_data *data)
 	t_ints	i;
 
 	init_loop(data, &i);
-	data->err_num = 0;
-	i = (t_ints){.len = ft_pipeline_tab_len(data->pipeline), .i = -1,
-		.tmp2 = -127};
 	if (i.len == 1 && handle_bcase(data->pipeline[0]))
 		return (ft_execute_pipeline(data->pipeline[0]));
 	data->prevpipe = -1;

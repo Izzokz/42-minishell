@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:23:35 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/15 12:00:51 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:19:40 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	ft_init(int ac, char **av, char **envp, t_data *data)
-{
-	(void) ac;
-	(void) av;
-	ft_set_tdata(data);
-	if (set_data(data, envp) == -1)
-		return (-1);
-	up_shlvl(data);
-	ft_gen_history(data);
-	signal(SIGINT, handler);
-	signal(SIGQUIT, SIG_IGN);
-	return (0);
-}
 
 void	ft_get_user(t_data *data)
 {

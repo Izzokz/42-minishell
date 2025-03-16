@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 14:55:33 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/08 10:05:15 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:07:08 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ char	*ft_generate_prompt(t_data *data, char *path)
 {
 	char	*prompt;
 	char	*shlvl;
-	int		i;
 
-	i = -1;
 	shlvl = ft_pick_env("SHLVL");
 	if (!shlvl)
 		shlvl = ft_strdup("UNK");
