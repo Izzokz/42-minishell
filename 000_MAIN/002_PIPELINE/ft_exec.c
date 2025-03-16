@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exec_tmp.c                                      :+:      :+:    :+:   */
+/*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzhen-cl <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 16:14:26 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/02/24 16:14:28 by kzhen-cl         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:40:25 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,13 @@ static int	handle_builtins(t_data *data, t_rlines cmd)
 	if (!ft_strncmp(cmd[0], "export", -1))
 		ret = ft_export(data, cmd);
 	else if (!ft_strncmp(cmd[0], "echo", -1))
-		ret = ft_echo(cmd);
+		ret = ft_echo(data, cmd);
 	else if (!ft_strncmp(cmd[0], "unset", -1))
 		ret = ft_unset(data, cmd);
 	else if (!ft_strncmp(cmd[0], "env", -1))
 		ret = ft_printf("%*[\n]s\n", data->envp);
 	else if (!ft_strncmp(cmd[0], "pwd", -1))
-		ret = ft_pwd();
+		ret = ft_pwd(data);
 	else if (!ft_strncmp(cmd[0], "cd", -1))
 		ret = ft_cd(data, cmd);
 	else if (!ft_strncmp(cmd[0], "exit", -1))

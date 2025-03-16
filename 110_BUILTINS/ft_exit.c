@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/20 14:50:34 by kzhen-cl          #+#    #+#             */
-/*   Updated: 2025/03/08 10:11:33 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:49:27 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_exit(t_data *data, t_rlines cmd)
 	}
 	else if (len > 2)
 	{
-		ft_printf_fd(ERROR_TMA, 2);
+		ft_printf_fd(ERROR_TMA"\n", 2);
 		data->err_num = 1;
 		if (ft_slines_rlen(data->input) == 1)
 			return ;

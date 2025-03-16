@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:20:53 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/15 21:25:54 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:13:43 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,19 @@
 /* All Error MSG, expect Internal Errors */
 # define ERROR_CD "\e[1;31m[Minishell] \e[0mcd: -|%s|-: No such file or \
 directory\n"
-# define ERROR_TMA "\e[1;31m[Minishell] \e[0mToo many arguments\n"
+# define ERROR_TMA "\e[1;31m[Minishell] \e[0mToo many arguments"
 # define ERROR_CCH "\e[1;31m[Minishell] \e[0mCannot create history\n"
 # define ERROR_UQ "\e[1;31m[Minishell] \e[0mUnfinished quotes\n%*."
 # define ERROR_FDE "\e[1;31m[Minishell] \e[0m-|%s|- doesn't exist\n"
 # define ERROR_FNF "\e[1;31m[Minishell] \e[0m-|%s|-: command not found\n"
 # define ERROR_NV "\e[1;31m[Minishell] \e[0m-|%s|-: not valid\n"
-# define ERROR_NVI "\e[1;31m[Minishell] \e[0mNot a valid identifier\n"
-# define ERROR_NEA "\e[1;31m[Minishell] \e[0mNot enough arguments\n%*."
+# define ERROR_NVI "\e[1;31m[Minishell] \e[0mNot a valid identifier\n%*."
 # define ERROR_US "\e[1;31m[Minishell] \e[0mUnexpected syntax"
+# define ERROR_HNS "\e[1;31m[Minishell] \e[0mHOME not set\n"
+# define ERROR_CDR "\e[1;31m[Minishell] \e[0mPWD and/or OLDPWD isn't set\n"
+# define ERROR_SEP "\e[1;31m[Minishell] \e[0mSyntax Error : |"
+# define ERROR_SEI "\e[1;31m[Minishell] \e[0mSyntax Error : <"
+# define ERROR_SES "\e[1;31m[Minishell] \e[0mSyntax Error : >"
 # define ERROR_IE "Internal Error:"
 
 struct	s_pipeline;
@@ -67,7 +71,6 @@ typedef struct s_data
 	t_rlines			var;
 	t_slines			input;
 	struct s_pipeline	**pipeline;
-	struct sigaction	usr;
 }	t_data;
 
 typedef struct s_pipeline
@@ -110,8 +113,10 @@ int			ft_fix_redirections(t_slines *input);
 t_slines	ft_pipe_split(char *line);
 	/*	ft_fix_order.c */
 int			ft_fix_order(t_slines *input);
+	/*	ft_valid_input_utils.c */
+void		ft_vi_add_redirec(char *red, char *pipe);
 	/*	ft_valid_input.c */
-int			ft_valid_input(char *input);
+char		ft_valid_input(char *input);
 	/*	ft_export_quotes.c */
 int			ft_export_quotes(t_slines *input);
 //->	002_PIPELINE
@@ -170,11 +175,11 @@ void		ft_exit(t_data *data, t_rlines cmd);
 /*	ft_cd.c */
 int			ft_cd(t_data *data, t_rlines cmd);
 /*	ft_pwd.c */
-int			ft_pwd(void);
+int			ft_pwd(t_data *data);
 /*	ft_unset.c */
 int			ft_unset(t_data *data, t_rlines cmd);
 /*	ft_echo.c */
-int			ft_echo(t_rlines cmd);
+int			ft_echo(t_data *data, t_rlines cmd);
 /*	ft_export.c */
 int			ft_export(t_data *data, t_rlines cmd);
 void		ft_make_export(t_data *data, t_rlines cmd, t_ints *ints, char *dup);

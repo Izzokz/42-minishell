@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 12:01:03 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/15 12:50:31 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:54:13 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	find_err_num(t_data *data, t_ints *i)
 		if (WIFSIGNALED(i->tmp1))
 			check_signal(data, i);
 	}
-	data->err_num = i->tmp2;
+	if (i->tmp2 != -127)
+		data->err_num = i->tmp2;
 	return (0);
 }

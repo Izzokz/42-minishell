@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 15:01:50 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/13 14:43:06 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:49:23 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ static void	ft_cd_no_args(t_data *data)
 
 	path = ft_pick_env("HOME");
 	if (!path)
+	{
+		data->err_num = 1;
+		ft_printf_fd(ERROR_HNS, 2);
 		return ;
+	}
 	chdir(path);
 	pwd = ft_pick_env("PWD");
 	check = ft_is_env("OLDPWD");
@@ -42,6 +46,8 @@ static void	ft_cd_reverse(t_data *data)
 	pwd = ft_pick_env("PWD");
 	if (!path || !pwd)
 	{
+		ft_printf_fd(ERROR_CDR, 2);
+		data->err_num = 1;
 		free(pwd);
 		free(path);
 		return ;
@@ -78,9 +84,10 @@ int	ft_cd(t_data *data, t_rlines cmd)
 {
 	t_ints		i;
 
+	data->err_num = 0;
 	i.len = ft_rlines_len(cmd);
 	if (i.len > 2)
-		return (ft_printf_fd(ERROR_TMA, 2));
+		return (ft_printf_fd(ERROR_TMA"\n", 2));
 	else if (i.len == 1)
 		ft_cd_no_args(data);
 	else

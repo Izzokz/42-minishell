@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/11 15:34:05 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:37:25 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	ft_execute(t_data *data, t_rlines cmd, t_ints *ints)
 		ft_make_var(data, cmd, ints, dup);
 	}
 	else
-		ft_printf_fd(ERROR_NVI, 2);
+		data->err_num = (ft_printf_fd(ERROR_NVI, 2) + 2);
 	return (0);
 }
 
@@ -97,14 +97,13 @@ int	ft_export(t_data *data, t_rlines cmd)
 {
 	t_ints	ints;
 
-	(void)data;
+	data->err_num = 0;
 	ints.len = ft_rlines_len(cmd);
 	if (ints.len == 1)
 		return (ft_print_export(data));
 	ints.i = 0;
 	while (cmd[++(ints.i)])
 	{
-		ft_printf("%s\n", cmd[ints.i]);
 		ints.j = ft_chr(cmd[ints.i]);
 		ft_execute(data, cmd, &ints);
 	}

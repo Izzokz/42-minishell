@@ -6,7 +6,7 @@
 /*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 17:30:08 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/09 13:06:43 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:42:35 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,10 @@ int	ft_unset(t_data *data, t_rlines cmd)
 {
 	t_ints	ints;
 
+	data->err_num = 0;
 	ints.len = ft_rlines_len(cmd);
 	if (ints.len == 1)
-		return (ft_printf_fd(ERROR_NEA, 2) + 1);
+		return (0);
 	ints.i = 0;
 	while (cmd[++ints.i])
 	{

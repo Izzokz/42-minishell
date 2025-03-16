@@ -16,6 +16,7 @@ MAIN1SRC = $(MAIN1DIR)ft_pipe_split.c \
 	$(MAIN1DIR)ft_fix_redirections.c \
 	$(MAIN1DIR)ft_split_redirec.c \
 	$(MAIN1DIR)ft_fix_order.c \
+	$(MAIN1DIR)ft_valid_input_utils.c \
 	$(MAIN1DIR)ft_valid_input.c \
 	$(MAIN1DIR)ft_export_quotes.c
 MAIN2SRC = $(MAIN2DIR)ft_exec.c \
@@ -45,7 +46,7 @@ OBJDIR = 666_OBJ/
 OBJ = $(patsubst %.c,$(OBJDIR)%.o,$(notdir $(MAINSRC) $(MAIN1SRC) $(MAIN2SRC) $(UTILSSRC) $(BUILTINSSRC)))
 DEP = $(patsubst %.c,$(OBJDIR)%.d,$(notdir $(MAINSRC) $(MAIN1SRC) $(MAIN2SRC) $(UTILSSRC) $(BUILTINSSRC)))
 
-CCA = cc -Wall -Werror -Wextra -L/usr/local/lib -I/usr/local/include -lreadline -lhistory -MP -MMD -g3
+CCA = cc -Wall -Werror -Wextra -L/usr/local/lib -I/usr/local/include -MP -MMD -g3
 
 MAKEFLAGS += --no-print-directory
 

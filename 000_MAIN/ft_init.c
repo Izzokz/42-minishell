@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pboucher <pboucher@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pboucher <pboucher@42student.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 12:59:14 by pboucher          #+#    #+#             */
-/*   Updated: 2025/03/15 21:26:39 by pboucher         ###   ########.fr       */
+/*   Updated: 2025/03/16 12:32:01 by pboucher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	ft_init_history(t_data *data)
 
 void	init_loop(t_data *data, t_ints *i)
 {
-	data->err_num = 0;
 	i->len = ft_pipeline_tab_len(data->pipeline);
 	i->i = -1;
 	i->tmp2 = -127;
